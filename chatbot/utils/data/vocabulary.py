@@ -416,6 +416,7 @@ class VocabularyBuilder:
                 self.vocab.add_many(tokens=self.tokenizer(sequence))
 
         logger.info(
-            f"Vocab size: {len(self.vocab)}, " f"sequence pairs: {len(filtered_pairs)}\n"
+            f"Vocab size: {len(self.vocab)}, "
+            f"sequence pairs: {len(filtered_pairs)}\n"
         )
         return filtered_pairs, self.vocab

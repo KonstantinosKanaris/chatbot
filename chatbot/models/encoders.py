@@ -132,6 +132,9 @@ class EncoderRNN(nn.Module):
         output, _ = pad_packed_sequence(sequence=output)
 
         # Sum bidirectional GRU outputs
-        output = output[:, :, : self.hidden_size] + output[:, :, self.hidden_size :]
+        output = (
+            output[:, :, : self.hidden_size]
+            + output[:, :, self.hidden_size :]  # noqa: E203
+        )
 
         return output, h_n

@@ -110,7 +110,7 @@ class Trainer:
             True if random.random() < self.teacher_forcing_ratio else False
         )
 
-        loss = torch.tensor(data=0, dtype=torch.float32)
+        loss = torch.tensor(data=0, dtype=torch.float32).to(self.device)
         if use_teacher_forcing:
             for t in range(target_max_length):
                 decoder_output, decoder_hidden = self.decoder(
