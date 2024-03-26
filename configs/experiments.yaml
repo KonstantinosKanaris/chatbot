@@ -1,0 +1,55 @@
+#----------------------------------------------------------------------------------------
+#----------------------------------------------------------------------------------------
+# - checkpoints_dir         : The directory path to save checkpoints during training.
+# - data_path               : The path to the txt file containing pairs of text sequences.
+# - num_epochs              : An integer indicating how many epochs to train for.
+# - batch_size              : How many samples per batch to load.
+# - lr_patience             : Number of epochs to wait before reducing the learning
+#                             rate.
+# - lr_reduce_factor        : How much to reduce the learning rate, i.e. lr * factor.
+# - ea_patience             : Number of epochs to wait before early stopping.
+# - ea_delta                : Minimum change in monitored quantity to qualify as an
+#                             improvement.
+# - clip_factor             : Max norm value for gradient clipping.
+# - max_seq_length          : Maximum number of tokens allowed in each of the pair of
+#                             sequences.
+# - min_count               : Minimum token count value threshold.
+# - alignment_method        : Name of the alignment score method used in the attention layer.
+#                             The available methods are: `concat`, `dot` and `general`.
+# - embedding_dim           : Dimensions of token embeddings.
+# - hidden_size             : Hidden size of `rnn`, `gru` or `lstm` model.
+# - dropout                 : Dropout value to apply after the `rnn`, `gru or `lstm`
+#                             layer.
+# - encoder_num_layers      : Number of `rnn`, `gru` or `lstm` layers in the encoder layer.
+# - decoder_num_layers      : Number of `rnn`, `gru` or `lstm` layers in the decoder layer.
+# - teacher_forcing_ratio   :
+# - encoder_lr              : The learning rate of the encoder optimizer.
+# - decoder_lr              : The learning rate of the decoder optimizer.
+#----------------------------------------------------------------------------------------
+checkpoints_dir: ./checkpoints
+data_path: ./data/cornell_movie_dialogs/processed/formatted_dialogs.txt
+num_samples: 40000
+hyperparameters:
+    embeddings_path:
+    checkpoint_filename: 20240326_23-02_checkpoint.pth
+    general:
+      num_epochs: 50
+      batch_size: 64
+      lr_patience: 2
+      lr_reduce_factor: 0.25
+      ea_patience: 4
+      ea_delta: 0.0025
+      clip_factor: 50
+      max_seq_length: 10
+      min_count: 3
+    model_init_params:
+      alignment_method: dot
+      embedding_dim: 500
+      hidden_size: 500
+      dropout: 0.1
+      encoder_num_layers: 2
+      decoder_num_layers: 2
+      teacher_forcing_ratio: 0.5
+    optimizer_init_params:
+      encoder_lr: 0.0001
+      decoder_lr: 0.0005

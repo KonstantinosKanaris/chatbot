@@ -1,0 +1,17 @@
+data/
+logs/
+images/
+checkpoints/
+experiments/
+
+.venv
+.idea
+.mypy_cache
+.vector_cache
+__pycache__
+mlruns
+
+.env
+.DS_Store
+*.ipynb
+*.txt

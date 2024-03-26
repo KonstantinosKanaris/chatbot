@@ -1,0 +1,27 @@
+[[source]]
+url = "https://pypi.python.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[dev-packages]
+black = "*"
+isort = "*"
+mypy = "*"
+flake8 = "*"
+pytest-cov = "*"
+pre-commit = "*"
+ipykernel = "*"
+sphinx-rtd-theme = "*"
+sphinx = "*"
+
+[packages]
+colorlog = "*"
+torch = "*"
+requests = "*"
+tqdm = "*"
+numpy = "*"
+scikit-learn = "*"
+mlflow = "*"
+prefetch-generator = "*"
+pyyaml = "*"
+torchinfo = "*"

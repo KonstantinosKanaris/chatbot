@@ -1,0 +1,31 @@
+#-----------------------------------------------------------------------------------
+# Configuration for generating new surnames.
+#-----------------------------------------------------------------------------------
+# - data_path               : The csv path to the training data.
+# - model_path              : The path to the saved model.
+# - model_name              : The name of the model.
+# - num_samples             : Number of surnames to generate.
+# - embedding_dim           : Dimension of character embeddings.
+# - hidden_size             : Hidden size of `rnn`, `gru` or `lstm` model.
+# - dropout                 : Dropout value to apply after the `rnn`, `gru or `lstm`
+#                             layer.
+# - num_layers              : Number of `rnn`, `gru` or `lstm` layers.
+# - with_condition          : If ``True`` the surname nationalities will be also
+#                             passed as an input in the `rnn`, `gru` or `lstm` layer(s).
+#-----------------------------------------------------------------------------------
+data_path: ./data/cornell_movie_dialogs/processed/formatted_dialogs.txt
+checkpoint_path: ./checkpoints/20240326_23-02_checkpoint.pth
+max_seq_length: 10
+min_count: 3
+num_samples: 40000
+embedding_init_params:
+  embedding_dim: 500
+encoder_init_params:
+  hidden_size: 500
+  dropout: 0.1
+  num_layers: 2
+decoder_init_params:
+  alignment_method: dot
+  hidden_size: 500
+  dropout: 0.1
+  num_layers: 2
