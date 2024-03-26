@@ -28,7 +28,6 @@
 #----------------------------------------------------------------------------------------
 checkpoints_dir: ./checkpoints
 data_path: ./data/cornell_movie_dialogs/processed/formatted_dialogs.txt
-num_samples: 40000
 hyperparameters:
     embeddings_path:
     checkpoint_filename: 20240326_23-02_checkpoint.pth

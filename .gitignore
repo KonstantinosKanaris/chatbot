@@ -1,4 +1,3 @@
-data/
 logs/
 images/
 checkpoints/
@@ -10,8 +9,8 @@ experiments/
 .vector_cache
 __pycache__
 mlruns
+./data/
 
 .env
 .DS_Store
-*.ipynb
 *.txt
