@@ -101,7 +101,10 @@ if __name__ == "__main__":
             min_count=config["min_count"] + 1,
         )
         vectorizer = dataset.get_vectorizer()
-        checkpoint = torch.load(f=config["checkpoint_path"])
+        checkpoint = torch.load(
+            f=config["checkpoint_path"],
+            map_location=torch.device("cpu")
+        )
 
         embedding = nn.Embedding(
             num_embeddings=vectorizer.vocab.num_tokens,

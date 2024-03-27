@@ -231,12 +231,6 @@ class Trainer:
             self.decoder_optimizer = checkpoint["decoder_optimizer"]
             loss_value = checkpoint["val_loss"]
             last_epoch = checkpoint["epoch"]
-            # self.epochs -= last_epoch
-            # tqdm_bar = tqdm(
-            #     desc="Training routine",
-            #     total=self.epochs,
-            #     position=0,
-            # )
             logger.info(
                 f"Resume training from general checkpoint: {self.checkpoint_path}."
             )
