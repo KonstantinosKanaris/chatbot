@@ -186,9 +186,7 @@ class Trainer:
         self,
         train_dataloader: torch.utils.data.DataLoader,
         val_dataloader: torch.utils.data.DataLoader,
-        epoch_bar: tqdm,
-        train_bar: tqdm,
-        val_bar: tqdm,
+        tqdm_bar: tqdm,
     ) -> None:
         """Trains a seq-to-seq text generation PyTorch encoder.
 
@@ -213,9 +211,7 @@ class Trainer:
             val_dataloader (torch.utils.data.DataLoader):
                 A `DataLoader` instance for providing batches of
                 validation data.
-            epoch_bar (tqdm): Custom tqdm bar for the epochs loop.
-            train_bar (tqdm): Custom tqdm bar for the training step.
-            val_bar (tqdm): Custom tqdm bar for the validation step.
+            tqdm_bar (tqdm): Custom tqdm bar for the training.
         """
         self.encoder.to(self.device)
         self.decoder.to(self.device)
@@ -235,35 +231,30 @@ class Trainer:
             self.decoder_optimizer = checkpoint["decoder_optimizer"]
             loss_value = checkpoint["val_loss"]
             last_epoch = checkpoint["epoch"]
-            self.epochs -= last_epoch
-            epoch_bar = tqdm(
-                desc="Training routine",
-                total=self.epochs,
-                position=0,
-            )
+            # self.epochs -= last_epoch
+            # tqdm_bar = tqdm(
+            #     desc="Training routine",
+            #     total=self.epochs,
+            #     position=0,
+            # )
             logger.info(
                 f"Resume training from general checkpoint: {self.checkpoint_path}."
             )
             logger.info(f"Last training loss value: {loss_value:.4f}")
             logger.info(
-                f"Resuming from {last_epoch + 1} epoch. "
+                f"Resuming from epoch {last_epoch + 1}. "
                 f"Remaining epochs: {self.epochs}"
             )
 
         for epoch_index in range(0, self.epochs):
-            epoch_bar.set_postfix(epoch=epoch_index + 1)
-
-            train_batch_generator = self.generate_batches(train_dataloader)
-            val_batch_generator = self.generate_batches(val_dataloader)
-
             train_loss = self._train_step(
-                batch_generator=train_batch_generator,
-                tqdm_bar=train_bar,
+                dataloader=train_dataloader,
+                tqdm_bar=tqdm_bar,
                 epoch_index=epoch_index + last_epoch,
             )
             val_loss = self._val_step(
-                batch_generator=val_batch_generator,
-                tqdm_bar=val_bar,
+                dataloader=val_dataloader,
+                tqdm_bar=tqdm_bar,
                 epoch_index=epoch_index + last_epoch,
             )
 
@@ -298,13 +289,12 @@ class Trainer:
                 logger.info("Training stopped due to early stopping.")
                 break
             else:
-                train_bar.n, val_bar.n = 0, 0
-                epoch_bar.update()
+                tqdm_bar.update()
                 continue
 
     def _train_step(
         self,
-        batch_generator: Iterator[Dict[str, torch.Tensor | int]],
+        dataloader: torch.utils.data.DataLoader,
         tqdm_bar: tqdm,
         epoch_index: int,
     ) -> float:
@@ -316,8 +306,9 @@ class Trainer:
         loss calculation, optimizer step).
 
         Args:
-            batch_generator (Iterator[Dict[str, torch.Tensor | int]]):
-                Generates batch samples for training.
+            dataloader (torch.utils.data.DataLoader):
+                A `DataLoader` instance for creating the training
+                batch generator.
             tqdm_bar (tqdm): Custom tqdm bar for the training
                 process.
             epoch_index (int): Current epoch.
@@ -325,10 +316,20 @@ class Trainer:
         Returns:
           float: The training loss.
         """
+        batch_generator = self.generate_batches(dataloader)
+
         self.encoder.train()
         self.decoder.train()
+
         running_loss = 0
         for batch_idx, data_dict in enumerate(BackgroundGenerator(batch_generator)):
+            desc = (
+                f"Training: [{epoch_index + 1}/{self.epochs}] | "
+                f"[{batch_idx}/{len(dataloader)}]"
+            )
+            tqdm_bar.set_description(desc=desc)
+            tqdm_bar.set_postfix({"loss": running_loss})
+
             data_dict = dict(data_dict)
             input_sequences = data_dict["input_sequences"].to(self.device)
             input_lengths = data_dict["input_lengths"].to("cpu")
@@ -377,18 +378,11 @@ class Trainer:
                 batch_idx + 1
             )
 
-            tqdm_bar.set_postfix(
-                epoch=epoch_index + 1,
-                batch=batch_idx + 1,
-                train_loss=running_loss,
-            )
-            tqdm_bar.update()
-
         return running_loss
 
     def _val_step(
         self,
-        batch_generator: Iterator[Dict[str, torch.Tensor | int]],
+        dataloader: torch.utils.data.DataLoader,
         tqdm_bar: tqdm,
         epoch_index: int,
     ) -> float:
@@ -399,8 +393,9 @@ class Trainer:
         a forward pass on the validation data.
 
         Args:
-            batch_generator (Iterator[Dict[str, torch.Tensor | int]]):
-                Generates batch samples for training.
+            dataloader (torch.utils.data.DataLoader):
+                A `DataLoader` instance for creating the validation
+                batch generator.
             tqdm_bar (tqdm): Custom tqdm bar for the validation
                 process.
             epoch_index (int): Current epoch.
@@ -408,11 +403,21 @@ class Trainer:
         Returns:
           float: The validation loss.
         """
+        batch_generator = self.generate_batches(dataloader)
+
         self.encoder.eval()
         self.decoder.eval()
+
         running_loss = 0
         with torch.inference_mode():
             for batch_idx, data_dict in enumerate(BackgroundGenerator(batch_generator)):
+                desc = (
+                    f"Validation: [{epoch_index + 1}/{self.epochs}] | "
+                    f"[{batch_idx}/{len(dataloader)}]"
+                )
+                tqdm_bar.set_description(desc=desc)
+                tqdm_bar.set_postfix({"loss": running_loss})
+
                 data_dict = dict(data_dict)
                 input_sequences = data_dict["input_sequences"].to(self.device)
                 input_lengths = data_dict["input_lengths"].to("cpu")
@@ -448,18 +453,4 @@ class Trainer:
                     batch_idx + 1
                 )
 
-                tqdm_bar.set_postfix(
-                    epoch=epoch_index + 1,
-                    batch=batch_idx + 1,
-                    val_loss=running_loss,
-                )
-                tqdm_bar.update()
-
-                # decoded_words = self.evaluator.evaluate(
-                #     input_sequence="hello?",
-                #     searcher=GreedySearchDecoder(
-                #         encoder=self.encoder,
-                #         decoder=self.decoder
-                #     ))
-                # print(decoded_words)
         return running_loss

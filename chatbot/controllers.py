@@ -247,6 +247,10 @@ class TrainingController:
                 "-------------------------- Training --------------------------"
             )
             logger.info(f"Device: {'cuda' if torch.cuda.is_available() else 'cpu'}\n")
+
+            bar_format = (
+                "{desc} {percentage:3.0f}%|{bar}{postfix} [{elapsed}<{remaining}]"
+            )
             try:
                 for fold, (train_ids, val_ids) in enumerate(rs.split(X=self.dataset)):
                     train_dataloader, val_dataloader = self._create_dataloaders(
@@ -254,30 +258,14 @@ class TrainingController:
                         val_ids=val_ids,
                         batch_size=self.training_params["batch_size"],
                     )
-                    epoch_bar = tqdm(
-                        desc="Training routine",
-                        total=self.training_params["num_epochs"],
-                        position=0,
-                    )
-                    train_bar = tqdm(
-                        desc="split=train",
-                        total=len(train_ids) // self.training_params["batch_size"],
-                        position=1,
-                        leave=True,
-                    )
-                    val_bar = tqdm(
-                        desc="split=val",
-                        total=len(val_ids) // self.training_params["batch_size"],
-                        position=1,
-                        leave=True,
+                    tqdm_bar = tqdm(
+                        bar_format=bar_format, initial=1, position=0, leave=False
                     )
                     with Timer() as t:
                         trainer.train(
                             train_dataloader=train_dataloader,
                             val_dataloader=val_dataloader,
-                            epoch_bar=epoch_bar,
-                            train_bar=train_bar,
-                            val_bar=val_bar,
+                            tqdm_bar=tqdm_bar,
                         )
                     logger.info(f"Training took {t.elapsed} seconds.\n")
             except KeyboardInterrupt:

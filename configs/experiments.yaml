@@ -30,7 +30,7 @@ checkpoints_dir: ./checkpoints
 data_path: ./data/cornell_movie_dialogs/processed/formatted_dialogs.txt
 hyperparameters:
     embeddings_path:
-    checkpoint_filename: 20240326_23-02_checkpoint.pth
+    checkpoint_filename: 20240327_01-58_checkpoint.pth
     general:
       num_epochs: 50
       batch_size: 64
@@ -43,11 +43,11 @@ hyperparameters:
       min_count: 3
     model_init_params:
       alignment_method: dot
-      embedding_dim: 500
-      hidden_size: 500
+      embedding_dim: 50
+      hidden_size: 50
       dropout: 0.1
-      encoder_num_layers: 2
-      decoder_num_layers: 2
+      encoder_num_layers: 1
+      decoder_num_layers: 1
       teacher_forcing_ratio: 0.5
     optimizer_init_params:
       encoder_lr: 0.0001

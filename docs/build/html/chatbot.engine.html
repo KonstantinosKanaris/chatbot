@@ -225,7 +225,7 @@ dataloader.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="chatbot.engine.trainer.Trainer.train">
-<span class="sig-name descname"><span class="pre">train</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">train_dataloader</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataLoader</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">val_dataloader</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataLoader</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">epoch_bar</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tqdm</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">train_bar</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tqdm</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">val_bar</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tqdm</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#chatbot.engine.trainer.Trainer.train" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">train</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">train_dataloader</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataLoader</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">val_dataloader</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataLoader</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tqdm_bar</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tqdm</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#chatbot.engine.trainer.Trainer.train" title="Link to this definition"></a></dt>
 <dd><p>Trains a seq-to-seq text generation PyTorch encoder.</p>
 <p>The training routine expects from the dataloaders to provide
 two sequence of integers which represent the token observations,
@@ -245,9 +245,7 @@ does not improve for a certain number of epochs, defined from the
 training data.</p></li>
 <li><p><strong>val_dataloader</strong> (<em>torch.utils.data.DataLoader</em>) – A <cite>DataLoader</cite> instance for providing batches of
 validation data.</p></li>
-<li><p><strong>epoch_bar</strong> (<em>tqdm</em>) – Custom tqdm bar for the epochs loop.</p></li>
-<li><p><strong>train_bar</strong> (<em>tqdm</em>) – Custom tqdm bar for the training step.</p></li>
-<li><p><strong>val_bar</strong> (<em>tqdm</em>) – Custom tqdm bar for the validation step.</p></li>
+<li><p><strong>tqdm_bar</strong> (<em>tqdm</em>) – Custom tqdm bar for the training.</p></li>
 </ul>
 </dd>
 </dl>
