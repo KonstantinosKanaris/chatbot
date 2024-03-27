@@ -27,6 +27,7 @@ class Trainer:
 
     Args:
         checkpoint_path (str): The file path to save or load a checkpoint.
+        embedding (torch.nn.Embedding): The embedding layer.
         encoder (torch.nn.Module): The encoder layer.
         decoder (torch.nn.Module): The decoder layer.
         encoder_optimizer (torch.optim.Optimizer): The optimizer for updating
@@ -52,6 +53,7 @@ class Trainer:
 
     def __init__(
         self,
+        embedding: torch.nn.Embedding,
         encoder: torch.nn.Module,
         decoder: torch.nn.Module,
         encoder_optimizer: torch.optim.Optimizer,
@@ -66,6 +68,7 @@ class Trainer:
         resume: bool = False,
         scheduler: Optional[torch.optim.lr_scheduler.ReduceLROnPlateau] = None,
     ) -> None:
+        self.embedding = embedding
         self.encoder = encoder
         self.decoder = decoder
         self.encoder_optimizer = encoder_optimizer
@@ -79,11 +82,9 @@ class Trainer:
         self.teacher_forcing_ratio = teacher_forcing_ratio
 
         self.device = "cuda" if torch.cuda.is_available() else "cpu"
-
         self.early_stopping: EarlyStopping = EarlyStopping(
             patience=patience, delta=delta, path=checkpoint_path, verbose=True
         )
-        # self.evaluator = Evaluator(vectorizer=vectorizer)
 
     def mask_nll_loss(
         self, y_pred: torch.Tensor, y_true: torch.Tensor, mask: torch.Tensor
@@ -219,12 +220,15 @@ class Trainer:
         last_epoch = 0
         if self.resume:
             checkpoint = load_general_checkpoint(
+                embedding=self.embedding,
                 encoder=self.encoder,
                 decoder=self.decoder,
                 encoder_optimizer=self.encoder_optimizer,
                 decoder_optimizer=self.decoder_optimizer,
                 filepath=self.checkpoint_path,
+                device=self.device,
             )
+            self.embedding = checkpoint["embedding"].to(self.device)
             self.encoder = checkpoint["encoder"].to(self.device)
             self.decoder = checkpoint["decoder"].to(self.device)
             self.encoder_optimizer = checkpoint["encoder_optimizer"]
@@ -269,6 +273,7 @@ class Trainer:
 
             self.early_stopping(
                 epoch=epoch_index + 1 + last_epoch,
+                embedding=self.embedding,
                 encoder=self.encoder,
                 decoder=self.decoder,
                 encoder_optimizer=self.encoder_optimizer,

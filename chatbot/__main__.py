@@ -1,4 +1,5 @@
 import argparse
+import os
 
 import torch
 from torch import nn
@@ -8,8 +9,7 @@ from chatbot.controllers import TrainingController
 from chatbot.datasets import CornellDialogsDataset
 from chatbot.engine.evaluator import Evaluator, GreedySearchDecoder
 from chatbot.models.decoders import LuongAttnDecoderRNN
-
-# from chatbot.models.cornell_model import CornellModel
+from chatbot.models.embeddings import PreTrainedEmbeddings
 from chatbot.models.encoders import EncoderRNN
 from chatbot.utils.aux import get_tokenizer, load_yaml_file
 
@@ -101,16 +101,37 @@ if __name__ == "__main__":
             min_count=config["min_count"] + 1,
         )
         vectorizer = dataset.get_vectorizer()
-        checkpoint = torch.load(
-            f=config["checkpoint_path"],
-            map_location=torch.device("cpu")
-        )
 
-        embedding = nn.Embedding(
-            num_embeddings=vectorizer.vocab.num_tokens,
-            padding_idx=0,
-            **config["embedding_init_params"],
+        device = "cuda" if torch.cuda.is_available() else "cpu"
+        checkpoint = torch.load(
+            f=config["checkpoint_path"], map_location=torch.device("cpu")
         )
+        embedding_state_dict = checkpoint["embedding"]
+        encoder_state_dict = checkpoint["encoder"]
+        decoder_state_dict = checkpoint["decoder"]
+
+        embeddings_path = config["embeddings_path"]
+        if embeddings_path and os.path.exists(embeddings_path):
+            embeddings_wrapper = PreTrainedEmbeddings.from_embeddings_file(
+                embedding_file=embeddings_path
+            )
+            input_embeddings = embeddings_wrapper.make_embedding_matrix(
+                words=list(vectorizer.vocab.token_to_idx.keys())
+            )
+            embedding = nn.Embedding(
+                num_embeddings=vectorizer.vocab.num_tokens,
+                padding_idx=0,
+                _weight=input_embeddings,
+                **config["embedding_init_params"],
+            )
+        else:
+            embedding = nn.Embedding(
+                num_embeddings=vectorizer.vocab.num_tokens,
+                padding_idx=0,
+                **config["embedding_init_params"],
+            )
+
+        embedding.load_state_dict(embedding_state_dict)
 
         encoder = EncoderRNN(embedding=embedding, **config["encoder_init_params"])
         decoder = LuongAttnDecoderRNN(
@@ -118,9 +139,12 @@ if __name__ == "__main__":
             output_size=vectorizer.vocab.num_tokens,
             **config["decoder_init_params"],
         )
+        encoder.load_state_dict(encoder_state_dict)
+        decoder.load_state_dict(decoder_state_dict)
 
-        encoder.load_state_dict(checkpoint["encoder"])
-        decoder.load_state_dict(checkpoint["decoder"])
+        encoder = encoder.to(device)
+        decoder = decoder.to(device)
+
         searcher = GreedySearchDecoder(encoder=encoder, decoder=decoder)
         evaluator = Evaluator(vectorizer=vectorizer)
         # evaluator.evaluate("hello how are you today?", searcher=searcher)

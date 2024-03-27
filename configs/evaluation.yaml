@@ -14,18 +14,18 @@
 #                             passed as an input in the `rnn`, `gru` or `lstm` layer(s).
 #-----------------------------------------------------------------------------------
 data_path: ./data/cornell_movie_dialogs/processed/formatted_dialogs.txt
-checkpoint_path: ./checkpoints/20240326_23-02_checkpoint.pth
-max_seq_length: 10
+checkpoint_path: ./checkpoints/20240327_13-17_checkpoint.pth
+embeddings_path: ./pretrained_embeddings/glove.6B.300d.txt
+max_seq_length: 15
 min_count: 3
-num_samples: 40000
 embedding_init_params:
-  embedding_dim: 500
+  embedding_dim: 300
 encoder_init_params:
-  hidden_size: 500
+  hidden_size: 300
   dropout: 0.1
   num_layers: 2
 decoder_init_params:
   alignment_method: dot
-  hidden_size: 500
+  hidden_size: 300
   dropout: 0.1
   num_layers: 2

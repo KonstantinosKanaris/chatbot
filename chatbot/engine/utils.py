@@ -25,31 +25,40 @@ def set_seeds(seed: int = 42) -> None:
 
 
 def load_general_checkpoint(
+    embedding: torch.nn.Embedding,
     encoder: torch.nn.Module,
     decoder: torch.nn.Module,
+    filepath: str,
     encoder_optimizer: torch.optim.Optimizer,
     decoder_optimizer: torch.optim.Optimizer,
-    filepath: str,
+    device: str = "cpu",
 ) -> Dict[str, Any]:
     """Loads a general checkpoint.
 
     Args:
+        embedding (torch.nn.Embedding): The embedding to be updated
+            with its saved `state_dict`.
         encoder (torch.nn.Module): The encoder to be updated with its
             saved `state_dict`.
         decoder (torch.nn.Module): The decoder to be updated with its
             saved `state_dict`.
-        encoder_optimizer (torch.optim.Optimizer): The optimizer of the
-            encoder to be updated with its saved `state_dict`.
-        decoder_optimizer (torch.optim.Optimizer): The optimizer of the
-            decoder to be updated with its saved `state_dict`.
         filepath (str): The file path of the general checkpoint.
+        encoder_optimizer (torch.optim.Optimizer, optional): The optimizer
+            of the encoder to be updated with its saved `state_dict`. Defaults
+            to ``None``.
+        decoder_optimizer (torch.optim.Optimizer, optional): The optimizer of
+            the decoder to be updated with its saved `state_dict`. Defaults to
+            ``None``.
+        device (str, optional)): The target's device tag. Defaults to ``cpu``.
     """
-    checkpoint = torch.load(f=filepath)
+    checkpoint = torch.load(f=filepath, map_location=device)
+    embedding.load_state_dict(checkpoint["embedding"])
     encoder.load_state_dict(checkpoint["encoder"])
     decoder.load_state_dict(checkpoint["decoder"])
     encoder_optimizer.load_state_dict(checkpoint["encoder_optimizer"])
     decoder_optimizer.load_state_dict(checkpoint["decoder_optimizer"])
     return {
+        "embedding": embedding,
         "encoder": encoder,
         "decoder": decoder,
         "encoder_optimizer": encoder_optimizer,
@@ -137,19 +146,20 @@ class EarlyStopping:
     def __call__(
         self,
         epoch: int,
+        embedding: torch.nn.Embedding,
         encoder: torch.nn.Module,
         decoder: torch.nn.Module,
         encoder_optimizer: torch.optim.Optimizer,
         decoder_optimizer: torch.optim.Optimizer,
         val_loss: float,
     ) -> None:
-        """Call method to check if the model's performance has
-        improved.
+        """Call method to check if the model's performance has improved.
 
         Args:
             epoch (int): Current epoch.
-            encoder (torch.nn.Module): The encoder to be saved.
-            decoder (torch.nn.Module): The decoder to be saved.
+            embedding (torch.nn.Embedding): The embedding layer to be saved.
+            encoder (torch.nn.Module): The encoder layer to be saved.
+            decoder (torch.nn.Module): The decoder layer to be saved.
             encoder_optimizer (torch.optim.Optimizer): The optimizer
                 of the encoder.
             decoder_optimizer (torch.optim.Optimizer): The optimizer
@@ -162,6 +172,7 @@ class EarlyStopping:
             self.best_score = score
             self.save_general_checkpoint(
                 epoch=epoch,
+                embedding=embedding,
                 encoder=encoder,
                 decoder=decoder,
                 encoder_optimizer=encoder_optimizer,
@@ -177,6 +188,7 @@ class EarlyStopping:
             self.best_score = score
             self.save_general_checkpoint(
                 epoch=epoch,
+                embedding=embedding,
                 encoder=encoder,
                 decoder=decoder,
                 encoder_optimizer=encoder_optimizer,
@@ -188,6 +200,7 @@ class EarlyStopping:
     def save_general_checkpoint(
         self,
         epoch: int,
+        embedding: torch.nn.Embedding,
         encoder: torch.nn.Module,
         decoder: torch.nn.Module,
         encoder_optimizer: torch.optim.Optimizer,
@@ -196,14 +209,15 @@ class EarlyStopping:
     ) -> None:
         """Saves a general checkpoint during training.
 
-        In addition to the model's `state_dict`, a general checkpoint
-        also includes the optimizer's `state_dict`, the current epoch,
-        and the validation loss value.
+        In addition to the model's layers `state_dict`, a general checkpoint also
+        includes the optimizer's `state_dict`, the current epoch, and the
+        validation loss value.
 
         Args:
             epoch (int): Current epoch.
-            encoder (torch.nn.Module): The encoder to be saved.
-            decoder (torch.nn.Module): The decoder to be saved.
+            embedding (torch.nn.Embedding): The embedding layer to be saved.
+            encoder (torch.nn.Module): The encoder layer to be saved.
+            decoder (torch.nn.Module): The decoder layer to be saved.
             encoder_optimizer (torch.optim.Optimizer): The optimizer
                 of the encoder.
             decoder_optimizer (torch.optim.Optimizer): The optimizer
@@ -223,6 +237,7 @@ class EarlyStopping:
         torch.save(
             obj={
                 "epoch": epoch,
+                "embedding": embedding.state_dict(),
                 "encoder": encoder.state_dict(),
                 "decoder": decoder.state_dict(),
                 "encoder_optimizer": encoder_optimizer.state_dict(),

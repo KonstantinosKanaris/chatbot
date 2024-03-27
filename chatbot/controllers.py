@@ -220,6 +220,7 @@ class TrainingController:
             )
 
         trainer = Trainer(
+            embedding=embedding,
             encoder=encoder,
             decoder=decoder,
             encoder_optimizer=encoder_optimizer,

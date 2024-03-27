@@ -59,7 +59,7 @@ class Evaluator:
         )
         token_indices = token_indices.unsqueeze(dim=1).to(self.device)
         indices_length_tensor = torch.tensor(
-            data=indices_length, dtype=torch.int64, device=self.device
+            data=indices_length, dtype=torch.int64, device=torch.device("cpu")
         ).unsqueeze(0)
 
         predicted_token_indices, scores = searcher(
@@ -68,6 +68,17 @@ class Evaluator:
         decoded_words = [
             self.vectorizer.vocab.lookup_index(idx.item())
             for idx in predicted_token_indices
+        ]
+
+        decoded_words[:] = [
+            token
+            for token in decoded_words
+            if token
+            not in [
+                self.vocab.lookup_index(self.vocab.end_seq_index),
+                self.vocab.lookup_index(self.vocab.begin_seq_index),
+                self.vocab.lookup_index(self.vocab.mask_index),
+            ]
         ]
         return decoded_words
 
@@ -81,16 +92,6 @@ class Evaluator:
                 output_tokens = self.evaluate(
                     input_sequence=normalized_seq, searcher=searcher
                 )
-                output_tokens[:] = [
-                    token
-                    for token in output_tokens
-                    if token
-                    not in [
-                        self.vocab.lookup_index(self.vocab.end_seq_index),
-                        self.vocab.lookup_index(self.vocab.begin_seq_index),
-                        self.vocab.lookup_index(self.vocab.mask_index),
-                    ]
-                ]
                 print(f"Bot: {' '.join(output_tokens)}")
             except KeyError:
                 logger.exception("Error: Encountered unknown word")
