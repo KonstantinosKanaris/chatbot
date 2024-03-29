@@ -8,14 +8,13 @@ from chatbot.utils.data.vocabulary import SequenceVocabulary
 
 
 class SequenceVectorizer:
-    """Responsible implementing token-level based vectorization
+    """Responsible for implementing token-level based vectorization
     of an input text sequence.
 
     The tokens can be either words or punctuations.
 
     Each token in the input sequence is substituted with each
     corresponding index in the sequence vocabulary.
-
 
     Args:
         vocab (SequenceVocabulary): Vocabulary object constructed

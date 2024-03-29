@@ -18,6 +18,7 @@
         <script src="_static/documentation_options.js?v=5929fcd5"></script>
         <script src="_static/doctools.js?v=888ff710"></script>
         <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -52,33 +53,42 @@
 <li><a class="reference internal" href="#chatbot.engine.evaluator.Evaluator.evaluate"><code class="docutils literal notranslate"><span class="pre">Evaluator.evaluate()</span></code></a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#chatbot.engine.evaluator.GreedySearchDecoder"><code class="docutils literal notranslate"><span class="pre">GreedySearchDecoder</span></code></a><ul>
-<li><a class="reference internal" href="#chatbot.engine.evaluator.GreedySearchDecoder.forward"><code class="docutils literal notranslate"><span class="pre">GreedySearchDecoder.forward()</span></code></a></li>
-</ul>
-</li>
 </ul>
 </li>
 <li><a class="reference internal" href="#module-chatbot.engine.trainer">chatbot.engine.trainer module</a><ul>
 <li><a class="reference internal" href="#chatbot.engine.trainer.Trainer"><code class="docutils literal notranslate"><span class="pre">Trainer</span></code></a><ul>
 <li><a class="reference internal" href="#chatbot.engine.trainer.Trainer.compute_loss"><code class="docutils literal notranslate"><span class="pre">Trainer.compute_loss()</span></code></a></li>
 <li><a class="reference internal" href="#chatbot.engine.trainer.Trainer.generate_batches"><code class="docutils literal notranslate"><span class="pre">Trainer.generate_batches()</span></code></a></li>
-<li><a class="reference internal" href="#chatbot.engine.trainer.Trainer.mask_nll_loss"><code class="docutils literal notranslate"><span class="pre">Trainer.mask_nll_loss()</span></code></a></li>
 <li><a class="reference internal" href="#chatbot.engine.trainer.Trainer.train"><code class="docutils literal notranslate"><span class="pre">Trainer.train()</span></code></a></li>
 </ul>
 </li>
 </ul>
 </li>
 <li><a class="reference internal" href="#module-chatbot.engine.utils">chatbot.engine.utils module</a><ul>
-<li><a class="reference internal" href="#chatbot.engine.utils.EarlyStopping"><code class="docutils literal notranslate"><span class="pre">EarlyStopping</span></code></a><ul>
-<li><a class="reference internal" href="#chatbot.engine.utils.EarlyStopping.save_general_checkpoint"><code class="docutils literal notranslate"><span class="pre">EarlyStopping.save_general_checkpoint()</span></code></a></li>
-</ul>
-</li>
+<li><a class="reference internal" href="#chatbot.engine.utils.EarlyStopping"><code class="docutils literal notranslate"><span class="pre">EarlyStopping</span></code></a></li>
 <li><a class="reference internal" href="#chatbot.engine.utils.Timer"><code class="docutils literal notranslate"><span class="pre">Timer</span></code></a></li>
-<li><a class="reference internal" href="#chatbot.engine.utils.load_general_checkpoint"><code class="docutils literal notranslate"><span class="pre">load_general_checkpoint()</span></code></a></li>
+<li><a class="reference internal" href="#chatbot.engine.utils.inverse_sigmoid_decay"><code class="docutils literal notranslate"><span class="pre">inverse_sigmoid_decay()</span></code></a></li>
 <li><a class="reference internal" href="#chatbot.engine.utils.set_seeds"><code class="docutils literal notranslate"><span class="pre">set_seeds()</span></code></a></li>
+<li><a class="reference internal" href="#chatbot.engine.utils.write_checkpoint"><code class="docutils literal notranslate"><span class="pre">write_checkpoint()</span></code></a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#module-chatbot.engine">Module contents</a></li>
+<li><a class="reference internal" href="#module-chatbot.engine">Module contents</a><ul>
+<li><a class="reference internal" href="#chatbot.engine.Evaluator"><code class="docutils literal notranslate"><span class="pre">Evaluator</span></code></a><ul>
+<li><a class="reference internal" href="#chatbot.engine.Evaluator.chat"><code class="docutils literal notranslate"><span class="pre">Evaluator.chat()</span></code></a></li>
+<li><a class="reference internal" href="#chatbot.engine.Evaluator.evaluate"><code class="docutils literal notranslate"><span class="pre">Evaluator.evaluate()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#chatbot.engine.Timer"><code class="docutils literal notranslate"><span class="pre">Timer</span></code></a></li>
+<li><a class="reference internal" href="#chatbot.engine.Trainer"><code class="docutils literal notranslate"><span class="pre">Trainer</span></code></a><ul>
+<li><a class="reference internal" href="#chatbot.engine.Trainer.compute_loss"><code class="docutils literal notranslate"><span class="pre">Trainer.compute_loss()</span></code></a></li>
+<li><a class="reference internal" href="#chatbot.engine.Trainer.generate_batches"><code class="docutils literal notranslate"><span class="pre">Trainer.generate_batches()</span></code></a></li>
+<li><a class="reference internal" href="#chatbot.engine.Trainer.train"><code class="docutils literal notranslate"><span class="pre">Trainer.train()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#chatbot.engine.set_seeds"><code class="docutils literal notranslate"><span class="pre">set_seeds()</span></code></a></li>
+<li><a class="reference internal" href="#chatbot.engine.write_checkpoint"><code class="docutils literal notranslate"><span class="pre">write_checkpoint()</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -120,32 +130,32 @@
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <dl class="py method">
 <dt class="sig sig-object py" id="chatbot.engine.evaluator.Evaluator.chat">
-<span class="sig-name descname"><span class="pre">chat</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">searcher</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#chatbot.engine.evaluator.Evaluator.chat" title="Link to this definition"></a></dt>
-<dd></dd></dl>
+<span class="sig-name descname"><span class="pre">chat</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">searcher</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Module</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#chatbot.engine.evaluator.Evaluator.chat" title="Link to this definition"></a></dt>
+<dd><p>Starts an interactive conversation with the bot.</p>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="chatbot.engine.evaluator.Evaluator.evaluate">
 <span class="sig-name descname"><span class="pre">evaluate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_sequence</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">searcher</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Module</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#chatbot.engine.evaluator.Evaluator.evaluate" title="Link to this definition"></a></dt>
-<dd></dd></dl>
-
-</dd></dl>
-
-<dl class="py class">
-<dt class="sig sig-object py" id="chatbot.engine.evaluator.GreedySearchDecoder">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">chatbot.engine.evaluator.</span></span><span class="sig-name descname"><span class="pre">GreedySearchDecoder</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">encoder</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Module</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">decoder</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Module</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#chatbot.engine.evaluator.GreedySearchDecoder" title="Link to this definition"></a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></p>
-<dl class="py method">
-<dt class="sig sig-object py" id="chatbot.engine.evaluator.GreedySearchDecoder.forward">
-<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_seq</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input_length</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_seq_length</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tensor</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Tensor</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Tensor</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#chatbot.engine.evaluator.GreedySearchDecoder.forward" title="Link to this definition"></a></dt>
-<dd><p>Define the computation performed at every call.</p>
-<p>Should be overridden by all subclasses.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>Although the recipe for forward pass needs to be defined within
-this function, one should call the <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code> instance afterwards
-instead of this since the former takes care of running the
-registered hooks while the latter silently ignores them.</p>
-</div>
+<dd><p>Generates a list of tokens in response to the input query.</p>
+<p>Implements a forward pass through the decoder and samples its
+predictions to obtain the best response tokens at each time-step.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>input_sequence</strong> (<em>str</em>) – The input query.</p></li>
+<li><p><strong>searcher</strong> (<em>torch.nn.Module</em>) – A search decoder for sampling the
+decoder’s predictions. Available searcher decoders:
+<cite>GreedySearchDecoder</cite> and <cite>RandomSearchDecoder</cite>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The generated tokens.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List[str]</p>
+</dd>
+</dl>
 </dd></dl>
 
 </dd></dl>
@@ -155,45 +165,79 @@ registered hooks while the latter silently ignores them.</p>
 <span id="chatbot-engine-trainer-module"></span><h2>chatbot.engine.trainer module<a class="headerlink" href="#module-chatbot.engine.trainer" title="Link to this heading"></a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="chatbot.engine.trainer.Trainer">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">chatbot.engine.trainer.</span></span><span class="sig-name descname"><span class="pre">Trainer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">encoder</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Module</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">decoder</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Module</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">encoder_optimizer</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optimizer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">decoder_optimizer</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optimizer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vectorizer</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="chatbot.utils.data.html#chatbot.utils.data.vectorizer.SequenceVectorizer" title="chatbot.utils.data.vectorizer.SequenceVectorizer"><span class="pre">SequenceVectorizer</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">checkpoint_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">epochs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">patience</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delta</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">clip_factor</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">teacher_forcing_ratio</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resume</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scheduler</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ReduceLROnPlateau</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#chatbot.engine.trainer.Trainer" title="Link to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">chatbot.engine.trainer.</span></span><span class="sig-name descname"><span class="pre">Trainer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">embedding</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Embedding</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">encoder</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Module</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">decoder</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Module</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">encoder_optimizer</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optimizer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">decoder_optimizer</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optimizer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">loss_fn</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Module</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bos_index</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">checkpoint_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">epochs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">clip_factor</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resume</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">enable_early_stop</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">last_epoch</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sampling_decay</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">early_stopper</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scheduler</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ReduceLROnPlateau</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#chatbot.engine.trainer.Trainer" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<p>Class for training a seq-to-seq model with PyTorch.</p>
-<p>The model consists of encoder and decoder layers, each trained
-separately using its own optimizer.</p>
-<p>Incorporates functionalities such as early stopping, resume from
-checkpoint, and MLFlow tracking.</p>
+<p>Class for training a sequence-to-sequence text generation model with
+PyTorch.</p>
+<p>The model consists of encoder and decoder layers, each trained separately
+using its own optimizer.</p>
+<p>Incorporates functionalities such as early stopping, resuming from
+checkpoint, learning rate scheduling and MLFlow tracking.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
 <li><p><strong>checkpoint_path</strong> (<em>str</em>) – The file path to save or load a checkpoint.</p></li>
+<li><p><strong>embedding</strong> (<em>torch.nn.Embedding</em>) – The embedding layer.</p></li>
 <li><p><strong>encoder</strong> (<em>torch.nn.Module</em>) – The encoder layer.</p></li>
 <li><p><strong>decoder</strong> (<em>torch.nn.Module</em>) – The decoder layer.</p></li>
 <li><p><strong>encoder_optimizer</strong> (<em>torch.optim.Optimizer</em>) – The optimizer for updating
 the parameters of the encoder.</p></li>
 <li><p><strong>decoder_optimizer</strong> (<em>torch.optim.Optimizer</em>) – The optimizer for updating
 the parameters of the decoder.</p></li>
-<li><p><strong>vectorizer</strong> (<em>CharacterVectorizer</em>) – Vectorizes a text sequence
-to observations <cite>X</cite> and targets <cite>y</cite>.</p></li>
-<li><p><strong>epochs</strong> (<em>int</em><em>, </em><em>optional</em>) – Number of training epochs
-(default=5).</p></li>
-<li><p><strong>patience</strong> (<em>int</em><em>, </em><em>optional</em>) – Number of epochs to wait before</p></li>
-<li><p><strong>stopping</strong> (<em>early</em>) – </p></li>
-<li><p><strong>delta</strong> (<em>float</em><em>, </em><em>optional</em>) – Minimum change in monitored quantity
-to qualify as an improvement (default=0).</p></li>
-<li><p><strong>clip_factor</strong> (<em>float</em><em>, </em><em>optional</em>) – Max norm value for gradient clipping
+<li><p><strong>epochs</strong> (<em>int</em><em>, </em><em>optional</em>) – Number of training epochs (default=5).</p></li>
+<li><p><strong>clip_factor</strong> (<em>float</em><em>, </em><em>optional</em>) – Max norm value for gradient clipping.
 Defaults to <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p></li>
-<li><p><strong>teacher_forcing_ratio</strong> (<em>float</em><em>, </em><em>optional</em>) – </p></li>
 <li><p><strong>resume</strong> (<em>bool</em><em>, </em><em>optional</em>) – If <code class="docutils literal notranslate"><span class="pre">True</span></code>, resumes training from
 the specified checkpoint. Defaults to <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p></li>
-<li><p><strong>scheduler</strong> (<em>optional</em>) – Reduces the learning rate when the
-validation loss stops improving. Defaults to <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p></li>
+<li><p><strong>enable_early_stop</strong> (<em>bool</em><em>, </em><em>optional</em>) – If <code class="docutils literal notranslate"><span class="pre">True</span></code> utilizes the
+<code class="xref py py-attr docutils literal notranslate"><span class="pre">early_stopper</span></code> for stopping the training process
+if the validation loss doesn’t decrease for a number of epochs.
+Defaults to <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p></li>
+<li><p><strong>last_epoch</strong> (<em>int</em><em>, </em><em>optional</em>) – Used in case of resuming training
+from the last checkpoint (default=0).</p></li>
+<li><p><strong>sampling_decay</strong> (<em>int</em><em> | </em><em>float</em><em>, </em><em>optional</em>) – Decay value for the
+sampling scheduler. Refer to
+<a class="reference internal" href="#chatbot.engine.utils.inverse_sigmoid_decay" title="chatbot.engine.utils.inverse_sigmoid_decay"><code class="xref py py-func docutils literal notranslate"><span class="pre">chatbot.engine.utils.inverse_sigmoid_decay()</span></code></a>.</p></li>
+<li><p><strong>early_stopper</strong> (<a class="reference internal" href="#chatbot.engine.utils.EarlyStopping" title="chatbot.engine.utils.EarlyStopping"><em>EarlyStopping</em></a><em>, </em><em>optional</em>) – Stops the training process
+if the validation loss doesn’t decrease for a number of epochs.
+Defaults to <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p></li>
+<li><p><strong>scheduler</strong> (<em>ReduceLROnPlateau</em><em>, </em><em>optional</em>) – Reduces the learning rate when
+the validation loss stops improving. Defaults to <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p></li>
 </ul>
 </dd>
 </dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="chatbot.engine.trainer.Trainer.compute_loss">
 <span class="sig-name descname"><span class="pre">compute_loss</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">decoder_input</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">decoder_hidden</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">encoder_state</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_sequences</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_masks</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_max_length</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tensor</span></span></span><a class="headerlink" href="#chatbot.engine.trainer.Trainer.compute_loss" title="Link to this definition"></a></dt>
-<dd></dd></dl>
+<dd><p>Performs a forward pass through the decoder.</p>
+<p>For each token in the input sequence the loss is computed
+and accumulated.</p>
+<p>Implements a scheduled sampling mechanism which, based on
+the <code class="xref py py-attr docutils literal notranslate"><span class="pre">sampling_probability</span></code>, decides whether to use
+the actual target token as next input to the decoder or
+an estimated token coming from the decoder’s output.</p>
+<p>The estimation from the decoder is obtained by sampling a token
+according to decoder’s output probability (multinomial) distribution
+over the vocabulary.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>decoder_input</strong> – tensor of shape: math:<cite>(1, N)</cite>.</p></li>
+<li><p><strong>decoder_hidden</strong> – tensor of shape: math:<cite>(1, N, H)</cite>.</p></li>
+<li><p><strong>encoder_state</strong> – tensor of shape: math:<cite>(L_{in}, N, H)</cite>.</p></li>
+<li><p><strong>target_sequences</strong> – tensor of shape: math:<cite>(L_{out}, N)</cite>.</p></li>
+<li><p><strong>target_masks</strong> – tensor of shape: math:<cite>(L_{out}, N)</cite>.</p></li>
+<li><p><strong>target_max_length</strong> – an integer number.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="simple">
+<dt>Returns: loss</dt><dd><ul class="simple">
+<li><p><strong>loss</strong>: tensor of shape: math`()`.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="chatbot.engine.trainer.Trainer.generate_batches">
@@ -219,32 +263,28 @@ dataloader.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt class="sig sig-object py" id="chatbot.engine.trainer.Trainer.mask_nll_loss">
-<span class="sig-name descname"><span class="pre">mask_nll_loss</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">y_pred</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_true</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mask</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tensor</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tensor</span></span></span><a class="headerlink" href="#chatbot.engine.trainer.Trainer.mask_nll_loss" title="Link to this definition"></a></dt>
-<dd></dd></dl>
-
-<dl class="py method">
 <dt class="sig sig-object py" id="chatbot.engine.trainer.Trainer.train">
 <span class="sig-name descname"><span class="pre">train</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">train_dataloader</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataLoader</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">val_dataloader</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataLoader</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tqdm_bar</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tqdm</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#chatbot.engine.trainer.Trainer.train" title="Link to this definition"></a></dt>
-<dd><p>Trains a seq-to-seq text generation PyTorch encoder.</p>
-<p>The training routine expects from the dataloaders to provide
-two sequence of integers which represent the token observations,
-and the token targets at each time step.</p>
-<p>Performs the training using the provided dataloaders, loss function,
-and optimizer. It also performs evaluation on the validation data at
-the end of each epoch. Checkpointing is supported, optionally allowing
-for the resumption of training from a saved checkpoint.</p>
-<p>The training process includes learning rate reduction and early stopping
-to prevent over-fitting. The training loop stops if the validation loss
-does not improve for a certain number of epochs, defined from the
-<code class="xref py py-attr docutils literal notranslate"><span class="pre">patience</span></code> class attribute.</p>
+<dd><p>Trains and validates a sequence-to-sequence text generation model
+consisting of encoder and decoder layers.</p>
+<dl class="simple">
+<dt>The training process includes:</dt><dd><ul class="simple">
+<li><p>Tracking training progress with MLFlow and custom tqdm bar</p></li>
+<li><p>Checkpointing</p></li>
+<li><p>Optional learning rate reduction</p></li>
+<li><p>Optional early stopping</p></li>
+</ul>
+</dd>
+</dl>
+<p>If <code class="xref py py-attr docutils literal notranslate"><span class="pre">enable_early_stop</span></code> is <code class="docutils literal notranslate"><span class="pre">False</span></code> a checkpoint is saved after
+every epoch.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>train_dataloader</strong> (<em>torch.utils.data.DataLoader</em>) – A <cite>DataLoader</cite> instance for providing batches of
-training data.</p></li>
-<li><p><strong>val_dataloader</strong> (<em>torch.utils.data.DataLoader</em>) – A <cite>DataLoader</cite> instance for providing batches of
-validation data.</p></li>
+<li><p><strong>train_dataloader</strong> (<em>torch.utils.data.DataLoader</em>) – Dataloader for
+creating the training batch generator.</p></li>
+<li><p><strong>val_dataloader</strong> (<em>torch.utils.data.DataLoader</em>) – Dataloader for
+creating the validation batch generator.</p></li>
 <li><p><strong>tqdm_bar</strong> (<em>tqdm</em>) – Custom tqdm bar for the training.</p></li>
 </ul>
 </dd>
@@ -260,46 +300,26 @@ validation data.</p></li>
 <dt class="sig sig-object py" id="chatbot.engine.utils.EarlyStopping">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">chatbot.engine.utils.</span></span><span class="sig-name descname"><span class="pre">EarlyStopping</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">patience</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delta</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">verbose</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'./checkpoint.pt'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#chatbot.engine.utils.EarlyStopping" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<p>Implements early stopping during training.</p>
+<p>Stops the training process and checkpoints the states of
+the training components of a seq-to-seq model.</p>
+<p>The stopping occurs if the loss value during the validation
+step stops decreasing for a number of epochs specified by
+the <code class="xref py py-attr docutils literal notranslate"><span class="pre">patience</span></code>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>patience</strong> (<em>int</em><em>, </em><em>optional</em>) – Number of epochs to wait before early stopping.
-(default=5).</p></li>
-<li><p><strong>delta</strong> (<em>float</em><em>, </em><em>optional</em>) – Minimum change in monitored quantity to qualify
-as an improvement (default=0).</p></li>
-<li><p><strong>verbose</strong> (<em>bool</em><em>, </em><em>optional</em>) – If <code class="docutils literal notranslate"><span class="pre">True</span></code>, prints a message for each improvement.
-Defaults to <cite>False</cite>.</p></li>
-<li><p><strong>path</strong> (<em>str</em><em>, </em><em>optional</em>) – Path to save the checkpoint. Should include either
-<cite>.pth</cite> or <cite>.pt</cite> as the file extension. Defaults to
-<code class="docutils literal notranslate"><span class="pre">'./checkpoint.pt'</span></code>.</p></li>
+<li><p><strong>patience</strong> (<em>int</em><em>, </em><em>optional</em>) – Number of epochs to wait
+before early stopping. (default=5).</p></li>
+<li><p><strong>delta</strong> (<em>float</em><em>, </em><em>optional</em>) – Minimum change in monitored
+quantity to qualify as an improvement (default=0).</p></li>
+<li><p><strong>verbose</strong> (<em>bool</em><em>, </em><em>optional</em>) – If <code class="docutils literal notranslate"><span class="pre">True</span></code>, logs a message
+for each improvement. Defaults to <cite>False</cite>.</p></li>
+<li><p><strong>path</strong> (<em>str</em><em>, </em><em>optional</em>) – Path to write the checkpoint.
+Should include either <cite>.pth</cite> or <cite>.pt</cite> as the file
+extension. Defaults to <code class="docutils literal notranslate"><span class="pre">'./checkpoint.pth'</span></code>.</p></li>
 </ul>
 </dd>
 </dl>
-<dl class="py method">
-<dt class="sig sig-object py" id="chatbot.engine.utils.EarlyStopping.save_general_checkpoint">
-<span class="sig-name descname"><span class="pre">save_general_checkpoint</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">epoch</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">encoder</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Module</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">decoder</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Module</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">encoder_optimizer</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optimizer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">decoder_optimizer</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optimizer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">val_loss</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#chatbot.engine.utils.EarlyStopping.save_general_checkpoint" title="Link to this definition"></a></dt>
-<dd><p>Saves a general checkpoint during training.</p>
-<p>In addition to the model’s <cite>state_dict</cite>, a general checkpoint
-also includes the optimizer’s <cite>state_dict</cite>, the current epoch,
-and the validation loss value.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>epoch</strong> (<em>int</em>) – Current epoch.</p></li>
-<li><p><strong>encoder</strong> (<em>torch.nn.Module</em>) – The encoder to be saved.</p></li>
-<li><p><strong>decoder</strong> (<em>torch.nn.Module</em>) – The decoder to be saved.</p></li>
-<li><p><strong>encoder_optimizer</strong> (<em>torch.optim.Optimizer</em>) – The optimizer
-of the encoder.</p></li>
-<li><p><strong>decoder_optimizer</strong> (<em>torch.optim.Optimizer</em>) – The optimizer
-of the decoder.</p></li>
-<li><p><strong>val_loss</strong> (<em>float</em>) – Validation loss at the time of saving
-the checkpoint.</p></li>
-</ul>
-</dd>
-</dl>
-</dd></dl>
-
 </dd></dl>
 
 <dl class="py class">
@@ -319,22 +339,39 @@ the checkpoint.</p></li>
 </dd></dl>
 
 <dl class="py function">
-<dt class="sig sig-object py" id="chatbot.engine.utils.load_general_checkpoint">
-<span class="sig-prename descclassname"><span class="pre">chatbot.engine.utils.</span></span><span class="sig-name descname"><span class="pre">load_general_checkpoint</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">encoder</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Module</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">decoder</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Module</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">encoder_optimizer</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optimizer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">decoder_optimizer</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optimizer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filepath</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#chatbot.engine.utils.load_general_checkpoint" title="Link to this definition"></a></dt>
-<dd><p>Loads a general checkpoint.</p>
+<dt class="sig sig-object py" id="chatbot.engine.utils.inverse_sigmoid_decay">
+<span class="sig-prename descclassname"><span class="pre">chatbot.engine.utils.</span></span><span class="sig-name descname"><span class="pre">inverse_sigmoid_decay</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">decay</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">epoch</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#chatbot.engine.utils.inverse_sigmoid_decay" title="Link to this definition"></a></dt>
+<dd><p>Implements an inverse sigmoid decay scheduler.</p>
+<p>The implementation is based on the paper <cite>Scheduled Sampling for
+Sequence Prediction with Recurrent Neural Networks</cite>. Samy Bengio,
+Oriol Vinyals, Navdeep Jaitly, Noam Shazeer.
+<a class="reference external" href="https://arxiv.org/abs/1506.03099">https://arxiv.org/abs/1506.03099</a>.</p>
+<p>Reduces the probability of selecting the actual target token over
+the decoder’s prediction to be fed into the decoder at the next
+time step.</p>
+<p>The probability <span class="math notranslate nohighlight">\(e_{i}\)</span> at epoch <span class="math notranslate nohighlight">\(i\)</span> and with a
+<code class="xref py py-attr docutils literal notranslate"><span class="pre">decay</span></code> value <span class="math notranslate nohighlight">\(k\)</span> is computed with the following
+function:</p>
+<div class="math notranslate nohighlight">
+\[\begin{aligned}
+    e_i = \frac{k}{k + exp(\frac{i}{k})}, \text{ where } k \ge 1
+\end{aligned}\]</div>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>encoder</strong> (<em>torch.nn.Module</em>) – The encoder to be updated with its
-saved <cite>state_dict</cite>.</p></li>
-<li><p><strong>decoder</strong> (<em>torch.nn.Module</em>) – The decoder to be updated with its
-saved <cite>state_dict</cite>.</p></li>
-<li><p><strong>encoder_optimizer</strong> (<em>torch.optim.Optimizer</em>) – The optimizer of the
-encoder to be updated with its saved <cite>state_dict</cite>.</p></li>
-<li><p><strong>decoder_optimizer</strong> (<em>torch.optim.Optimizer</em>) – The optimizer of the
-decoder to be updated with its saved <cite>state_dict</cite>.</p></li>
-<li><p><strong>filepath</strong> (<em>str</em>) – The file path of the general checkpoint.</p></li>
+<li><p><strong>decay</strong> (<em>int</em>) – The scheduled sampling decay factor.</p></li>
+<li><p><strong>epoch</strong> (<em>int</em>) – Running epoch.</p></li>
 </ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>The probability of selecting the actual target as next</dt><dd><p>input to the decoder.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
 </dd>
 </dl>
 </dd></dl>
@@ -350,9 +387,252 @@ decoder to be updated with its saved <cite>state_dict</cite>.</p></li>
 </dl>
 </dd></dl>
 
+<dl class="py function">
+<dt class="sig sig-object py" id="chatbot.engine.utils.write_checkpoint">
+<span class="sig-prename descclassname"><span class="pre">chatbot.engine.utils.</span></span><span class="sig-name descname"><span class="pre">write_checkpoint</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">epoch</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">embedding</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Embedding</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">encoder</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Module</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">decoder</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Module</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">encoder_optimizer</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optimizer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">decoder_optimizer</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optimizer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">val_loss</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'./checkpoint.pth'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#chatbot.engine.utils.write_checkpoint" title="Link to this definition"></a></dt>
+<dd><p>Saves the states of the training components of a seq-to-seq
+model and also the last validation loss and epoch.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>epoch</strong> (<em>int</em>) – Current epoch.</p></li>
+<li><p><strong>embedding</strong> (<em>torch.nn.Embedding</em>) – The embedding layer.</p></li>
+<li><p><strong>encoder</strong> (<em>torch.nn.Module</em>) – The encoder layer.</p></li>
+<li><p><strong>decoder</strong> (<em>torch.nn.Module</em>) – The decoder layer.</p></li>
+<li><p><strong>encoder_optimizer</strong> (<em>torch.optim.Optimizer</em>) – The optimizer of
+the encoder.</p></li>
+<li><p><strong>decoder_optimizer</strong> (<em>torch.optim.Optimizer</em>) – The optimizer of
+the decoder.</p></li>
+<li><p><strong>val_loss</strong> (<em>float</em>) – Loss value during validation.</p></li>
+<li><p><strong>path</strong> (<em>str</em><em>, </em><em>optional</em>) – Path to write the checkpoint.
+Should include either <cite>.pth</cite> or <cite>.pt</cite> as the file
+extension. Defaults to <code class="docutils literal notranslate"><span class="pre">'./checkpoint.pth'</span></code>.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
 </section>
 <section id="module-chatbot.engine">
 <span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-chatbot.engine" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="chatbot.engine.Evaluator">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">chatbot.engine.</span></span><span class="sig-name descname"><span class="pre">Evaluator</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vectorizer</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="chatbot.utils.data.html#chatbot.utils.data.vectorizer.SequenceVectorizer" title="chatbot.utils.data.vectorizer.SequenceVectorizer"><span class="pre">SequenceVectorizer</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#chatbot.engine.Evaluator" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="chatbot.engine.Evaluator.chat">
+<span class="sig-name descname"><span class="pre">chat</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">searcher</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Module</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#chatbot.engine.Evaluator.chat" title="Link to this definition"></a></dt>
+<dd><p>Starts an interactive conversation with the bot.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="chatbot.engine.Evaluator.evaluate">
+<span class="sig-name descname"><span class="pre">evaluate</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_sequence</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">searcher</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Module</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#chatbot.engine.Evaluator.evaluate" title="Link to this definition"></a></dt>
+<dd><p>Generates a list of tokens in response to the input query.</p>
+<p>Implements a forward pass through the decoder and samples its
+predictions to obtain the best response tokens at each time-step.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>input_sequence</strong> (<em>str</em>) – The input query.</p></li>
+<li><p><strong>searcher</strong> (<em>torch.nn.Module</em>) – A search decoder for sampling the
+decoder’s predictions. Available searcher decoders:
+<cite>GreedySearchDecoder</cite> and <cite>RandomSearchDecoder</cite>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The generated tokens.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List[str]</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="chatbot.engine.Timer">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">chatbot.engine.</span></span><span class="sig-name descname"><span class="pre">Timer</span></span><a class="headerlink" href="#chatbot.engine.Timer" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Context manager to count elapsed time.</p>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">do_something</span><span class="p">():</span>
+<span class="gp">... </span>    <span class="k">pass</span>
+<span class="gp">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="k">with</span> <span class="n">Timer</span><span class="p">()</span> <span class="k">as</span> <span class="n">t</span><span class="p">:</span>
+<span class="gp">... </span>  <span class="n">do_something</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Invocation of f took </span><span class="si">{</span><span class="n">t</span><span class="o">.</span><span class="n">elapsed</span><span class="si">}</span><span class="s2">s!&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="chatbot.engine.Trainer">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">chatbot.engine.</span></span><span class="sig-name descname"><span class="pre">Trainer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">embedding</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Embedding</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">encoder</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Module</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">decoder</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Module</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">encoder_optimizer</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optimizer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">decoder_optimizer</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optimizer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">loss_fn</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Module</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bos_index</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">checkpoint_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">epochs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">clip_factor</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resume</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">enable_early_stop</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">last_epoch</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sampling_decay</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">early_stopper</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Any</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">scheduler</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ReduceLROnPlateau</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#chatbot.engine.Trainer" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Class for training a sequence-to-sequence text generation model with
+PyTorch.</p>
+<p>The model consists of encoder and decoder layers, each trained separately
+using its own optimizer.</p>
+<p>Incorporates functionalities such as early stopping, resuming from
+checkpoint, learning rate scheduling and MLFlow tracking.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>checkpoint_path</strong> (<em>str</em>) – The file path to save or load a checkpoint.</p></li>
+<li><p><strong>embedding</strong> (<em>torch.nn.Embedding</em>) – The embedding layer.</p></li>
+<li><p><strong>encoder</strong> (<em>torch.nn.Module</em>) – The encoder layer.</p></li>
+<li><p><strong>decoder</strong> (<em>torch.nn.Module</em>) – The decoder layer.</p></li>
+<li><p><strong>encoder_optimizer</strong> (<em>torch.optim.Optimizer</em>) – The optimizer for updating
+the parameters of the encoder.</p></li>
+<li><p><strong>decoder_optimizer</strong> (<em>torch.optim.Optimizer</em>) – The optimizer for updating
+the parameters of the decoder.</p></li>
+<li><p><strong>epochs</strong> (<em>int</em><em>, </em><em>optional</em>) – Number of training epochs (default=5).</p></li>
+<li><p><strong>clip_factor</strong> (<em>float</em><em>, </em><em>optional</em>) – Max norm value for gradient clipping.
+Defaults to <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p></li>
+<li><p><strong>resume</strong> (<em>bool</em><em>, </em><em>optional</em>) – If <code class="docutils literal notranslate"><span class="pre">True</span></code>, resumes training from
+the specified checkpoint. Defaults to <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p></li>
+<li><p><strong>enable_early_stop</strong> (<em>bool</em><em>, </em><em>optional</em>) – If <code class="docutils literal notranslate"><span class="pre">True</span></code> utilizes the
+<code class="xref py py-attr docutils literal notranslate"><span class="pre">early_stopper</span></code> for stopping the training process
+if the validation loss doesn’t decrease for a number of epochs.
+Defaults to <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p></li>
+<li><p><strong>last_epoch</strong> (<em>int</em><em>, </em><em>optional</em>) – Used in case of resuming training
+from the last checkpoint (default=0).</p></li>
+<li><p><strong>sampling_decay</strong> (<em>int</em><em> | </em><em>float</em><em>, </em><em>optional</em>) – Decay value for the
+sampling scheduler. Refer to
+<a class="reference internal" href="#chatbot.engine.utils.inverse_sigmoid_decay" title="chatbot.engine.utils.inverse_sigmoid_decay"><code class="xref py py-func docutils literal notranslate"><span class="pre">chatbot.engine.utils.inverse_sigmoid_decay()</span></code></a>.</p></li>
+<li><p><strong>early_stopper</strong> (<a class="reference internal" href="#chatbot.engine.utils.EarlyStopping" title="chatbot.engine.utils.EarlyStopping"><em>EarlyStopping</em></a><em>, </em><em>optional</em>) – Stops the training process
+if the validation loss doesn’t decrease for a number of epochs.
+Defaults to <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p></li>
+<li><p><strong>scheduler</strong> (<em>ReduceLROnPlateau</em><em>, </em><em>optional</em>) – Reduces the learning rate when
+the validation loss stops improving. Defaults to <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="chatbot.engine.Trainer.compute_loss">
+<span class="sig-name descname"><span class="pre">compute_loss</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">decoder_input</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">decoder_hidden</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">encoder_state</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_sequences</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_masks</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_max_length</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tensor</span></span></span><a class="headerlink" href="#chatbot.engine.Trainer.compute_loss" title="Link to this definition"></a></dt>
+<dd><p>Performs a forward pass through the decoder.</p>
+<p>For each token in the input sequence the loss is computed
+and accumulated.</p>
+<p>Implements a scheduled sampling mechanism which, based on
+the <code class="xref py py-attr docutils literal notranslate"><span class="pre">sampling_probability</span></code>, decides whether to use
+the actual target token as next input to the decoder or
+an estimated token coming from the decoder’s output.</p>
+<p>The estimation from the decoder is obtained by sampling a token
+according to decoder’s output probability (multinomial) distribution
+over the vocabulary.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>decoder_input</strong> – tensor of shape: math:<cite>(1, N)</cite>.</p></li>
+<li><p><strong>decoder_hidden</strong> – tensor of shape: math:<cite>(1, N, H)</cite>.</p></li>
+<li><p><strong>encoder_state</strong> – tensor of shape: math:<cite>(L_{in}, N, H)</cite>.</p></li>
+<li><p><strong>target_sequences</strong> – tensor of shape: math:<cite>(L_{out}, N)</cite>.</p></li>
+<li><p><strong>target_masks</strong> – tensor of shape: math:<cite>(L_{out}, N)</cite>.</p></li>
+<li><p><strong>target_max_length</strong> – an integer number.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="simple">
+<dt>Returns: loss</dt><dd><ul class="simple">
+<li><p><strong>loss</strong>: tensor of shape: math`()`.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="chatbot.engine.Trainer.generate_batches">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">generate_batches</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataloader</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataLoader</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Iterator</span><span class="p"><span class="pre">[</span></span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Tensor</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#chatbot.engine.Trainer.generate_batches" title="Link to this definition"></a></dt>
+<dd><p>Creates a batch generator from a <cite>DataLoader</cite> that
+yields data dictionaries upon iteration.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>dataloader</strong> (<em>torch.utils.data.DataLoader</em>) – The input
+dataloader.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>An iterator</dt><dd><p>over data dictionaries.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Iterator[Dict[str, torch.Tensor]]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="chatbot.engine.Trainer.train">
+<span class="sig-name descname"><span class="pre">train</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">train_dataloader</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataLoader</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">val_dataloader</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataLoader</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tqdm_bar</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">tqdm</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#chatbot.engine.Trainer.train" title="Link to this definition"></a></dt>
+<dd><p>Trains and validates a sequence-to-sequence text generation model
+consisting of encoder and decoder layers.</p>
+<dl class="simple">
+<dt>The training process includes:</dt><dd><ul class="simple">
+<li><p>Tracking training progress with MLFlow and custom tqdm bar</p></li>
+<li><p>Checkpointing</p></li>
+<li><p>Optional learning rate reduction</p></li>
+<li><p>Optional early stopping</p></li>
+</ul>
+</dd>
+</dl>
+<p>If <code class="xref py py-attr docutils literal notranslate"><span class="pre">enable_early_stop</span></code> is <code class="docutils literal notranslate"><span class="pre">False</span></code> a checkpoint is saved after
+every epoch.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>train_dataloader</strong> (<em>torch.utils.data.DataLoader</em>) – Dataloader for
+creating the training batch generator.</p></li>
+<li><p><strong>val_dataloader</strong> (<em>torch.utils.data.DataLoader</em>) – Dataloader for
+creating the validation batch generator.</p></li>
+<li><p><strong>tqdm_bar</strong> (<em>tqdm</em>) – Custom tqdm bar for the training.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="chatbot.engine.set_seeds">
+<span class="sig-prename descclassname"><span class="pre">chatbot.engine.</span></span><span class="sig-name descname"><span class="pre">set_seeds</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">seed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">42</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#chatbot.engine.set_seeds" title="Link to this definition"></a></dt>
+<dd><p>Sets random seeds for torch operations.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>seed</strong> (<em>int</em><em>, </em><em>optional</em>) – Random seed to set (default=42).</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="chatbot.engine.write_checkpoint">
+<span class="sig-prename descclassname"><span class="pre">chatbot.engine.</span></span><span class="sig-name descname"><span class="pre">write_checkpoint</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">epoch</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">embedding</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Embedding</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">encoder</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Module</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">decoder</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Module</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">encoder_optimizer</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optimizer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">decoder_optimizer</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Optimizer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">val_loss</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'./checkpoint.pth'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#chatbot.engine.write_checkpoint" title="Link to this definition"></a></dt>
+<dd><p>Saves the states of the training components of a seq-to-seq
+model and also the last validation loss and epoch.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>epoch</strong> (<em>int</em>) – Current epoch.</p></li>
+<li><p><strong>embedding</strong> (<em>torch.nn.Embedding</em>) – The embedding layer.</p></li>
+<li><p><strong>encoder</strong> (<em>torch.nn.Module</em>) – The encoder layer.</p></li>
+<li><p><strong>decoder</strong> (<em>torch.nn.Module</em>) – The decoder layer.</p></li>
+<li><p><strong>encoder_optimizer</strong> (<em>torch.optim.Optimizer</em>) – The optimizer of
+the encoder.</p></li>
+<li><p><strong>decoder_optimizer</strong> (<em>torch.optim.Optimizer</em>) – The optimizer of
+the decoder.</p></li>
+<li><p><strong>val_loss</strong> (<em>float</em>) – Loss value during validation.</p></li>
+<li><p><strong>path</strong> (<em>str</em><em>, </em><em>optional</em>) – Path to write the checkpoint.
+Should include either <cite>.pth</cite> or <cite>.pt</cite> as the file
+extension. Defaults to <code class="docutils literal notranslate"><span class="pre">'./checkpoint.pth'</span></code>.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
 </section>
 </section>
 

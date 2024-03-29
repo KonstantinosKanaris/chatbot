@@ -32,7 +32,7 @@ class AttnLayer(nn.Module):
             \begin{aligned}
                 N ={} & \text{batch size} \\
                 L ={} & \text{max sequence length} \\
-                H ={} & \text{hidden\_size}
+                H ={} & \text{hidden_size}
             \end{aligned}
 
     Outputs: attention_energies

@@ -1,7 +1,10 @@
 #----------------------------------------------------------------------------------------
+# The hidden size and embedding dimension must have the same value.
 #----------------------------------------------------------------------------------------
 # - checkpoints_dir         : The directory path to save checkpoints during training.
+# - checkpoint_filename     : The name of the checkpoint file.
 # - data_path               : The path to the txt file containing pairs of text sequences.
+# - embeddings_path         : Path to pre-trained embeddings file, i.e. GLoVe embeddings.
 # - num_epochs              : An integer indicating how many epochs to train for.
 # - batch_size              : How many samples per batch to load.
 # - lr_patience             : Number of epochs to wait before reducing the learning
@@ -27,28 +30,35 @@
 # - decoder_lr              : The learning rate of the decoder optimizer.
 #----------------------------------------------------------------------------------------
 checkpoints_dir: ./checkpoints
+checkpoint_filename: checkpoint_100d_2l_50ep_10_pa_8length.pth
 data_path: ./data/cornell_movie_dialogs/processed/formatted_dialogs.txt
 hyperparameters:
-    embeddings_path:
-    checkpoint_filename: 20240327_01-58_checkpoint.pth
+    embeddings_path: ./pretrained_embeddings/glove.6B.100d.txt
     general:
       num_epochs: 50
       batch_size: 64
       lr_patience: 2
       lr_reduce_factor: 0.25
-      ea_patience: 4
-      ea_delta: 0.0025
+      ea_patience: 10
+      ea_delta: 0
       clip_factor: 50
-      max_seq_length: 10
+      max_seq_length: 8
       min_count: 3
-    model_init_params:
-      alignment_method: dot
-      embedding_dim: 50
-      hidden_size: 50
+      enable_early_stop: True
+      sampling_decay: 10
+    embedding_init_params:
+      embedding_dim: 100
+      padding_idx: 0
+    encoder_init_params:
+      hidden_size: 100
+      num_layers: 2
       dropout: 0.1
-      encoder_num_layers: 1
-      decoder_num_layers: 1
-      teacher_forcing_ratio: 0.5
-    optimizer_init_params:
-      encoder_lr: 0.0001
-      decoder_lr: 0.0005
+    decoder_init_params:
+      alignment_method: dot
+      hidden_size: 100
+      num_layers: 2
+      dropout: 0.1
+    encoder_optimizer_init_params:
+      lr: 0.0001
+    decoder_optimizer_init_params:
+      lr: 0.0005

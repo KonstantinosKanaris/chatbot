@@ -22,9 +22,9 @@ class EncoderRNN(nn.Module):
     Inputs: input_sequences, input_lengths, h_0
         * **input_sequences**: tensor of shape :math:`(L, N)`.
         * **input_lengths**: tensor of shape :math:`(N)`.
-        * **h_0**: tensor of shape :math:`(2 * \text{num\_layers}, H)` or
-        :math:`(2 * \text{num\_layers}, N, H)` containing the initial hidden
-        state for the input sequence. Defaults to ``None``.
+        * **h_0**: tensor of shape :math:`(2 * \text{num_layers}, H)` or
+          :math:`(2 * \text{num_layers}, N, H)` containing the initial
+          hidden state for the input sequence. Defaults to ``None``.
 
         where:
 
@@ -37,7 +37,7 @@ class EncoderRNN(nn.Module):
 
     Outputs: output, h_n
         * **output**: tensor of shape :math:`(L, N, H)`.
-        * **h_n**: tensor of shape :math:`(2 * \text{num\_layers}, N, H)`.
+        * **h_n**: tensor of shape :math:`(2 * \text{num_layers}, N, H)`.
 
     Attributes:
         hidden_size (int): The number of features in the hidden state `h`.

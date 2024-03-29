@@ -56,13 +56,27 @@
 </ul>
 </li>
 <li><a class="reference internal" href="#module-chatbot.models.decoders">chatbot.models.decoders module</a><ul>
+<li><a class="reference internal" href="#chatbot.models.decoders.GreedySearchDecoder"><code class="docutils literal notranslate"><span class="pre">GreedySearchDecoder</span></code></a><ul>
+<li><a class="reference internal" href="#chatbot.models.decoders.GreedySearchDecoder.forward"><code class="docutils literal notranslate"><span class="pre">GreedySearchDecoder.forward()</span></code></a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#chatbot.models.decoders.LuongAttnDecoderRNN"><code class="docutils literal notranslate"><span class="pre">LuongAttnDecoderRNN</span></code></a><ul>
 <li><a class="reference internal" href="#chatbot.models.decoders.LuongAttnDecoderRNN.forward"><code class="docutils literal notranslate"><span class="pre">LuongAttnDecoderRNN.forward()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#chatbot.models.decoders.RandomSearchDecoder"><code class="docutils literal notranslate"><span class="pre">RandomSearchDecoder</span></code></a><ul>
+<li><a class="reference internal" href="#chatbot.models.decoders.RandomSearchDecoder.forward"><code class="docutils literal notranslate"><span class="pre">RandomSearchDecoder.forward()</span></code></a></li>
 </ul>
 </li>
 </ul>
 </li>
 <li><a class="reference internal" href="#module-chatbot.models.embeddings">chatbot.models.embeddings module</a><ul>
+<li><a class="reference internal" href="#chatbot.models.embeddings.EmbeddingLayerConstructor"><code class="docutils literal notranslate"><span class="pre">EmbeddingLayerConstructor</span></code></a><ul>
+<li><a class="reference internal" href="#chatbot.models.embeddings.EmbeddingLayerConstructor.create_embedding_layer"><code class="docutils literal notranslate"><span class="pre">EmbeddingLayerConstructor.create_embedding_layer()</span></code></a></li>
+<li><a class="reference internal" href="#chatbot.models.embeddings.EmbeddingLayerConstructor.from_file"><code class="docutils literal notranslate"><span class="pre">EmbeddingLayerConstructor.from_file()</span></code></a></li>
+<li><a class="reference internal" href="#chatbot.models.embeddings.EmbeddingLayerConstructor.without_pretrained_embeddings"><code class="docutils literal notranslate"><span class="pre">EmbeddingLayerConstructor.without_pretrained_embeddings()</span></code></a></li>
+</ul>
+</li>
 <li><a class="reference internal" href="#chatbot.models.embeddings.PreTrainedEmbeddings"><code class="docutils literal notranslate"><span class="pre">PreTrainedEmbeddings</span></code></a><ul>
 <li><a class="reference internal" href="#chatbot.models.embeddings.PreTrainedEmbeddings.word_to_index"><code class="docutils literal notranslate"><span class="pre">PreTrainedEmbeddings.word_to_index</span></code></a></li>
 <li><a class="reference internal" href="#chatbot.models.embeddings.PreTrainedEmbeddings.word_vectors"><code class="docutils literal notranslate"><span class="pre">PreTrainedEmbeddings.word_vectors</span></code></a></li>
@@ -84,7 +98,59 @@
 </li>
 </ul>
 </li>
-<li><a class="reference internal" href="#module-chatbot.models">Module contents</a></li>
+<li><a class="reference internal" href="#module-chatbot.models.loss">chatbot.models.loss module</a><ul>
+<li><a class="reference internal" href="#chatbot.models.loss.MaskedNLLLoss"><code class="docutils literal notranslate"><span class="pre">MaskedNLLLoss</span></code></a><ul>
+<li><a class="reference internal" href="#chatbot.models.loss.MaskedNLLLoss.forward"><code class="docutils literal notranslate"><span class="pre">MaskedNLLLoss.forward()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-chatbot.models">Module contents</a><ul>
+<li><a class="reference internal" href="#chatbot.models.AttnLayer"><code class="docutils literal notranslate"><span class="pre">AttnLayer</span></code></a><ul>
+<li><a class="reference internal" href="#chatbot.models.AttnLayer.forward"><code class="docutils literal notranslate"><span class="pre">AttnLayer.forward()</span></code></a></li>
+<li><a class="reference internal" href="#chatbot.models.AttnLayer.select_attention_score"><code class="docutils literal notranslate"><span class="pre">AttnLayer.select_attention_score()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#chatbot.models.EmbeddingLayerConstructor"><code class="docutils literal notranslate"><span class="pre">EmbeddingLayerConstructor</span></code></a><ul>
+<li><a class="reference internal" href="#chatbot.models.EmbeddingLayerConstructor.create_embedding_layer"><code class="docutils literal notranslate"><span class="pre">EmbeddingLayerConstructor.create_embedding_layer()</span></code></a></li>
+<li><a class="reference internal" href="#chatbot.models.EmbeddingLayerConstructor.from_file"><code class="docutils literal notranslate"><span class="pre">EmbeddingLayerConstructor.from_file()</span></code></a></li>
+<li><a class="reference internal" href="#chatbot.models.EmbeddingLayerConstructor.without_pretrained_embeddings"><code class="docutils literal notranslate"><span class="pre">EmbeddingLayerConstructor.without_pretrained_embeddings()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#chatbot.models.EncoderRNN"><code class="docutils literal notranslate"><span class="pre">EncoderRNN</span></code></a><ul>
+<li><a class="reference internal" href="#chatbot.models.EncoderRNN.hidden_size"><code class="docutils literal notranslate"><span class="pre">EncoderRNN.hidden_size</span></code></a></li>
+<li><a class="reference internal" href="#chatbot.models.EncoderRNN.emb"><code class="docutils literal notranslate"><span class="pre">EncoderRNN.emb</span></code></a></li>
+<li><a class="reference internal" href="#chatbot.models.EncoderRNN.bi_gru"><code class="docutils literal notranslate"><span class="pre">EncoderRNN.bi_gru</span></code></a></li>
+<li><a class="reference internal" href="#chatbot.models.EncoderRNN.forward"><code class="docutils literal notranslate"><span class="pre">EncoderRNN.forward()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#chatbot.models.GreedySearchDecoder"><code class="docutils literal notranslate"><span class="pre">GreedySearchDecoder</span></code></a><ul>
+<li><a class="reference internal" href="#chatbot.models.GreedySearchDecoder.forward"><code class="docutils literal notranslate"><span class="pre">GreedySearchDecoder.forward()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#chatbot.models.LuongAttnDecoderRNN"><code class="docutils literal notranslate"><span class="pre">LuongAttnDecoderRNN</span></code></a><ul>
+<li><a class="reference internal" href="#chatbot.models.LuongAttnDecoderRNN.forward"><code class="docutils literal notranslate"><span class="pre">LuongAttnDecoderRNN.forward()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#chatbot.models.MaskedNLLLoss"><code class="docutils literal notranslate"><span class="pre">MaskedNLLLoss</span></code></a><ul>
+<li><a class="reference internal" href="#chatbot.models.MaskedNLLLoss.forward"><code class="docutils literal notranslate"><span class="pre">MaskedNLLLoss.forward()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#chatbot.models.PreTrainedEmbeddings"><code class="docutils literal notranslate"><span class="pre">PreTrainedEmbeddings</span></code></a><ul>
+<li><a class="reference internal" href="#chatbot.models.PreTrainedEmbeddings.word_to_index"><code class="docutils literal notranslate"><span class="pre">PreTrainedEmbeddings.word_to_index</span></code></a></li>
+<li><a class="reference internal" href="#chatbot.models.PreTrainedEmbeddings.word_vectors"><code class="docutils literal notranslate"><span class="pre">PreTrainedEmbeddings.word_vectors</span></code></a></li>
+<li><a class="reference internal" href="#chatbot.models.PreTrainedEmbeddings.index_to_word"><code class="docutils literal notranslate"><span class="pre">PreTrainedEmbeddings.index_to_word</span></code></a></li>
+<li><a class="reference internal" href="#chatbot.models.PreTrainedEmbeddings.from_embeddings_file"><code class="docutils literal notranslate"><span class="pre">PreTrainedEmbeddings.from_embeddings_file()</span></code></a></li>
+<li><a class="reference internal" href="#chatbot.models.PreTrainedEmbeddings.get_embedding"><code class="docutils literal notranslate"><span class="pre">PreTrainedEmbeddings.get_embedding()</span></code></a></li>
+<li><a class="reference internal" href="#chatbot.models.PreTrainedEmbeddings.make_embedding_matrix"><code class="docutils literal notranslate"><span class="pre">PreTrainedEmbeddings.make_embedding_matrix()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#chatbot.models.RandomSearchDecoder"><code class="docutils literal notranslate"><span class="pre">RandomSearchDecoder</span></code></a><ul>
+<li><a class="reference internal" href="#chatbot.models.RandomSearchDecoder.forward"><code class="docutils literal notranslate"><span class="pre">RandomSearchDecoder.forward()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -152,7 +218,7 @@ Defaults to <cite>concat</cite>.</p></li>
 \[\begin{split}\begin{aligned}
     N ={} &amp; \text{batch size} \\
     L ={} &amp; \text{max sequence length} \\
-    H ={} &amp; \text{hidden\_size}
+    H ={} &amp; \text{hidden_size}
 \end{aligned}\end{split}\]</div>
 </dd>
 <dt>Outputs: attention_energies</dt><dd><ul class="simple">
@@ -199,6 +265,65 @@ energies.</p>
 <section id="module-chatbot.models.decoders">
 <span id="chatbot-models-decoders-module"></span><h2>chatbot.models.decoders module<a class="headerlink" href="#module-chatbot.models.decoders" title="Link to this heading"></a></h2>
 <dl class="py class">
+<dt class="sig sig-object py" id="chatbot.models.decoders.GreedySearchDecoder">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">chatbot.models.decoders.</span></span><span class="sig-name descname"><span class="pre">GreedySearchDecoder</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">encoder</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Module</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">decoder</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Module</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eos_idx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#chatbot.models.decoders.GreedySearchDecoder" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></p>
+<p>Implements greedy decoding.</p>
+<p>Selects the most probable token, i.e <cite>argmax</cite> from the model’s
+vocabulary at each decoding time-step as candidate to the output
+sequence.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>encoder</strong> (<em>torch.nn.Module</em>) – The encoder layer of a seq-to-seq model.</p></li>
+<li><p><strong>decoder</strong> (<em>torch.nn.Module</em>) – The decoder layer of a seq-to-seq model.</p></li>
+<li><p><strong>eos_idx</strong> (<em>int</em>) – The end-of-sentence token index.</p></li>
+</ul>
+</dd>
+</dl>
+<dl>
+<dt>Inputs: input_seq, input_length, max_seq_length</dt><dd><ul class="simple">
+<li><p><strong>input_seq</strong>: tensor of shape <span class="math notranslate nohighlight">\((L_{in}, 1)\)</span>.</p></li>
+<li><p><strong>input_length</strong>: tensor of shape <span class="math notranslate nohighlight">\((1, )\)</span>.</p></li>
+<li><p><strong>max_seq_length</strong>: An integer number.</p></li>
+</ul>
+</dd>
+<dt>Outputs: all_token_indices</dt><dd><ul class="simple">
+<li><p><strong>all_token_indices</strong>: tensor of shape <span class="math notranslate nohighlight">\((L_{out})\)</span>.</p></li>
+</ul>
+<p>where:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+    L_{in} ={} &amp; \text{input sequence length} \\
+    L_{out} ={} &amp; \text{max_seq_length}
+\end{aligned}\end{split}\]</div>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="chatbot.models.decoders.GreedySearchDecoder.forward">
+<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_seq</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input_length</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_seq_length</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tensor</span></span></span><a class="headerlink" href="#chatbot.models.decoders.GreedySearchDecoder.forward" title="Link to this definition"></a></dt>
+<dd><p>Forward pass of the Greedy Search Sampler.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>input_seq</strong> (<em>torch.Tensor</em>) – Input tokenized sequence.</p></li>
+<li><p><strong>input_length</strong> (<em>torch.Tensor</em>) – Length of input sequence.</p></li>
+<li><p><strong>max_seq_length</strong> (<em>int</em>) – The maximum sequence length in the
+entire dataset.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The predicted output indices.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>torch.Tensor</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
 <dt class="sig sig-object py" id="chatbot.models.decoders.LuongAttnDecoderRNN">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">chatbot.models.decoders.</span></span><span class="sig-name descname"><span class="pre">LuongAttnDecoderRNN</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">alignment_method</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">embedding</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Embedding</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hidden_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_layers</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dropout</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#chatbot.models.decoders.LuongAttnDecoderRNN" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></p>
@@ -220,9 +345,10 @@ in the attention layer. The available methods are: <cite>concat</cite>,
 <li><p><strong>hidden_size</strong> (<em>int</em>) – The number of features in the hidden state.</p></li>
 <li><p><strong>output_size</strong> (<em>int</em>) – The size of the vocabulary.</p></li>
 <li><p><strong>num_layers</strong> (<em>int</em><em>, </em><em>optional</em>) – The number of recurrent layers (default=1).</p></li>
-<li><p><strong>dropout</strong> (<em>float</em><em>, </em><em>optional</em>) – input sequence and to the GRU layer. If non-zero, the <code class="xref py py-attr docutils literal notranslate"><span class="pre">num_layers</span></code>
-should be greater than 1, otherwise the dropout value in the GRU layer
-will be set to zero. (default=0.1).</p></li>
+<li><p><strong>dropout</strong> (<em>float</em><em>, </em><em>optional</em>) – The dropout value applied to the embedded
+input sequence and to the GRU layer. If non-zero, the
+<code class="xref py py-attr docutils literal notranslate"><span class="pre">num_layers</span></code> should be greater than 1, otherwise the dropout
+value will be set to zero. (default=0.1).</p></li>
 </ul>
 </dd>
 </dl>
@@ -230,7 +356,7 @@ will be set to zero. (default=0.1).</p></li>
 <dt>Inputs: input_seq, h_0, encoder_state</dt><dd><ul class="simple">
 <li><p><strong>input_seq</strong>: tensor of shape <span class="math notranslate nohighlight">\((1, N)\)</span>.</p></li>
 <li><p><strong>h_0</strong>: tensor of shape <span class="math notranslate nohighlight">\((num_layers, N, H)\)</span>.</p></li>
-<li><p><strong>encoder_state</strong>: tensor of shape <span class="math notranslate nohighlight">\((L, N, H)\)</span></p></li>
+<li><p><strong>encoder_state</strong>: tensor of shape <span class="math notranslate nohighlight">\((L, N, H)\)</span>.</p></li>
 </ul>
 <p>where:</p>
 <div class="math notranslate nohighlight">
@@ -282,17 +408,176 @@ will be set to zero. (default=0.1).</p></li>
 
 </dd></dl>
 
+<dl class="py class">
+<dt class="sig sig-object py" id="chatbot.models.decoders.RandomSearchDecoder">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">chatbot.models.decoders.</span></span><span class="sig-name descname"><span class="pre">RandomSearchDecoder</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">encoder</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Module</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">decoder</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Module</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eos_idx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#chatbot.models.decoders.RandomSearchDecoder" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></p>
+<p>Implements multinomial sampling during decoding.</p>
+<p>Samples a token according to the output probability distribution over
+the vocabulary.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>encoder</strong> (<em>torch.nn.Module</em>) – The encoder layer of a seq-to-seq model.</p></li>
+<li><p><strong>decoder</strong> (<em>torch.nn.Module</em>) – The decoder layer of a seq-to-seq model.</p></li>
+<li><p><strong>eos_idx</strong> (<em>int</em>) – The end-of-sentence token index.</p></li>
+</ul>
+</dd>
+</dl>
+<dl>
+<dt>Inputs: input_seq, input_length, max_seq_length</dt><dd><ul class="simple">
+<li><p><strong>input_seq</strong>: tensor of shape <span class="math notranslate nohighlight">\((L_{in}, 1)\)</span>.</p></li>
+<li><p><strong>input_length</strong>: tensor of shape <span class="math notranslate nohighlight">\((1, )\)</span>.</p></li>
+<li><p><strong>max_seq_length</strong>: An integer number.</p></li>
+</ul>
+</dd>
+<dt>Outputs: all_token_indices</dt><dd><ul class="simple">
+<li><p><strong>all_token_indices</strong>: tensor of shape <span class="math notranslate nohighlight">\((L_{out})\)</span>.</p></li>
+</ul>
+<p>where:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+    L_{in} ={} &amp; \text{input sequence length} \\
+    L_{out} ={} &amp; \text{max_seq_length}
+\end{aligned}\end{split}\]</div>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="chatbot.models.decoders.RandomSearchDecoder.forward">
+<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_seq</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input_length</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_seq_length</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tensor</span></span></span><a class="headerlink" href="#chatbot.models.decoders.RandomSearchDecoder.forward" title="Link to this definition"></a></dt>
+<dd><p>Forward pass of the Greedy Search Sampler.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>input_seq</strong> (<em>torch.Tensor</em>) – Input tokenized sequence.</p></li>
+<li><p><strong>input_length</strong> (<em>torch.Tensor</em>) – Length of input sequence.</p></li>
+<li><p><strong>max_seq_length</strong> (<em>int</em>) – The maximum sequence length in the
+entire dataset.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>The predicted token indices</dt><dd><p>along with their predicted scores.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Tuple[torch.Tensor, torch.Tensor]</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
 </section>
 <section id="module-chatbot.models.embeddings">
 <span id="chatbot-models-embeddings-module"></span><h2>chatbot.models.embeddings module<a class="headerlink" href="#module-chatbot.models.embeddings" title="Link to this heading"></a></h2>
 <dl class="py class">
+<dt class="sig sig-object py" id="chatbot.models.embeddings.EmbeddingLayerConstructor">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">chatbot.models.embeddings.</span></span><span class="sig-name descname"><span class="pre">EmbeddingLayerConstructor</span></span><a class="headerlink" href="#chatbot.models.embeddings.EmbeddingLayerConstructor" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Responsible for initializing an <cite>nn.Embedding</cite> layer.</p>
+<p>Initializes the embedding layer with either pretrained
+frozen weights from a file or with learnable weights.</p>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">chatbot.models.embeddings</span> <span class="kn">import</span> <span class="n">EmbeddingLayerConstructor</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">embedding_init_params</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;embedding_dim&quot;</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span> <span class="s2">&quot;padding_idx&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">embedding</span> <span class="o">=</span> <span class="n">EmbeddingLayerConstructor</span><span class="o">.</span><span class="n">create_embedding_layer</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">vocab_tokens</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;1st_token&quot;</span><span class="p">,</span> <span class="s2">&quot;2nd_token&quot;</span><span class="p">,</span> <span class="s2">&quot;and_so_on&quot;</span><span class="p">],</span>
+<span class="gp">... </span>    <span class="n">filepath</span><span class="o">=</span><span class="s2">&quot;./pretrained_embeddings/glove.6B.100d.txt&quot;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="o">**</span><span class="n">embedding_init_params</span>
+<span class="gp">... </span>    <span class="p">)</span>
+<span class="gp">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">embedding</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="chatbot.models.embeddings.EmbeddingLayerConstructor.create_embedding_layer">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create_embedding_layer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vocab_tokens</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filepath</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Embedding</span></span></span><a class="headerlink" href="#chatbot.models.embeddings.EmbeddingLayerConstructor.create_embedding_layer" title="Link to this definition"></a></dt>
+<dd><p>Initializes a <cite>nn.Embedding</cite> layer.</p>
+<p>If <code class="xref py py-attr docutils literal notranslate"><span class="pre">filepath</span></code> is provided the embedding layer is
+initialized with pretrained word embeddings from the file.
+Otherwise, returns an embedding layer with learnable weights.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>vocab_tokens</strong> (<em>List</em><em>[</em><em>str</em><em>]</em>) – All the tokens in the vocabulary.</p></li>
+<li><p><strong>filepath</strong> (<em>str</em><em>, </em><em>optional</em>) – Path to the pretrained embeddings
+file. Defaults to <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p></li>
+<li><p><strong>**kwargs</strong> – Initialization parameters of the embedding layer,
+e.g., <cite>embedding_dim</cite>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>An embedding layer with either pretrained</dt><dd><p>frozen weights or with learnable weights.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>nn.Embedding</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="chatbot.models.embeddings.EmbeddingLayerConstructor.from_file">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vocab_tokens</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filepath</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Embedding</span></span></span><a class="headerlink" href="#chatbot.models.embeddings.EmbeddingLayerConstructor.from_file" title="Link to this definition"></a></dt>
+<dd><p>Loads pretrained word embeddings, i.e., GLoVe embeddings,
+into a <cite>nn.Embedding</cite> layer.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>vocab_tokens</strong> (<em>List</em><em>[</em><em>str</em><em>]</em>) – All the tokens in the
+vocabulary.</p></li>
+<li><p><strong>filepath</strong> (<em>str</em>) – Path to the pretrained embeddings file.</p></li>
+<li><p><strong>**kwargs</strong> – Initialization parameters of the embedding layer,
+e.g., <cite>embedding_dim</cite>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>An embedding layer with pretrained frozen weights.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>nn.Embedding</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="chatbot.models.embeddings.EmbeddingLayerConstructor.without_pretrained_embeddings">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">without_pretrained_embeddings</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vocab_tokens</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Embedding</span></span></span><a class="headerlink" href="#chatbot.models.embeddings.EmbeddingLayerConstructor.without_pretrained_embeddings" title="Link to this definition"></a></dt>
+<dd><p>Returns an initialized <cite>nn.Embedding</cite> layer with learnable
+weights.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>vocab_tokens</strong> (<em>List</em><em>[</em><em>str</em><em>]</em>) – All the tokens in the
+vocabulary.</p></li>
+<li><p><strong>**kwargs</strong> – Initialization parameters of the embedding layer,
+e.g., <cite>embedding_dim</cite>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>An embedding layer with learnable weights.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>nn.Embedding</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
 <dt class="sig sig-object py" id="chatbot.models.embeddings.PreTrainedEmbeddings">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">chatbot.models.embeddings.</span></span><span class="sig-name descname"><span class="pre">PreTrainedEmbeddings</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">word_to_index</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">word_vectors</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Tensor</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#chatbot.models.embeddings.PreTrainedEmbeddings" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
-<p>A wrapper around pre-trained word vectors and their use.</p>
-<p>Implements  an in-memory index of all the word vectors to
-facilitate quick lookups and nearest-neighbor queries using
-an approximate nearest-neighbor package, i.e. <cite>annoy</cite>.</p>
+<p>A wrapper around pretrained word vectors and their use.</p>
+<p>Loads the pretrained embeddings from a file and creates an
+embedding matrix ready to be passed into an <cite>nn.Embedding</cite> layer.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -364,7 +649,7 @@ to words.</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># Get embedding for a single word</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">cat_embedding</span> <span class="o">=</span> <span class="n">embeddings_wrapper</span><span class="o">.</span><span class="n">get_embedding</span><span class="p">(</span><span class="n">word</span><span class="o">=</span><span class="s2">&quot;cat&quot;</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">cat_embedding</span><span class="p">)</span>
-<span class="go">tensor([ 0.2309,  0.2828,  0.6318, -0.5941, -0.5860,  0.6326,  0.2440, -0.1411,</span>
+<span class="go">tensor([0.2309, 0.2828, 0.6318, 0.5941, 0.5860, 0.6326, 0.2440, 0.1411,</span>
 <span class="go"> 0.0608, -0.7898, -0.2910,  0.1429,  0.7227,  0.2043,  0.1407,  0.9876,</span>
 <span class="go"> 0.5253,  0.0975,  0.8822,  0.5122,  0.4020,  0.2117, -0.0131, -0.7162,</span>
 <span class="go"> 0.5539,  1.1452, -0.8804, -0.5022, -0.2281,  0.0239,  0.1072,  0.0837,</span>
@@ -426,11 +711,17 @@ word1 x1_0 x1_1 x1_2 x1_3 ... x1_N
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><p><strong>words</strong> (<em>List</em><em>[</em><em>str</em><em>]</em>) – A list of words.</p>
 </dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>The final embedding matrix.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>torch.Tensor</p>
+</dl>
+<dl>
+<dt>Returns: final_embeddings</dt><dd><ul class="simple">
+<li><p><strong>final_embeddings</strong>: tensor of shape <span class="math notranslate nohighlight">\((V, D)\)</span>.</p></li>
+</ul>
+<p>where:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+    N ={} &amp; \text{vocabulary size} \\
+    D ={} &amp; \text{dimension of token embeddings}
+\end{aligned}\end{split}\]</div>
 </dd>
 </dl>
 </dd></dl>
@@ -463,10 +754,10 @@ otherwise the dropout value will be set to zero. (default=0).</p></li>
 <dt>Inputs: input_sequences, input_lengths, h_0</dt><dd><ul class="simple">
 <li><p><strong>input_sequences</strong>: tensor of shape <span class="math notranslate nohighlight">\((L, N)\)</span>.</p></li>
 <li><p><strong>input_lengths</strong>: tensor of shape <span class="math notranslate nohighlight">\((N)\)</span>.</p></li>
-<li><p><strong>h_0</strong>: tensor of shape <span class="math notranslate nohighlight">\((2 * \text{num\_layers}, H)\)</span> or</p></li>
+<li><p><strong>h_0</strong>: tensor of shape <span class="math notranslate nohighlight">\((2 * \text{num_layers}, H)\)</span> or
+<span class="math notranslate nohighlight">\((2 * \text{num_layers}, N, H)\)</span> containing the initial
+hidden state for the input sequence. Defaults to <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p></li>
 </ul>
-<p><span class="math notranslate nohighlight">\((2 * \text{num\_layers}, N, H)\)</span> containing the initial hidden
-state for the input sequence. Defaults to <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p>
 <p>where:</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}\begin{aligned}
@@ -477,7 +768,7 @@ state for the input sequence. Defaults to <code class="docutils literal notransl
 </dd>
 <dt>Outputs: output, h_n</dt><dd><ul class="simple">
 <li><p><strong>output</strong>: tensor of shape <span class="math notranslate nohighlight">\((L, N, H)\)</span>.</p></li>
-<li><p><strong>h_n</strong>: tensor of shape <span class="math notranslate nohighlight">\((2 * \text{num\_layers}, N, H)\)</span>.</p></li>
+<li><p><strong>h_n</strong>: tensor of shape <span class="math notranslate nohighlight">\((2 * \text{num_layers}, N, H)\)</span>.</p></li>
 </ul>
 </dd>
 </dl>
@@ -582,8 +873,774 @@ of the rnn layer of the encoder. Defaults to
 </dd></dl>
 
 </section>
+<section id="module-chatbot.models.loss">
+<span id="chatbot-models-loss-module"></span><h2>chatbot.models.loss module<a class="headerlink" href="#module-chatbot.models.loss" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="chatbot.models.loss.MaskedNLLLoss">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">chatbot.models.loss.</span></span><span class="sig-name descname"><span class="pre">MaskedNLLLoss</span></span><a class="headerlink" href="#chatbot.models.loss.MaskedNLLLoss" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></p>
+<p>Computes the negative log likelihood loss.</p>
+<p>Ignores target values, i.e., PAD values, specified by the
+input <cite>mask</cite> tensor.</p>
+<dl class="simple">
+<dt>Inputs: y_pred, y_true, mask</dt><dd><ul class="simple">
+<li><p><strong>y_pred</strong>: tensor of shape <span class="math notranslate nohighlight">\((N, V)\)</span>.</p></li>
+<li><p><strong>y_true</strong>: tensor of shape <span class="math notranslate nohighlight">\((N)\)</span>.</p></li>
+<li><p><strong>mask</strong>: tensor of shape <span class="math notranslate nohighlight">\((N)\)</span>.</p></li>
+</ul>
+</dd>
+</dl>
+<p>where:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+    N ={} &amp; \text{batch size} \\
+    V ={} &amp; \text{vocabulary size}
+\end{aligned}\end{split}\]</div>
+<dl class="simple">
+<dt>Outputs: loss</dt><dd><ul class="simple">
+<li><p><strong>loss</strong>: tensor of shape <span class="math notranslate nohighlight">\(()\)</span>.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="chatbot.models.loss.MaskedNLLLoss.forward">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">y_pred</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_true</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mask</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tensor</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tensor</span></span></span><a class="headerlink" href="#chatbot.models.loss.MaskedNLLLoss.forward" title="Link to this definition"></a></dt>
+<dd><p>Define the computation performed at every call.</p>
+<p>Should be overridden by all subclasses.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Although the recipe for forward pass needs to be defined within
+this function, one should call the <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code> instance afterwards
+instead of this since the former takes care of running the
+registered hooks while the latter silently ignores them.</p>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+</section>
 <section id="module-chatbot.models">
 <span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-chatbot.models" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="chatbot.models.AttnLayer">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">chatbot.models.</span></span><span class="sig-name descname"><span class="pre">AttnLayer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">hidden_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">method</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'concat'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#chatbot.models.AttnLayer" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></p>
+<p>An alignment attention layer for producing attention
+energies.</p>
+<p>The implementation is based on the paper “Effective Approaches
+to Attention-based Neural Machine Translation”. Luong, M.-T., Pham,
+H., &amp; Manning, C. D. (2015). <a class="reference external" href="https://arxiv.org/abs/1508.04025">https://arxiv.org/abs/1508.04025</a></p>
+<p>Applies an alignment score method for computing the attention energies.
+The available alignment score methods are: <code class="docutils literal notranslate"><span class="pre">concat</span></code>, <code class="docutils literal notranslate"><span class="pre">dot</span></code> and
+<code class="docutils literal notranslate"><span class="pre">general</span></code>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>hidden_size</strong> (<em>int</em>) – Hidden size of <cite>Linear</cite> layer
+used in <cite>concat</cite> and <cite>general</cite> alignment function.</p></li>
+<li><p><strong>method</strong> (<em>str</em><em>, </em><em>optional</em>) – The name of the alignment function.
+Defaults to <cite>concat</cite>.</p></li>
+</ul>
+</dd>
+</dl>
+<dl>
+<dt>Inputs: decoder_output, encoder_state</dt><dd><ul class="simple">
+<li><p><strong>decoder_output</strong>: tensor of shape <span class="math notranslate nohighlight">\((1, N, H)\)</span>.</p></li>
+<li><p><strong>encoder_state</strong>: tensor of shape <span class="math notranslate nohighlight">\((L, N, H)\)</span></p></li>
+</ul>
+<p>where:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+    N ={} &amp; \text{batch size} \\
+    L ={} &amp; \text{max sequence length} \\
+    H ={} &amp; \text{hidden_size}
+\end{aligned}\end{split}\]</div>
+</dd>
+<dt>Outputs: attention_energies</dt><dd><ul class="simple">
+<li><p><strong>attention_energies</strong>: tensor of shape <span class="math notranslate nohighlight">\((N, 1, L)\)</span></p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="chatbot.models.AttnLayer.forward">
+<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">decoder_output</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">encoder_state</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tensor</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tensor</span></span></span><a class="headerlink" href="#chatbot.models.AttnLayer.forward" title="Link to this definition"></a></dt>
+<dd><p>The forward pass of the attention layer.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>decoder_output</strong> (<em>torch.Tensor</em>) – The ith output of the decoder.</p></li>
+<li><p><strong>encoder_state</strong> (<em>torch.Tensor</em>) – The output of the encoder.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The attention energies (weights).</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>torch.Tensor</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="chatbot.models.AttnLayer.select_attention_score">
+<span class="sig-name descname"><span class="pre">select_attention_score</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><span class="pre">Tensor</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Tensor</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Tensor</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#chatbot.models.AttnLayer.select_attention_score" title="Link to this definition"></a></dt>
+<dd><p>Returns an alignment function for producing attention
+energies.</p>
+<p>Available alignment functions: <cite>concat</cite>, <cite>dot</cite>, and <cite>general</cite>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p>A <cite>Callable</cite> alignment function.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="chatbot.models.EmbeddingLayerConstructor">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">chatbot.models.</span></span><span class="sig-name descname"><span class="pre">EmbeddingLayerConstructor</span></span><a class="headerlink" href="#chatbot.models.EmbeddingLayerConstructor" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Responsible for initializing an <cite>nn.Embedding</cite> layer.</p>
+<p>Initializes the embedding layer with either pretrained
+frozen weights from a file or with learnable weights.</p>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">chatbot.models.embeddings</span> <span class="kn">import</span> <span class="n">EmbeddingLayerConstructor</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">embedding_init_params</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;embedding_dim&quot;</span><span class="p">:</span> <span class="mi">100</span><span class="p">,</span> <span class="s2">&quot;padding_idx&quot;</span><span class="p">:</span> <span class="mi">0</span><span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">embedding</span> <span class="o">=</span> <span class="n">EmbeddingLayerConstructor</span><span class="o">.</span><span class="n">create_embedding_layer</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">vocab_tokens</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;1st_token&quot;</span><span class="p">,</span> <span class="s2">&quot;2nd_token&quot;</span><span class="p">,</span> <span class="s2">&quot;and_so_on&quot;</span><span class="p">],</span>
+<span class="gp">... </span>    <span class="n">filepath</span><span class="o">=</span><span class="s2">&quot;./pretrained_embeddings/glove.6B.100d.txt&quot;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="o">**</span><span class="n">embedding_init_params</span>
+<span class="gp">... </span>    <span class="p">)</span>
+<span class="gp">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">embedding</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="chatbot.models.EmbeddingLayerConstructor.create_embedding_layer">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">create_embedding_layer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vocab_tokens</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filepath</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Embedding</span></span></span><a class="headerlink" href="#chatbot.models.EmbeddingLayerConstructor.create_embedding_layer" title="Link to this definition"></a></dt>
+<dd><p>Initializes a <cite>nn.Embedding</cite> layer.</p>
+<p>If <code class="xref py py-attr docutils literal notranslate"><span class="pre">filepath</span></code> is provided the embedding layer is
+initialized with pretrained word embeddings from the file.
+Otherwise, returns an embedding layer with learnable weights.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>vocab_tokens</strong> (<em>List</em><em>[</em><em>str</em><em>]</em>) – All the tokens in the vocabulary.</p></li>
+<li><p><strong>filepath</strong> (<em>str</em><em>, </em><em>optional</em>) – Path to the pretrained embeddings
+file. Defaults to <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p></li>
+<li><p><strong>**kwargs</strong> – Initialization parameters of the embedding layer,
+e.g., <cite>embedding_dim</cite>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>An embedding layer with either pretrained</dt><dd><p>frozen weights or with learnable weights.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>nn.Embedding</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="chatbot.models.EmbeddingLayerConstructor.from_file">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vocab_tokens</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">filepath</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Embedding</span></span></span><a class="headerlink" href="#chatbot.models.EmbeddingLayerConstructor.from_file" title="Link to this definition"></a></dt>
+<dd><p>Loads pretrained word embeddings, i.e., GLoVe embeddings,
+into a <cite>nn.Embedding</cite> layer.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>vocab_tokens</strong> (<em>List</em><em>[</em><em>str</em><em>]</em>) – All the tokens in the
+vocabulary.</p></li>
+<li><p><strong>filepath</strong> (<em>str</em>) – Path to the pretrained embeddings file.</p></li>
+<li><p><strong>**kwargs</strong> – Initialization parameters of the embedding layer,
+e.g., <cite>embedding_dim</cite>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>An embedding layer with pretrained frozen weights.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>nn.Embedding</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="chatbot.models.EmbeddingLayerConstructor.without_pretrained_embeddings">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">without_pretrained_embeddings</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vocab_tokens</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Embedding</span></span></span><a class="headerlink" href="#chatbot.models.EmbeddingLayerConstructor.without_pretrained_embeddings" title="Link to this definition"></a></dt>
+<dd><p>Returns an initialized <cite>nn.Embedding</cite> layer with learnable
+weights.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>vocab_tokens</strong> (<em>List</em><em>[</em><em>str</em><em>]</em>) – All the tokens in the
+vocabulary.</p></li>
+<li><p><strong>**kwargs</strong> – Initialization parameters of the embedding layer,
+e.g., <cite>embedding_dim</cite>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>An embedding layer with learnable weights.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>nn.Embedding</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="chatbot.models.EncoderRNN">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">chatbot.models.</span></span><span class="sig-name descname"><span class="pre">EncoderRNN</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">embedding</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Embedding</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hidden_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_layers</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dropout</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#chatbot.models.EncoderRNN" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></p>
+<p>Encoder layer for a seq2seq model.</p>
+<p>Encodes a variable-length input sequence of tokens into a
+fixed-length vector representation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>embedding</strong> (<em>nn.Embedding</em>) – The embedding layer.</p></li>
+<li><p><strong>hidden_size</strong> (<em>int</em>) – The number of features in the hidden state.</p></li>
+<li><p><strong>num_layers</strong> (<em>int</em><em>, </em><em>optional</em>) – The number of recurrent layers (default=1).</p></li>
+<li><p><strong>dropout</strong> (<em>float</em><em>, </em><em>optional</em>) – The dropout value applied to the GRU layer.
+If non-zero, the <code class="xref py py-attr docutils literal notranslate"><span class="pre">num_layers</span></code> should be greater than 1,
+otherwise the dropout value will be set to zero. (default=0).</p></li>
+</ul>
+</dd>
+</dl>
+<dl>
+<dt>Inputs: input_sequences, input_lengths, h_0</dt><dd><ul class="simple">
+<li><p><strong>input_sequences</strong>: tensor of shape <span class="math notranslate nohighlight">\((L, N)\)</span>.</p></li>
+<li><p><strong>input_lengths</strong>: tensor of shape <span class="math notranslate nohighlight">\((N)\)</span>.</p></li>
+<li><p><strong>h_0</strong>: tensor of shape <span class="math notranslate nohighlight">\((2 * \text{num_layers}, H)\)</span> or
+<span class="math notranslate nohighlight">\((2 * \text{num_layers}, N, H)\)</span> containing the initial
+hidden state for the input sequence. Defaults to <code class="docutils literal notranslate"><span class="pre">None</span></code>.</p></li>
+</ul>
+<p>where:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+    N ={} &amp; \text{batch size} \\
+    L ={} &amp; \text{max sequence length} \\
+    H ={} &amp; \text{hidden\_size}
+\end{aligned}\end{split}\]</div>
+</dd>
+<dt>Outputs: output, h_n</dt><dd><ul class="simple">
+<li><p><strong>output</strong>: tensor of shape <span class="math notranslate nohighlight">\((L, N, H)\)</span>.</p></li>
+<li><p><strong>h_n</strong>: tensor of shape <span class="math notranslate nohighlight">\((2 * \text{num_layers}, N, H)\)</span>.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="chatbot.models.EncoderRNN.hidden_size">
+<span class="sig-name descname"><span class="pre">hidden_size</span></span><a class="headerlink" href="#chatbot.models.EncoderRNN.hidden_size" title="Link to this definition"></a></dt>
+<dd><p>The number of features in the hidden state <cite>h</cite>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="chatbot.models.EncoderRNN.emb">
+<span class="sig-name descname"><span class="pre">emb</span></span><a class="headerlink" href="#chatbot.models.EncoderRNN.emb" title="Link to this definition"></a></dt>
+<dd><p>The embedding layer for the input sequence.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>torch.nn.Module</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="chatbot.models.EncoderRNN.bi_gru">
+<span class="sig-name descname"><span class="pre">bi_gru</span></span><a class="headerlink" href="#chatbot.models.EncoderRNN.bi_gru" title="Link to this definition"></a></dt>
+<dd><p>A bidirectional GRU layer.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>torch.nn.Module</p>
+</dd>
+</dl>
+</dd></dl>
+
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">num_vocab_tokens</span> <span class="o">=</span> <span class="mi">1000</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">batch_size</span> <span class="o">=</span> <span class="mi">10</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">max_seq_len</span> <span class="o">=</span> <span class="mi">12</span>
+<span class="gp">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Create embedding layer</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">embedding</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Embedding</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">embedding_dim</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">num_embeddings</span><span class="o">=</span><span class="n">num_vocab_tokens</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">padding_idx</span><span class="o">=</span><span class="mi">0</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Create encoder layer</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">encoder</span> <span class="o">=</span> <span class="n">EncoderRNN</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">embedding</span><span class="o">=</span><span class="n">embedding</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">hidden_size</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">num_layers</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">dropout</span><span class="o">=</span><span class="mi">0</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Create a sample of input sequences. In practice sequences</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># with length less than the maximum are padded with the mask index</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">input_sequences</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">randint</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">low</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">high</span><span class="o">=</span><span class="n">num_vocab_tokens</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">size</span><span class="o">=</span><span class="p">(</span><span class="n">batch_size</span><span class="p">,</span> <span class="n">max_seq_len</span><span class="p">),</span>
+<span class="gp">... </span>    <span class="n">dtype</span><span class="o">=</span><span class="n">torch</span><span class="o">.</span><span class="n">int64</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># Find the length of each sequence (without the mask index)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># in the input sequences</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">input_lengths</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">sum</span><span class="p">(</span><span class="n">input_sequences</span> <span class="o">!=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">dim</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">output</span><span class="p">,</span> <span class="n">h_n</span> <span class="o">=</span> <span class="n">encoder</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">input_sequences</span><span class="o">=</span><span class="n">input_sequences</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">input_lengths</span><span class="o">=</span><span class="n">input_lengths</span>
+<span class="gp">... </span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="chatbot.models.EncoderRNN.forward">
+<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_sequences</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input_lengths</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">h_0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tensor</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Tensor</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Tensor</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#chatbot.models.EncoderRNN.forward" title="Link to this definition"></a></dt>
+<dd><p>The forward pass of the encoder.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>input_sequences</strong> (<em>torch.Tensor</em>) – A batch of input sequences.</p></li>
+<li><p><strong>input_lengths</strong> (<em>torch.Tensor</em>) – Holds the length of each
+input sequence.</p></li>
+<li><p><strong>h_0</strong> (<em>torch.Tensor</em><em>, </em><em>optional</em>) – Initial hidden state
+of the rnn layer of the encoder. Defaults to
+<code class="docutils literal notranslate"><span class="pre">None</span></code>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>Output and hidden</dt><dd><p>state of the encoder layer.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Tuple[torch.Tensor, torch.Tensor]</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="chatbot.models.GreedySearchDecoder">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">chatbot.models.</span></span><span class="sig-name descname"><span class="pre">GreedySearchDecoder</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">encoder</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Module</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">decoder</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Module</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eos_idx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#chatbot.models.GreedySearchDecoder" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></p>
+<p>Implements greedy decoding.</p>
+<p>Selects the most probable token, i.e <cite>argmax</cite> from the model’s
+vocabulary at each decoding time-step as candidate to the output
+sequence.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>encoder</strong> (<em>torch.nn.Module</em>) – The encoder layer of a seq-to-seq model.</p></li>
+<li><p><strong>decoder</strong> (<em>torch.nn.Module</em>) – The decoder layer of a seq-to-seq model.</p></li>
+<li><p><strong>eos_idx</strong> (<em>int</em>) – The end-of-sentence token index.</p></li>
+</ul>
+</dd>
+</dl>
+<dl>
+<dt>Inputs: input_seq, input_length, max_seq_length</dt><dd><ul class="simple">
+<li><p><strong>input_seq</strong>: tensor of shape <span class="math notranslate nohighlight">\((L_{in}, 1)\)</span>.</p></li>
+<li><p><strong>input_length</strong>: tensor of shape <span class="math notranslate nohighlight">\((1, )\)</span>.</p></li>
+<li><p><strong>max_seq_length</strong>: An integer number.</p></li>
+</ul>
+</dd>
+<dt>Outputs: all_token_indices</dt><dd><ul class="simple">
+<li><p><strong>all_token_indices</strong>: tensor of shape <span class="math notranslate nohighlight">\((L_{out})\)</span>.</p></li>
+</ul>
+<p>where:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+    L_{in} ={} &amp; \text{input sequence length} \\
+    L_{out} ={} &amp; \text{max_seq_length}
+\end{aligned}\end{split}\]</div>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="chatbot.models.GreedySearchDecoder.forward">
+<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_seq</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input_length</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_seq_length</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tensor</span></span></span><a class="headerlink" href="#chatbot.models.GreedySearchDecoder.forward" title="Link to this definition"></a></dt>
+<dd><p>Forward pass of the Greedy Search Sampler.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>input_seq</strong> (<em>torch.Tensor</em>) – Input tokenized sequence.</p></li>
+<li><p><strong>input_length</strong> (<em>torch.Tensor</em>) – Length of input sequence.</p></li>
+<li><p><strong>max_seq_length</strong> (<em>int</em>) – The maximum sequence length in the
+entire dataset.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The predicted output indices.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>torch.Tensor</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="chatbot.models.LuongAttnDecoderRNN">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">chatbot.models.</span></span><span class="sig-name descname"><span class="pre">LuongAttnDecoderRNN</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">alignment_method</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">embedding</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Embedding</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hidden_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_layers</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dropout</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#chatbot.models.LuongAttnDecoderRNN" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></p>
+<p>Decoder layer for a seq2seq model.</p>
+<p>Produces a probability distribution predicting the next
+token in a sequence of tokens.</p>
+<p>The decoder uses a global attention mechanism as described
+on the paper “Effective Approaches to Attention-based Neural
+Machine Translation”. Luong, M.-T., Pham, H., &amp; Manning, C. D.
+(2015). <a class="reference external" href="https://arxiv.org/abs/1508.04025">https://arxiv.org/abs/1508.04025</a></p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>alignment_method</strong> (<em>str</em>) – Name of the alignment score method used
+in the attention layer. The available methods are: <cite>concat</cite>,
+<cite>dot</cite> and <cite>general</cite>.
+(vocabulary size).</p></li>
+<li><p><strong>embedding</strong> (<em>nn.Embedding</em>) – The embedding layer.</p></li>
+<li><p><strong>hidden_size</strong> (<em>int</em>) – The number of features in the hidden state.</p></li>
+<li><p><strong>output_size</strong> (<em>int</em>) – The size of the vocabulary.</p></li>
+<li><p><strong>num_layers</strong> (<em>int</em><em>, </em><em>optional</em>) – The number of recurrent layers (default=1).</p></li>
+<li><p><strong>dropout</strong> (<em>float</em><em>, </em><em>optional</em>) – The dropout value applied to the embedded
+input sequence and to the GRU layer. If non-zero, the
+<code class="xref py py-attr docutils literal notranslate"><span class="pre">num_layers</span></code> should be greater than 1, otherwise the dropout
+value will be set to zero. (default=0.1).</p></li>
+</ul>
+</dd>
+</dl>
+<dl>
+<dt>Inputs: input_seq, h_0, encoder_state</dt><dd><ul class="simple">
+<li><p><strong>input_seq</strong>: tensor of shape <span class="math notranslate nohighlight">\((1, N)\)</span>.</p></li>
+<li><p><strong>h_0</strong>: tensor of shape <span class="math notranslate nohighlight">\((num_layers, N, H)\)</span>.</p></li>
+<li><p><strong>encoder_state</strong>: tensor of shape <span class="math notranslate nohighlight">\((L, N, H)\)</span>.</p></li>
+</ul>
+<p>where:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+    N ={} &amp; \text{batch size} \\
+    L ={} &amp; \text{max sequence length} \\
+    H ={} &amp; \text{hidden\_size}
+\end{aligned}\end{split}\]</div>
+</dd>
+<dt>Outputs: output, hidden</dt><dd><ul class="simple">
+<li><p><strong>output</strong>: tensor of shape <span class="math notranslate nohighlight">\((N, V)\)</span>.</p></li>
+<li><p><strong>hidden</strong>: tensor of shape <span class="math notranslate nohighlight">\((num_layers, N, H)\)</span>.</p></li>
+</ul>
+<p>where:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+    V ={} &amp; \text{vocabulary size} \\
+\end{aligned}\end{split}\]</div>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="chatbot.models.LuongAttnDecoderRNN.forward">
+<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_seq</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">h_0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">encoder_state</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tensor</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Tensor</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Tensor</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#chatbot.models.LuongAttnDecoderRNN.forward" title="Link to this definition"></a></dt>
+<dd><p>The forward pass of the decoder.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The decoder runs one step (token) at a time.</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>input_seq</strong> (<em>torch.Tensor</em>) – Batch of single token sequences.</p></li>
+<li><p><strong>h_0</strong> (<em>torch.Tensor</em>) – The last hidden state of the encoder.</p></li>
+<li><p><strong>encoder_state</strong> (<em>torch.Tensor</em>) – The output of the encoder.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>The predictive distribution</dt><dd><p>and the attentional hidden state of the decoder.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Tuple[torch.Tensor, torch.Tensor]</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="chatbot.models.MaskedNLLLoss">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">chatbot.models.</span></span><span class="sig-name descname"><span class="pre">MaskedNLLLoss</span></span><a class="headerlink" href="#chatbot.models.MaskedNLLLoss" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></p>
+<p>Computes the negative log likelihood loss.</p>
+<p>Ignores target values, i.e., PAD values, specified by the
+input <cite>mask</cite> tensor.</p>
+<dl class="simple">
+<dt>Inputs: y_pred, y_true, mask</dt><dd><ul class="simple">
+<li><p><strong>y_pred</strong>: tensor of shape <span class="math notranslate nohighlight">\((N, V)\)</span>.</p></li>
+<li><p><strong>y_true</strong>: tensor of shape <span class="math notranslate nohighlight">\((N)\)</span>.</p></li>
+<li><p><strong>mask</strong>: tensor of shape <span class="math notranslate nohighlight">\((N)\)</span>.</p></li>
+</ul>
+</dd>
+</dl>
+<p>where:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+    N ={} &amp; \text{batch size} \\
+    V ={} &amp; \text{vocabulary size}
+\end{aligned}\end{split}\]</div>
+<dl class="simple">
+<dt>Outputs: loss</dt><dd><ul class="simple">
+<li><p><strong>loss</strong>: tensor of shape <span class="math notranslate nohighlight">\(()\)</span>.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="chatbot.models.MaskedNLLLoss.forward">
+<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">y_pred</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_true</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mask</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tensor</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tensor</span></span></span><a class="headerlink" href="#chatbot.models.MaskedNLLLoss.forward" title="Link to this definition"></a></dt>
+<dd><p>Define the computation performed at every call.</p>
+<p>Should be overridden by all subclasses.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Although the recipe for forward pass needs to be defined within
+this function, one should call the <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code> instance afterwards
+instead of this since the former takes care of running the
+registered hooks while the latter silently ignores them.</p>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="chatbot.models.PreTrainedEmbeddings">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">chatbot.models.</span></span><span class="sig-name descname"><span class="pre">PreTrainedEmbeddings</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">word_to_index</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">word_vectors</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">Tensor</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#chatbot.models.PreTrainedEmbeddings" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>A wrapper around pretrained word vectors and their use.</p>
+<p>Loads the pretrained embeddings from a file and creates an
+embedding matrix ready to be passed into an <cite>nn.Embedding</cite> layer.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>word_to_index</strong> (<em>Dict</em><em>[</em><em>str</em><em>, </em><em>int</em><em>]</em>) – A mapping from words
+to indexes.</p></li>
+<li><p><strong>word_vectors</strong> (<em>List</em><em>[</em><em>torch.Tensors</em><em>]</em>) – List with word
+embeddings.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="chatbot.models.PreTrainedEmbeddings.word_to_index">
+<span class="sig-name descname"><span class="pre">word_to_index</span></span><a class="headerlink" href="#chatbot.models.PreTrainedEmbeddings.word_to_index" title="Link to this definition"></a></dt>
+<dd><p>A mapping from words
+to indexes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Dict[str, int]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="chatbot.models.PreTrainedEmbeddings.word_vectors">
+<span class="sig-name descname"><span class="pre">word_vectors</span></span><a class="headerlink" href="#chatbot.models.PreTrainedEmbeddings.word_vectors" title="Link to this definition"></a></dt>
+<dd><p>List with word
+embeddings.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List[torch.Tensors]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="chatbot.models.PreTrainedEmbeddings.index_to_word">
+<span class="sig-name descname"><span class="pre">index_to_word</span></span><a class="headerlink" href="#chatbot.models.PreTrainedEmbeddings.index_to_word" title="Link to this definition"></a></dt>
+<dd><p>A mapping from indexes
+to words.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Dict[int, str]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># Example loading glove embeddings</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">embeddings_wrapper</span> <span class="o">=</span> <span class="n">PreTrainedEmbeddings</span><span class="o">.</span><span class="n">from_embeddings_file</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">embedding_file</span><span class="o">=</span><span class="s2">&quot;./.vector_cache/glove.6B.100d.txt&quot;</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">word_vectors</span> <span class="o">=</span> <span class="n">embeddings_wrapper</span><span class="o">.</span><span class="n">word_vectors</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">word_to_index</span> <span class="o">=</span> <span class="n">embeddings_wrapper</span><span class="o">.</span><span class="n">word_to_index</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">index_to_word</span> <span class="o">=</span> <span class="n">embeddings_wrapper</span><span class="o">.</span><span class="n">index_to_word</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">word_vectors</span><span class="p">))</span>
+<span class="go">400000</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">word_vectors</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="go">torch.Size([100])</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># Create an embedding matrix for a given list of words</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">embeddings_matrix</span> <span class="o">=</span> <span class="n">embeddings_wrapper</span><span class="o">.</span><span class="n">make_embedding_matrix</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">words</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;Creating&quot;</span><span class="p">,</span> <span class="s2">&quot;a&quot;</span><span class="p">,</span> <span class="s2">&quot;matrix&quot;</span><span class="p">]</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">embeddings_matrix</span><span class="o">.</span><span class="n">shape</span><span class="p">)</span>
+<span class="go">torch.Size([3, 100])</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># Get embedding for a single word</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">cat_embedding</span> <span class="o">=</span> <span class="n">embeddings_wrapper</span><span class="o">.</span><span class="n">get_embedding</span><span class="p">(</span><span class="n">word</span><span class="o">=</span><span class="s2">&quot;cat&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">cat_embedding</span><span class="p">)</span>
+<span class="go">tensor([0.2309, 0.2828, 0.6318, 0.5941, 0.5860, 0.6326, 0.2440, 0.1411,</span>
+<span class="go"> 0.0608, -0.7898, -0.2910,  0.1429,  0.7227,  0.2043,  0.1407,  0.9876,</span>
+<span class="go"> 0.5253,  0.0975,  0.8822,  0.5122,  0.4020,  0.2117, -0.0131, -0.7162,</span>
+<span class="go"> 0.5539,  1.1452, -0.8804, -0.5022, -0.2281,  0.0239,  0.1072,  0.0837,</span>
+<span class="go"> 0.5501,  0.5848,  0.7582,  0.4571, -0.2800,  0.2522,  0.6896, -0.6097,</span>
+<span class="go"> 0.1958,  0.0442, -0.3114, -0.6883, -0.2272,  0.4618, -0.7716,  0.1021,</span>
+<span class="go"> 0.5564,  0.0674, -0.5721,  0.2374,  0.4717,  0.8277, -0.2926, -1.3422,</span>
+<span class="go">-0.0993,  0.2814,  0.4160,  0.1058,  0.6220,  0.8950, -0.2345,  0.5135,</span>
+<span class="go"> 0.9938,  1.1846, -0.1636,  0.2065,  0.7385,  0.2406, -0.9647,  0.1348,</span>
+<span class="go">-0.0072,  0.3302, -0.1236,  0.2719, -0.4095,  0.0219, -0.6069,  0.4076,</span>
+<span class="go"> 0.1957, -0.4180,  0.1864, -0.0327, -0.7857, -0.1385,  0.0440, -0.0844,</span>
+<span class="go"> 0.0491,  0.2410,  0.4527, -0.1868,  0.4618,  0.0891, -0.1819, -0.0152,</span>
+<span class="go">-0.7368, -0.1453,  0.1510, -0.7149])</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="chatbot.models.PreTrainedEmbeddings.from_embeddings_file">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_embeddings_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">embedding_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#chatbot.models.embeddings.PreTrainedEmbeddings" title="chatbot.models.embeddings.PreTrainedEmbeddings"><span class="pre">PreTrainedEmbeddings</span></a></span></span><a class="headerlink" href="#chatbot.models.PreTrainedEmbeddings.from_embeddings_file" title="Link to this definition"></a></dt>
+<dd><p>Instantiates the wrapper from a pre-trained vector file.</p>
+<p>Vector file should have the following format:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>word0 x0_0 x0_1 x0_2 x0_3 ... x0_N
+word1 x1_0 x1_1 x1_2 x1_3 ... x1_N
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>embedding_file</strong> (<em>str</em>) – The path to the embedding file.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>An instance of the <cite>PretrainedEmbeddings</cite> class.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p><a class="reference internal" href="#chatbot.models.PreTrainedEmbeddings" title="chatbot.models.PreTrainedEmbeddings">PreTrainedEmbeddings</a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="chatbot.models.PreTrainedEmbeddings.get_embedding">
+<span class="sig-name descname"><span class="pre">get_embedding</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">word</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tensor</span></span></span><a class="headerlink" href="#chatbot.models.PreTrainedEmbeddings.get_embedding" title="Link to this definition"></a></dt>
+<dd><p>Returns the embedding of the input word.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>word</strong> (<em>str</em>) – The input word to be embedded.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The word embedding.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>torch.Tensor</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="chatbot.models.PreTrainedEmbeddings.make_embedding_matrix">
+<span class="sig-name descname"><span class="pre">make_embedding_matrix</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">words</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tensor</span></span></span><a class="headerlink" href="#chatbot.models.PreTrainedEmbeddings.make_embedding_matrix" title="Link to this definition"></a></dt>
+<dd><p>Creates an embedding matrix for a specific set of words.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>words</strong> (<em>List</em><em>[</em><em>str</em><em>]</em>) – A list of words.</p>
+</dd>
+</dl>
+<dl>
+<dt>Returns: final_embeddings</dt><dd><ul class="simple">
+<li><p><strong>final_embeddings</strong>: tensor of shape <span class="math notranslate nohighlight">\((V, D)\)</span>.</p></li>
+</ul>
+<p>where:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+    N ={} &amp; \text{vocabulary size} \\
+    D ={} &amp; \text{dimension of token embeddings}
+\end{aligned}\end{split}\]</div>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="chatbot.models.RandomSearchDecoder">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">chatbot.models.</span></span><span class="sig-name descname"><span class="pre">RandomSearchDecoder</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">encoder</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Module</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">decoder</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Module</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eos_idx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#chatbot.models.RandomSearchDecoder" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></p>
+<p>Implements multinomial sampling during decoding.</p>
+<p>Samples a token according to the output probability distribution over
+the vocabulary.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>encoder</strong> (<em>torch.nn.Module</em>) – The encoder layer of a seq-to-seq model.</p></li>
+<li><p><strong>decoder</strong> (<em>torch.nn.Module</em>) – The decoder layer of a seq-to-seq model.</p></li>
+<li><p><strong>eos_idx</strong> (<em>int</em>) – The end-of-sentence token index.</p></li>
+</ul>
+</dd>
+</dl>
+<dl>
+<dt>Inputs: input_seq, input_length, max_seq_length</dt><dd><ul class="simple">
+<li><p><strong>input_seq</strong>: tensor of shape <span class="math notranslate nohighlight">\((L_{in}, 1)\)</span>.</p></li>
+<li><p><strong>input_length</strong>: tensor of shape <span class="math notranslate nohighlight">\((1, )\)</span>.</p></li>
+<li><p><strong>max_seq_length</strong>: An integer number.</p></li>
+</ul>
+</dd>
+<dt>Outputs: all_token_indices</dt><dd><ul class="simple">
+<li><p><strong>all_token_indices</strong>: tensor of shape <span class="math notranslate nohighlight">\((L_{out})\)</span>.</p></li>
+</ul>
+<p>where:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+    L_{in} ={} &amp; \text{input sequence length} \\
+    L_{out} ={} &amp; \text{max_seq_length}
+\end{aligned}\end{split}\]</div>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="chatbot.models.RandomSearchDecoder.forward">
+<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_seq</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input_length</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_seq_length</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tensor</span></span></span><a class="headerlink" href="#chatbot.models.RandomSearchDecoder.forward" title="Link to this definition"></a></dt>
+<dd><p>Forward pass of the Greedy Search Sampler.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>input_seq</strong> (<em>torch.Tensor</em>) – Input tokenized sequence.</p></li>
+<li><p><strong>input_length</strong> (<em>torch.Tensor</em>) – Length of input sequence.</p></li>
+<li><p><strong>max_seq_length</strong> (<em>int</em>) – The maximum sequence length in the
+entire dataset.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>The predicted token indices</dt><dd><p>along with their predicted scores.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Tuple[torch.Tensor, torch.Tensor]</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
 </section>
 </section>
 

@@ -10,8 +10,6 @@ from chatbot.utils.data.vocabulary import VocabularyBuilder
 
 
 class CornellDialogsDataset(Dataset):
-    """"""
-
     def __init__(
         self, sequence_pairs: List[List[str]], vectorizer: SequenceVectorizer
     ) -> None:
@@ -26,7 +24,8 @@ class CornellDialogsDataset(Dataset):
         max_length: int = 10,
         min_count: int = 3,
     ) -> CornellDialogsDataset:
-        """Initializes the `CornelDialogsDataset` from a `.txt` file.
+        """Initializes the `CornelDialogsDataset` from a `.txt` file
+        that contains the sequence pairs.
 
         Args:
             file (str): Path to the `.txt` file.
@@ -79,8 +78,7 @@ class CornellDialogsDataset(Dataset):
         return len(self.sequence_pairs)
 
     def __getitem__(self, index: int) -> Dict[str, torch.Tensor | int]:
-        r"""Get dataset's data point in vectorized form based
-        on the input index.
+        r"""Returns a data point in vectorized form based on the input index.
 
         Refer to `chatbot.utils.data..vectorizer.SequenceVectorizer`.
 

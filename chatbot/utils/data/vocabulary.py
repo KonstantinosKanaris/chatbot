@@ -10,17 +10,15 @@ from chatbot.utils.aux import normalize_text
 
 
 class Vocabulary:
-    """A class representing a vocabulary for nlp processing
-    tasks.
+    """Creates a vocabulary object which maps tokens to indices.
 
-    Maps tokens to indices, indices to tokens and keeps track
-    of the count value of each token in the vocabulary and also
-    the total token count.
+    Provides methods for adding new tokens and for searching existing
+    tokens based on their indices or indices based on their tokens.
+    Also keeps track of the count value of each token in the vocabulary.
 
     Args:
-        token_to_idx (Dict[str, int], optional):
-            A pre-existing mapping of tokens to indices. Defaults
-            to `None`.
+        token_to_idx (Dict[str, int], optional): A pre-existing mapping
+            of tokens to indices. Defaults to `None`.
 
     Attributes:
         token_to_idx (Dict[str, int]):
@@ -32,19 +30,19 @@ class Vocabulary:
     def __init__(
         self,
         token_to_idx: Optional[Dict[str, int]] = None,
+        token_to_count: Optional[Dict[str, int]] = None,
     ) -> None:
         if token_to_idx is None:
             token_to_idx = {}
-        self.token_to_idx: Dict[str, int] = token_to_idx
-        self.token_to_count: Dict[str, int] = {}
+        self.token_to_idx = {} if token_to_idx is None else token_to_idx
+        self.token_to_count = {} if token_to_count is None else token_to_count
         self.idx_to_token: Dict[int, str] = {
             idx: token for token, idx in self.token_to_idx.items()
         }
         self.num_tokens = len(self.token_to_idx)
 
     def add_token(self, token: str) -> int:
-        """Updates the mapping dictionaries based on the
-        provided token.
+        """Updates the mapping dictionaries based on the provided token.
 
         Args:
             token (str): The token to be added to the
@@ -65,8 +63,7 @@ class Vocabulary:
         return index
 
     def add_many(self, tokens: List[str]) -> List[int]:
-        """Updates the mapping dictionaries based on a
-        list of input tokens.
+        """Updates the mapping dictionaries based on a list of input tokens.
 
         Args:
             tokens (List[str]): A list of string tokens.
@@ -180,8 +177,8 @@ class SequenceVocabulary(Vocabulary):
         self.end_seq_index = self.add_token(token=end_seq_token)
 
     def lookup_token(self, token: str) -> int:
-        """Retrieves the index associated with the token or
-        the `UNK` index if token isn't found.
+        """Retrieves the index associated with the token or the `UNK` index if
+        token isn't found.
 
         Args:
             token (str): The token to look up.
@@ -200,8 +197,8 @@ class SequenceVocabulary(Vocabulary):
 
 
 class VocabularyBuilder:
-    """Constructs a vocabulary object from a list of query and
-    response sequence pairs.
+    """Constructs a vocabulary object from a list of query and response
+    sequence pairs.
 
     Uses a tokenizer for splitting the text into tokens in order
     to build the vocabulary. Refer to
@@ -258,8 +255,7 @@ class VocabularyBuilder:
     def from_txt_file(
         cls, file: str, tokenizer: Callable[[str], List[str]]
     ) -> VocabularyBuilder:
-        """Initializes the `VocabularyBuilder` from a local
-        `.txt` file.
+        """Initializes the `VocabularyBuilder` from a local `.txt` file.
 
         Normalizes each pair of sequences before initialization.
         Refer to the `chatbot.data.utils.normalize_text()` function
@@ -288,8 +284,8 @@ class VocabularyBuilder:
         return cls(pairs=pairs, tokenizer=tokenizer)
 
     def _filter_pair_by_length(self, pair: List[str], max_length: int) -> bool:
-        """Returns ``True`` if both sequences in the provided pair
-        have length less than or equal to the maximum threshold.
+        """Returns ``True`` if both sequences in the provided pair have length
+        less than or equal to the maximum threshold.
 
         Note:
             The sequence length is essentially the length of the
@@ -308,8 +304,8 @@ class VocabularyBuilder:
     def filter_pairs_by_length(
         self, pairs: List[List[str]], max_length: int
     ) -> List[List[str]]:
-        """Removing pairs whose sequences (either of them) have length
-        greater than or equal to the specified maximum threshold..
+        """Removing pairs whose sequences (either of them) have length greater
+        than or equal to the specified maximum threshold..
 
         Note:
             The sequence length is essentially the length of the
@@ -328,9 +324,8 @@ class VocabularyBuilder:
     def filter_pairs_by_token_count(
         self, pairs: List[List[str]], min_count: int
     ) -> List[List[str]]:
-        """Removes pairs whose sequences (either of them) include tokens
-        with count value less than or equal to the specified minimum
-        threshold.
+        """Removes pairs whose sequences (either of them) include tokens with
+        count value less than or equal to the specified minimum threshold.
 
         Args:
             pairs (List[List[str]]): The query and response
@@ -366,10 +361,6 @@ class VocabularyBuilder:
             if keep_input and keep_output:
                 keep_pairs.append(pair)
 
-        logger.info(
-            f"Filtered (based on token count) to " f"{len(keep_pairs)} sequence pairs."
-        )
-
         return keep_pairs
 
     def build_vocabulary(
@@ -377,8 +368,7 @@ class VocabularyBuilder:
         max_length: int = 10,
         min_count: int = 3,
     ) -> Tuple[List[List[str]], SequenceVocabulary]:
-        """Filters the sequence pairs and builds the
-        vocabulary.
+        """Filters the sequence pairs and builds the vocabulary.
 
         The filtering includes:
 
@@ -411,7 +401,8 @@ class VocabularyBuilder:
             pairs=filtered_pairs, min_count=min_count
         )
 
-        for pair in tqdm(filtered_pairs, desc="Building vocabulary...", colour="green"):
+        bar = tqdm(filtered_pairs, "Building vocabulary...", colour="green")
+        for pair in bar:
             for sequence in pair:
                 self.vocab.add_many(tokens=self.tokenizer(sequence))
 

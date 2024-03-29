@@ -1,31 +1,37 @@
 #-----------------------------------------------------------------------------------
-# Configuration for generating new surnames.
+# Configuration for running the chatbot in evaluation mode.
+# All values must be the same with the values from the training configuration.
 #-----------------------------------------------------------------------------------
-# - data_path               : The csv path to the training data.
-# - model_path              : The path to the saved model.
-# - model_name              : The name of the model.
+# - data_path               : The path to the txt file containing pairs of text sequences.
+# - checkpoint_path         : Path to the checkpoint containing the trained model.
+# - embeddings_path         : Path to pre-trained embeddings file, i.e. GLoVe embeddings.
 # - num_samples             : Number of surnames to generate.
-# - embedding_dim           : Dimension of character embeddings.
+# - max_seq_length          : Maximum number of tokens allowed in each of the pair of
+#                             sequences.
+# - min_count               : Minimum token count value threshold.
+# - embedding_dim           : Dimensions of token embeddings.
 # - hidden_size             : Hidden size of `rnn`, `gru` or `lstm` model.
 # - dropout                 : Dropout value to apply after the `rnn`, `gru or `lstm`
-#                             layer.
-# - num_layers              : Number of `rnn`, `gru` or `lstm` layers.
-# - with_condition          : If ``True`` the surname nationalities will be also
-#                             passed as an input in the `rnn`, `gru` or `lstm` layer(s).
+# - num_layers              : Number of rnn layers in the encoder and the decoder.
+# - alignment_method        : Name of the alignment score method used in the attention layer.
+#                             The available methods are: `concat`, `dot` and `general`.
 #-----------------------------------------------------------------------------------
 data_path: ./data/cornell_movie_dialogs/processed/formatted_dialogs.txt
-checkpoint_path: ./checkpoints/20240327_13-17_checkpoint.pth
-embeddings_path: ./pretrained_embeddings/glove.6B.300d.txt
-max_seq_length: 15
-min_count: 3
-embedding_init_params:
-  embedding_dim: 300
-encoder_init_params:
-  hidden_size: 300
-  dropout: 0.1
-  num_layers: 2
-decoder_init_params:
-  alignment_method: dot
-  hidden_size: 300
-  dropout: 0.1
-  num_layers: 2
+checkpoint_path: ./checkpoints/checkpoint_100d_2l_50ep_10_pa_8length.pth
+evaluation_parameters:
+  embeddings_path: ./pretrained_embeddings/glove.6B.100d.txt
+  general:
+    max_seq_length: 8
+    min_count: 3
+  embedding_init_params:
+    embedding_dim: 100
+    padding_idx: 0
+  encoder_init_params:
+    hidden_size: 100
+    dropout: 0.1
+    num_layers: 2
+  decoder_init_params:
+    alignment_method: dot
+    hidden_size: 100
+    dropout: 0.1
+    num_layers: 2

@@ -45,7 +45,7 @@ help:
 .PHONY: black
 black: ## Run the black tool and update files that need to
 	@echo "$(BGreen)Running black$(Color_Off)"
-	black $(SRC_DIR)
+	black --line-length 79 $(SRC_DIR)
 
 .PHONY: isort
 isort:
@@ -59,7 +59,7 @@ pretty: isort black
 .PHONY: check-black
 check-black:
 	@echo "$(BGreen)Checking black$(Color_Off)"
-	black --check $(SRC_DIR)
+	black --line-length 79 --check $(SRC_DIR)
 
 .PHONY: check-isort
 check-isort:
@@ -76,7 +76,7 @@ mypy:  ## Run the mypy tool
 flake8: ## Run the flake8 tool
 	@echo "$(BGreen)Running flake8$(Color_Off)"
 	@echo $(CWD)
-	flake8 --max-line-length 99 --ignore W503,E203,E402 $(SRC_DIR)
+	flake8 --ignore W503,E203,E402 $(SRC_DIR)
 
 .PHONY: lint
 lint:

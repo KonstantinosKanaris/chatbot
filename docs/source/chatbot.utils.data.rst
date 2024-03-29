@@ -4,6 +4,14 @@ chatbot.utils.data package
 Submodules
 ----------
 
+chatbot.utils.data.datasets module
+----------------------------------
+
+.. automodule:: chatbot.utils.data.datasets
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 chatbot.utils.data.vectorizer module
 ------------------------------------
 

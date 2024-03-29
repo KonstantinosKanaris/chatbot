@@ -51,23 +51,15 @@
 <li><a class="reference internal" href="#chatbot.controllers.TrainingController"><code class="docutils literal notranslate"><span class="pre">TrainingController</span></code></a><ul>
 <li><a class="reference internal" href="#chatbot.controllers.TrainingController.dataset"><code class="docutils literal notranslate"><span class="pre">TrainingController.dataset</span></code></a></li>
 <li><a class="reference internal" href="#chatbot.controllers.TrainingController.hyperparameters"><code class="docutils literal notranslate"><span class="pre">TrainingController.hyperparameters</span></code></a></li>
-<li><a class="reference internal" href="#chatbot.controllers.TrainingController.checkpoints_dir"><code class="docutils literal notranslate"><span class="pre">TrainingController.checkpoints_dir</span></code></a></li>
+<li><a class="reference internal" href="#chatbot.controllers.TrainingController.checkpoint_path"><code class="docutils literal notranslate"><span class="pre">TrainingController.checkpoint_path</span></code></a></li>
 <li><a class="reference internal" href="#chatbot.controllers.TrainingController.resume"><code class="docutils literal notranslate"><span class="pre">TrainingController.resume</span></code></a></li>
 <li><a class="reference internal" href="#chatbot.controllers.TrainingController.vectorizer"><code class="docutils literal notranslate"><span class="pre">TrainingController.vectorizer</span></code></a></li>
-<li><a class="reference internal" href="#chatbot.controllers.TrainingController.mask_index"><code class="docutils literal notranslate"><span class="pre">TrainingController.mask_index</span></code></a></li>
 <li><a class="reference internal" href="#chatbot.controllers.TrainingController.prepare_for_training"><code class="docutils literal notranslate"><span class="pre">TrainingController.prepare_for_training()</span></code></a></li>
 <li><a class="reference internal" href="#chatbot.controllers.TrainingController.start_training"><code class="docutils literal notranslate"><span class="pre">TrainingController.start_training()</span></code></a></li>
 </ul>
 </li>
-</ul>
-</li>
-<li><a class="reference internal" href="#module-chatbot.datasets">chatbot.datasets module</a><ul>
-<li><a class="reference internal" href="#chatbot.datasets.CornellDialogsDataset"><code class="docutils literal notranslate"><span class="pre">CornellDialogsDataset</span></code></a><ul>
-<li><a class="reference internal" href="#chatbot.datasets.CornellDialogsDataset.get_num_batches"><code class="docutils literal notranslate"><span class="pre">CornellDialogsDataset.get_num_batches()</span></code></a></li>
-<li><a class="reference internal" href="#chatbot.datasets.CornellDialogsDataset.get_vectorizer"><code class="docutils literal notranslate"><span class="pre">CornellDialogsDataset.get_vectorizer()</span></code></a></li>
-<li><a class="reference internal" href="#chatbot.datasets.CornellDialogsDataset.load_pairs_and_vectorizer"><code class="docutils literal notranslate"><span class="pre">CornellDialogsDataset.load_pairs_and_vectorizer()</span></code></a></li>
-</ul>
-</li>
+<li><a class="reference internal" href="#chatbot.controllers.initialize_from_checkpoint"><code class="docutils literal notranslate"><span class="pre">initialize_from_checkpoint()</span></code></a></li>
+<li><a class="reference internal" href="#chatbot.controllers.initialize_seq2seq_components"><code class="docutils literal notranslate"><span class="pre">initialize_seq2seq_components()</span></code></a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#module-chatbot">Module contents</a></li>
@@ -113,33 +105,42 @@
 <li class="toctree-l4"><a class="reference internal" href="chatbot.engine.html#chatbot.engine.evaluator.Evaluator.evaluate"><code class="docutils literal notranslate"><span class="pre">Evaluator.evaluate()</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="chatbot.engine.html#chatbot.engine.evaluator.GreedySearchDecoder"><code class="docutils literal notranslate"><span class="pre">GreedySearchDecoder</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="chatbot.engine.html#chatbot.engine.evaluator.GreedySearchDecoder.forward"><code class="docutils literal notranslate"><span class="pre">GreedySearchDecoder.forward()</span></code></a></li>
-</ul>
-</li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="chatbot.engine.html#module-chatbot.engine.trainer">chatbot.engine.trainer module</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="chatbot.engine.html#chatbot.engine.trainer.Trainer"><code class="docutils literal notranslate"><span class="pre">Trainer</span></code></a><ul>
 <li class="toctree-l4"><a class="reference internal" href="chatbot.engine.html#chatbot.engine.trainer.Trainer.compute_loss"><code class="docutils literal notranslate"><span class="pre">Trainer.compute_loss()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="chatbot.engine.html#chatbot.engine.trainer.Trainer.generate_batches"><code class="docutils literal notranslate"><span class="pre">Trainer.generate_batches()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="chatbot.engine.html#chatbot.engine.trainer.Trainer.mask_nll_loss"><code class="docutils literal notranslate"><span class="pre">Trainer.mask_nll_loss()</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="chatbot.engine.html#chatbot.engine.trainer.Trainer.train"><code class="docutils literal notranslate"><span class="pre">Trainer.train()</span></code></a></li>
 </ul>
 </li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="chatbot.engine.html#module-chatbot.engine.utils">chatbot.engine.utils module</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="chatbot.engine.html#chatbot.engine.utils.EarlyStopping"><code class="docutils literal notranslate"><span class="pre">EarlyStopping</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="chatbot.engine.html#chatbot.engine.utils.EarlyStopping.save_general_checkpoint"><code class="docutils literal notranslate"><span class="pre">EarlyStopping.save_general_checkpoint()</span></code></a></li>
-</ul>
-</li>
+<li class="toctree-l3"><a class="reference internal" href="chatbot.engine.html#chatbot.engine.utils.EarlyStopping"><code class="docutils literal notranslate"><span class="pre">EarlyStopping</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="chatbot.engine.html#chatbot.engine.utils.Timer"><code class="docutils literal notranslate"><span class="pre">Timer</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="chatbot.engine.html#chatbot.engine.utils.load_general_checkpoint"><code class="docutils literal notranslate"><span class="pre">load_general_checkpoint()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="chatbot.engine.html#chatbot.engine.utils.inverse_sigmoid_decay"><code class="docutils literal notranslate"><span class="pre">inverse_sigmoid_decay()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="chatbot.engine.html#chatbot.engine.utils.set_seeds"><code class="docutils literal notranslate"><span class="pre">set_seeds()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="chatbot.engine.html#chatbot.engine.utils.write_checkpoint"><code class="docutils literal notranslate"><span class="pre">write_checkpoint()</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="chatbot.engine.html#module-chatbot.engine">Module contents</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chatbot.engine.html#module-chatbot.engine">Module contents</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="chatbot.engine.html#chatbot.engine.Evaluator"><code class="docutils literal notranslate"><span class="pre">Evaluator</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="chatbot.engine.html#chatbot.engine.Evaluator.chat"><code class="docutils literal notranslate"><span class="pre">Evaluator.chat()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="chatbot.engine.html#chatbot.engine.Evaluator.evaluate"><code class="docutils literal notranslate"><span class="pre">Evaluator.evaluate()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="chatbot.engine.html#chatbot.engine.Timer"><code class="docutils literal notranslate"><span class="pre">Timer</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="chatbot.engine.html#chatbot.engine.Trainer"><code class="docutils literal notranslate"><span class="pre">Trainer</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="chatbot.engine.html#chatbot.engine.Trainer.compute_loss"><code class="docutils literal notranslate"><span class="pre">Trainer.compute_loss()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="chatbot.engine.html#chatbot.engine.Trainer.generate_batches"><code class="docutils literal notranslate"><span class="pre">Trainer.generate_batches()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="chatbot.engine.html#chatbot.engine.Trainer.train"><code class="docutils literal notranslate"><span class="pre">Trainer.train()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="chatbot.engine.html#chatbot.engine.set_seeds"><code class="docutils literal notranslate"><span class="pre">set_seeds()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="chatbot.engine.html#chatbot.engine.write_checkpoint"><code class="docutils literal notranslate"><span class="pre">write_checkpoint()</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="chatbot.models.html">chatbot.models package</a><ul>
@@ -153,13 +154,27 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="chatbot.models.html#module-chatbot.models.decoders">chatbot.models.decoders module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="chatbot.models.html#chatbot.models.decoders.GreedySearchDecoder"><code class="docutils literal notranslate"><span class="pre">GreedySearchDecoder</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="chatbot.models.html#chatbot.models.decoders.GreedySearchDecoder.forward"><code class="docutils literal notranslate"><span class="pre">GreedySearchDecoder.forward()</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="chatbot.models.html#chatbot.models.decoders.LuongAttnDecoderRNN"><code class="docutils literal notranslate"><span class="pre">LuongAttnDecoderRNN</span></code></a><ul>
 <li class="toctree-l4"><a class="reference internal" href="chatbot.models.html#chatbot.models.decoders.LuongAttnDecoderRNN.forward"><code class="docutils literal notranslate"><span class="pre">LuongAttnDecoderRNN.forward()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="chatbot.models.html#chatbot.models.decoders.RandomSearchDecoder"><code class="docutils literal notranslate"><span class="pre">RandomSearchDecoder</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="chatbot.models.html#chatbot.models.decoders.RandomSearchDecoder.forward"><code class="docutils literal notranslate"><span class="pre">RandomSearchDecoder.forward()</span></code></a></li>
 </ul>
 </li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="chatbot.models.html#module-chatbot.models.embeddings">chatbot.models.embeddings module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="chatbot.models.html#chatbot.models.embeddings.EmbeddingLayerConstructor"><code class="docutils literal notranslate"><span class="pre">EmbeddingLayerConstructor</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="chatbot.models.html#chatbot.models.embeddings.EmbeddingLayerConstructor.create_embedding_layer"><code class="docutils literal notranslate"><span class="pre">EmbeddingLayerConstructor.create_embedding_layer()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="chatbot.models.html#chatbot.models.embeddings.EmbeddingLayerConstructor.from_file"><code class="docutils literal notranslate"><span class="pre">EmbeddingLayerConstructor.from_file()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="chatbot.models.html#chatbot.models.embeddings.EmbeddingLayerConstructor.without_pretrained_embeddings"><code class="docutils literal notranslate"><span class="pre">EmbeddingLayerConstructor.without_pretrained_embeddings()</span></code></a></li>
+</ul>
+</li>
 <li class="toctree-l3"><a class="reference internal" href="chatbot.models.html#chatbot.models.embeddings.PreTrainedEmbeddings"><code class="docutils literal notranslate"><span class="pre">PreTrainedEmbeddings</span></code></a><ul>
 <li class="toctree-l4"><a class="reference internal" href="chatbot.models.html#chatbot.models.embeddings.PreTrainedEmbeddings.word_to_index"><code class="docutils literal notranslate"><span class="pre">PreTrainedEmbeddings.word_to_index</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="chatbot.models.html#chatbot.models.embeddings.PreTrainedEmbeddings.word_vectors"><code class="docutils literal notranslate"><span class="pre">PreTrainedEmbeddings.word_vectors</span></code></a></li>
@@ -181,13 +196,66 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="chatbot.models.html#module-chatbot.models">Module contents</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chatbot.models.html#module-chatbot.models.loss">chatbot.models.loss module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="chatbot.models.html#chatbot.models.loss.MaskedNLLLoss"><code class="docutils literal notranslate"><span class="pre">MaskedNLLLoss</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="chatbot.models.html#chatbot.models.loss.MaskedNLLLoss.forward"><code class="docutils literal notranslate"><span class="pre">MaskedNLLLoss.forward()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="chatbot.models.html#module-chatbot.models">Module contents</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="chatbot.models.html#chatbot.models.AttnLayer"><code class="docutils literal notranslate"><span class="pre">AttnLayer</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="chatbot.models.html#chatbot.models.AttnLayer.forward"><code class="docutils literal notranslate"><span class="pre">AttnLayer.forward()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="chatbot.models.html#chatbot.models.AttnLayer.select_attention_score"><code class="docutils literal notranslate"><span class="pre">AttnLayer.select_attention_score()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="chatbot.models.html#chatbot.models.EmbeddingLayerConstructor"><code class="docutils literal notranslate"><span class="pre">EmbeddingLayerConstructor</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="chatbot.models.html#chatbot.models.EmbeddingLayerConstructor.create_embedding_layer"><code class="docutils literal notranslate"><span class="pre">EmbeddingLayerConstructor.create_embedding_layer()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="chatbot.models.html#chatbot.models.EmbeddingLayerConstructor.from_file"><code class="docutils literal notranslate"><span class="pre">EmbeddingLayerConstructor.from_file()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="chatbot.models.html#chatbot.models.EmbeddingLayerConstructor.without_pretrained_embeddings"><code class="docutils literal notranslate"><span class="pre">EmbeddingLayerConstructor.without_pretrained_embeddings()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="chatbot.models.html#chatbot.models.EncoderRNN"><code class="docutils literal notranslate"><span class="pre">EncoderRNN</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="chatbot.models.html#chatbot.models.EncoderRNN.hidden_size"><code class="docutils literal notranslate"><span class="pre">EncoderRNN.hidden_size</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="chatbot.models.html#chatbot.models.EncoderRNN.emb"><code class="docutils literal notranslate"><span class="pre">EncoderRNN.emb</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="chatbot.models.html#chatbot.models.EncoderRNN.bi_gru"><code class="docutils literal notranslate"><span class="pre">EncoderRNN.bi_gru</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="chatbot.models.html#chatbot.models.EncoderRNN.forward"><code class="docutils literal notranslate"><span class="pre">EncoderRNN.forward()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="chatbot.models.html#chatbot.models.GreedySearchDecoder"><code class="docutils literal notranslate"><span class="pre">GreedySearchDecoder</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="chatbot.models.html#chatbot.models.GreedySearchDecoder.forward"><code class="docutils literal notranslate"><span class="pre">GreedySearchDecoder.forward()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="chatbot.models.html#chatbot.models.LuongAttnDecoderRNN"><code class="docutils literal notranslate"><span class="pre">LuongAttnDecoderRNN</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="chatbot.models.html#chatbot.models.LuongAttnDecoderRNN.forward"><code class="docutils literal notranslate"><span class="pre">LuongAttnDecoderRNN.forward()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="chatbot.models.html#chatbot.models.MaskedNLLLoss"><code class="docutils literal notranslate"><span class="pre">MaskedNLLLoss</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="chatbot.models.html#chatbot.models.MaskedNLLLoss.forward"><code class="docutils literal notranslate"><span class="pre">MaskedNLLLoss.forward()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="chatbot.models.html#chatbot.models.PreTrainedEmbeddings"><code class="docutils literal notranslate"><span class="pre">PreTrainedEmbeddings</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="chatbot.models.html#chatbot.models.PreTrainedEmbeddings.word_to_index"><code class="docutils literal notranslate"><span class="pre">PreTrainedEmbeddings.word_to_index</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="chatbot.models.html#chatbot.models.PreTrainedEmbeddings.word_vectors"><code class="docutils literal notranslate"><span class="pre">PreTrainedEmbeddings.word_vectors</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="chatbot.models.html#chatbot.models.PreTrainedEmbeddings.index_to_word"><code class="docutils literal notranslate"><span class="pre">PreTrainedEmbeddings.index_to_word</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="chatbot.models.html#chatbot.models.PreTrainedEmbeddings.from_embeddings_file"><code class="docutils literal notranslate"><span class="pre">PreTrainedEmbeddings.from_embeddings_file()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="chatbot.models.html#chatbot.models.PreTrainedEmbeddings.get_embedding"><code class="docutils literal notranslate"><span class="pre">PreTrainedEmbeddings.get_embedding()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="chatbot.models.html#chatbot.models.PreTrainedEmbeddings.make_embedding_matrix"><code class="docutils literal notranslate"><span class="pre">PreTrainedEmbeddings.make_embedding_matrix()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="chatbot.models.html#chatbot.models.RandomSearchDecoder"><code class="docutils literal notranslate"><span class="pre">RandomSearchDecoder</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="chatbot.models.html#chatbot.models.RandomSearchDecoder.forward"><code class="docutils literal notranslate"><span class="pre">RandomSearchDecoder.forward()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="chatbot.utils.html">chatbot.utils package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="chatbot.utils.html#subpackages">Subpackages</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="chatbot.utils.data.html">chatbot.utils.data package</a><ul>
 <li class="toctree-l4"><a class="reference internal" href="chatbot.utils.data.html#submodules">Submodules</a></li>
+<li class="toctree-l4"><a class="reference internal" href="chatbot.utils.data.html#module-chatbot.utils.data.datasets">chatbot.utils.data.datasets module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="chatbot.utils.data.html#module-chatbot.utils.data.vectorizer">chatbot.utils.data.vectorizer module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="chatbot.utils.data.html#module-chatbot.utils.data.vocabulary">chatbot.utils.data.vocabulary module</a></li>
 <li class="toctree-l4"><a class="reference internal" href="chatbot.utils.data.html#module-chatbot.utils.data">Module contents</a></li>
@@ -200,10 +268,14 @@
 <li class="toctree-l3"><a class="reference internal" href="chatbot.utils.html#chatbot.utils.aux.get_tokenizer"><code class="docutils literal notranslate"><span class="pre">get_tokenizer()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="chatbot.utils.html#chatbot.utils.aux.load_yaml_file"><code class="docutils literal notranslate"><span class="pre">load_yaml_file()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="chatbot.utils.html#chatbot.utils.aux.normalize_text"><code class="docutils literal notranslate"><span class="pre">normalize_text()</span></code></a></li>
-<li class="toctree-l3"><a class="reference internal" href="chatbot.utils.html#chatbot.utils.aux.unicode_to_ascii"><code class="docutils literal notranslate"><span class="pre">unicode_to_ascii()</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="chatbot.utils.html#module-chatbot.utils">Module contents</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chatbot.utils.html#module-chatbot.utils">Module contents</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="chatbot.utils.html#chatbot.utils.get_tokenizer"><code class="docutils literal notranslate"><span class="pre">get_tokenizer()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="chatbot.utils.html#chatbot.utils.load_yaml_file"><code class="docutils literal notranslate"><span class="pre">load_yaml_file()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="chatbot.utils.html#chatbot.utils.normalize_text"><code class="docutils literal notranslate"><span class="pre">normalize_text()</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -216,24 +288,24 @@
 <span id="chatbot-controllers-module"></span><h2>chatbot.controllers module<a class="headerlink" href="#module-chatbot.controllers" title="Link to this heading"></a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="chatbot.controllers.TrainingController">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">chatbot.controllers.</span></span><span class="sig-name descname"><span class="pre">TrainingController</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#chatbot.datasets.CornellDialogsDataset" title="chatbot.datasets.CornellDialogsDataset"><span class="pre">CornellDialogsDataset</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">hyperparameters</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">checkpoints_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resume</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#chatbot.controllers.TrainingController" title="Link to this definition"></a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">chatbot.controllers.</span></span><span class="sig-name descname"><span class="pre">TrainingController</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">dataset</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="chatbot.utils.data.html#chatbot.utils.data.datasets.CornellDialogsDataset" title="chatbot.utils.data.datasets.CornellDialogsDataset"><span class="pre">CornellDialogsDataset</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">hyperparameters</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">checkpoint_path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">resume</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#chatbot.controllers.TrainingController" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Controls the flow of the training process of a seq-to-seq
-conversational model with PyTorch.</p>
-<p>The entire process in high-level includes:</p>
+model with PyTorch.</p>
+<p>The flow includes:</p>
 <div class="highlight-text notranslate"><div class="highlight"><pre><span></span>- Initialization of encoder and decoder layers
 - Setting up encoder and decoder optimizers
 - Splitting data into validation and training sets
 - Creation of dataloaders
-- Start training process
+- Start of training process
 </pre></div>
 </div>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>dataset</strong> (<a class="reference internal" href="#chatbot.datasets.CornellDialogsDataset" title="chatbot.datasets.CornellDialogsDataset"><em>CornellDialogsDataset</em></a>) – The cornell dialogs dataset.</p></li>
+<li><p><strong>dataset</strong> (<a class="reference internal" href="chatbot.utils.data.html#chatbot.utils.data.datasets.CornellDialogsDataset" title="chatbot.utils.data.datasets.CornellDialogsDataset"><em>CornellDialogsDataset</em></a>) – The cornell dialogs dataset.</p></li>
 <li><p><strong>hyperparameters</strong> (<em>Dict</em><em>[</em><em>str</em><em>, </em><em>Any</em><em>]</em>) – Set of hyperparameters.</p></li>
-<li><p><strong>checkpoints_dir</strong> (<em>str</em>) – Directory to save checkpoints.</p></li>
+<li><p><strong>checkpoint_path</strong> (<em>str</em>) – Path to save or load a checkpoint.</p></li>
 <li><p><strong>resume</strong> (<em>optional</em><em>, </em><em>bool</em>) – If <code class="docutils literal notranslate"><span class="pre">True</span></code>, resumes training from
 a saved checkpoint. Defaults to <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p></li>
 </ul>
@@ -245,7 +317,7 @@ a saved checkpoint. Defaults to <code class="docutils literal notranslate"><span
 <dd><p>The cornell dialogs dataset.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p><a class="reference internal" href="#chatbot.datasets.CornellDialogsDataset" title="chatbot.datasets.CornellDialogsDataset">CornellDialogsDataset</a></p>
+<dd class="field-odd"><p><a class="reference internal" href="chatbot.utils.data.html#chatbot.utils.data.datasets.CornellDialogsDataset" title="chatbot.utils.data.datasets.CornellDialogsDataset">CornellDialogsDataset</a></p>
 </dd>
 </dl>
 </dd></dl>
@@ -262,9 +334,9 @@ a saved checkpoint. Defaults to <code class="docutils literal notranslate"><span
 </dd></dl>
 
 <dl class="py attribute">
-<dt class="sig sig-object py" id="chatbot.controllers.TrainingController.checkpoints_dir">
-<span class="sig-name descname"><span class="pre">checkpoints_dir</span></span><a class="headerlink" href="#chatbot.controllers.TrainingController.checkpoints_dir" title="Link to this definition"></a></dt>
-<dd><p>Directory to save checkpoints.</p>
+<dt class="sig sig-object py" id="chatbot.controllers.TrainingController.checkpoint_path">
+<span class="sig-name descname"><span class="pre">checkpoint_path</span></span><a class="headerlink" href="#chatbot.controllers.TrainingController.checkpoint_path" title="Link to this definition"></a></dt>
+<dd><p>Path to save checkpoint.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>str</p>
@@ -296,23 +368,13 @@ tokens to numbers.</p>
 </dl>
 </dd></dl>
 
-<dl class="py attribute">
-<dt class="sig sig-object py" id="chatbot.controllers.TrainingController.mask_index">
-<span class="sig-name descname"><span class="pre">mask_index</span></span><a class="headerlink" href="#chatbot.controllers.TrainingController.mask_index" title="Link to this definition"></a></dt>
-<dd><p>Index of the mask token in the vocabulary.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>int</p>
-</dd>
-</dl>
-</dd></dl>
-
 <p class="rubric">Example</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># Create a `Dataset` object from the dataset&#39;s txt file</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="c1"># and with a `split()` tokenizer</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">chatbot.datasets</span> <span class="kn">import</span> <span class="n">CornellDialogsDataset</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">chatbot.utils.data.datasets</span> <span class="kn">import</span> <span class="n">CornellDialogsDataset</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">chatbot.utils.aux</span> <span class="kn">import</span> <span class="n">get_tokenizer</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">split_tokenizer</span> <span class="o">=</span> <span class="n">get_tokenizer</span><span class="p">(</span><span class="n">tokenizer</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span> <span class="c1"># If None returns split()</span>
+<span class="gp">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">split_tokenizer</span> <span class="o">=</span> <span class="n">get_tokenizer</span><span class="p">(</span><span class="n">tokenizer</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">dataset</span> <span class="o">=</span> <span class="n">CornellDialogsDataset</span><span class="o">.</span><span class="n">load_pairs_and_vectorizer</span><span class="p">(</span>
 <span class="gp">... </span>    <span class="n">file</span><span class="o">=</span><span class="s2">&quot;./cornel_dialogs.txt&quot;</span><span class="p">,</span>
 <span class="gp">... </span>    <span class="n">tokenizer</span><span class="o">=</span><span class="n">split_tokenizer</span><span class="p">,</span>
@@ -324,6 +386,7 @@ tokens to numbers.</p>
 <span class="gp">&gt;&gt;&gt; </span><span class="c1"># Note that the hyperparameters are defined in a yaml file</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="c1"># but with the same format.</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">hyperparameters</span> <span class="o">=</span> <span class="p">{</span>
+<span class="gp">... </span>    <span class="s2">&quot;embeddings_path&quot;</span><span class="p">:</span> <span class="s2">&quot;./pretrained_embeddings/glove.6B.50d.txt&quot;</span><span class="p">,</span>
 <span class="gp">... </span>    <span class="s2">&quot;general&quot;</span><span class="p">:</span> <span class="p">{</span>
 <span class="gp">... </span>        <span class="s2">&quot;num_epochs&quot;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span>
 <span class="gp">... </span>        <span class="s2">&quot;batch_size&quot;</span><span class="p">:</span> <span class="mi">64</span><span class="p">,</span>
@@ -333,20 +396,29 @@ tokens to numbers.</p>
 <span class="gp">... </span>        <span class="s2">&quot;ea_delta&quot;</span><span class="p">:</span> <span class="mf">0.005</span><span class="p">,</span>
 <span class="gp">... </span>        <span class="s2">&quot;clip_factor&quot;</span><span class="p">:</span> <span class="mi">50</span><span class="p">,</span>
 <span class="gp">... </span>        <span class="s2">&quot;max_seq_length&quot;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span>
-<span class="gp">... </span>        <span class="s2">&quot;min_count&quot;</span><span class="p">:</span> <span class="mi">3</span>
+<span class="gp">... </span>        <span class="s2">&quot;min_count&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
+<span class="gp">... </span>        <span class="s2">&quot;enable_early_stop&quot;</span><span class="p">:</span> <span class="kc">True</span>
 <span class="gp">... </span>    <span class="p">},</span>
-<span class="gp">... </span>    <span class="s2">&quot;model_init_params&quot;</span><span class="p">:</span> <span class="p">{</span>
-<span class="gp">... </span>        <span class="s2">&quot;alignment_method&quot;</span><span class="p">:</span> <span class="s2">&quot;dot&quot;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="s2">&quot;embedding_init_params&quot;</span><span class="p">:</span> <span class="p">{</span>
 <span class="gp">... </span>        <span class="s2">&quot;embedding_dim&quot;</span><span class="p">:</span> <span class="mi">50</span><span class="p">,</span>
+<span class="gp">... </span>        <span class="s2">&quot;padding_idx&quot;</span><span class="p">:</span> <span class="mi">0</span>
+<span class="gp">... </span>    <span class="p">}</span>
+<span class="gp">... </span>    <span class="s2">&quot;encoder_init_params&quot;</span><span class="p">:</span> <span class="p">{</span>
 <span class="gp">... </span>        <span class="s2">&quot;hidden_size&quot;</span><span class="p">:</span> <span class="mi">50</span><span class="p">,</span>
+<span class="gp">... </span>        <span class="s2">&quot;num_layers&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+<span class="gp">... </span>        <span class="s2">&quot;dropout&quot;</span><span class="p">:</span> <span class="mf">0.1</span>
+<span class="gp">... </span>    <span class="p">}</span>
+<span class="gp">... </span>    <span class="s2">&quot;decoder_init_params&quot;</span><span class="p">:</span> <span class="p">{</span>
+<span class="gp">... </span>        <span class="s2">&quot;alignment_method&quot;</span><span class="p">:</span> <span class="s2">&quot;dot&quot;</span><span class="p">,</span>
+<span class="gp">... </span>        <span class="s2">&quot;hidden_size&quot;</span><span class="p">:</span> <span class="mi">50</span><span class="p">,</span>
+<span class="gp">... </span>        <span class="s2">&quot;num_layers&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
 <span class="gp">... </span>        <span class="s2">&quot;dropout&quot;</span><span class="p">:</span> <span class="mf">0.1</span><span class="p">,</span>
-<span class="gp">... </span>        <span class="s2">&quot;encoder_num_layers&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
-<span class="gp">... </span>        <span class="s2">&quot;decoder_num_layers&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
-<span class="gp">... </span>        <span class="s2">&quot;teacher_forcing_ration&quot;</span><span class="p">:</span> <span class="mi">0</span>
 <span class="gp">... </span>    <span class="p">},</span>
-<span class="gp">... </span>    <span class="s2">&quot;optimizer_init_params&quot;</span><span class="p">:</span> <span class="p">{</span>
-<span class="gp">... </span>        <span class="s2">&quot;encoder_lr&quot;</span><span class="p">:</span> <span class="mf">0.0001</span><span class="p">,</span>
-<span class="gp">... </span>        <span class="s2">&quot;decoder_lr&quot;</span><span class="p">:</span> <span class="mf">0.0001</span>
+<span class="gp">... </span>    <span class="s2">&quot;encoder_optimizer_init_params&quot;</span><span class="p">:</span> <span class="p">{</span>
+<span class="gp">... </span>        <span class="s2">&quot;lr&quot;</span><span class="p">:</span> <span class="mf">0.0001</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="p">},</span>
+<span class="gp">... </span>    <span class="s2">&quot;decoder_optimizer_init_params&quot;</span><span class="p">:</span> <span class="p">{</span>
+<span class="gp">... </span>        <span class="s2">&quot;lr&quot;</span><span class="p">:</span> <span class="mf">0.0001</span>
 <span class="gp">... </span>    <span class="p">}</span>
 <span class="gp">... </span><span class="p">}</span>
 <span class="gp">&gt;&gt;&gt;</span>
@@ -354,89 +426,211 @@ tokens to numbers.</p>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">training_controller</span> <span class="o">=</span> <span class="n">TrainingController</span><span class="p">(</span>
 <span class="gp">... </span>    <span class="n">dataset</span><span class="o">=</span><span class="n">dataset</span><span class="p">,</span>
 <span class="gp">... </span>    <span class="n">hyperparameters</span><span class="o">=</span><span class="n">hyperparameters</span><span class="p">,</span>
-<span class="gp">... </span>    <span class="n">checkpoints_dir</span><span class="o">=</span><span class="s2">&quot;./checkpoints/&quot;</span>
+<span class="gp">... </span>    <span class="n">checkpoints_path</span><span class="o">=</span><span class="s2">&quot;./checkpoints/checkpoint_1.pth&quot;</span>
 <span class="gp">... </span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="c1"># Start training process</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">trainer</span> <span class="o">=</span> <span class="n">training_controller</span><span class="o">.</span><span class="n">prepare_for_training</span><span class="p">()</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="n">training_controller</span><span class="o">.</span><span class="n">start_training</span><span class="p">(</span><span class="n">trainer</span><span class="o">=</span><span class="n">trainer</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">trainer</span><span class="p">,</span> <span class="n">last_epoch</span> <span class="o">=</span> <span class="n">training_controller</span><span class="o">.</span><span class="n">prepare_for_training</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">training_controller</span><span class="o">.</span><span class="n">start_training</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">trainer</span><span class="o">=</span><span class="n">trainer</span><span class="p">,</span> <span class="n">last_epoch</span><span class="o">=</span><span class="n">last_epoch</span>
+<span class="gp">... </span><span class="p">)</span>
 </pre></div>
 </div>
 <dl class="py method">
 <dt class="sig sig-object py" id="chatbot.controllers.TrainingController.prepare_for_training">
-<span class="sig-name descname"><span class="pre">prepare_for_training</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="chatbot.engine.html#chatbot.engine.trainer.Trainer" title="chatbot.engine.trainer.Trainer"><span class="pre">Trainer</span></a></span></span><a class="headerlink" href="#chatbot.controllers.TrainingController.prepare_for_training" title="Link to this definition"></a></dt>
-<dd><p>Defines the layers of the seq-to-seq model, i.e., the
-embedding, encoder, and decoder layers.
-#TODO</p>
+<span class="sig-name descname"><span class="pre">prepare_for_training</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="chatbot.engine.html#chatbot.engine.trainer.Trainer" title="chatbot.engine.trainer.Trainer"><span class="pre">Trainer</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#chatbot.controllers.TrainingController.prepare_for_training" title="Link to this definition"></a></dt>
+<dd><p>Loads the training components, including the embedding,
+encoder, and decoder layers along with the encoder and
+decoder optimizers.</p>
+<p>If <a class="reference internal" href="#chatbot.controllers.TrainingController.resume" title="chatbot.controllers.TrainingController.resume"><code class="xref py py-attr docutils literal notranslate"><span class="pre">resume</span></code></a> is <code class="docutils literal notranslate"><span class="pre">True</span></code> the training components are
+initialized with their saved states from the last checkpoint.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns<span class="colon">:</span></dt>
+<dd class="field-odd"><p><p>A <cite>Trainer</cite> object responsible for executing the training</p>
+<p>process and the last epoch.</p>
+</p>
+</dd>
+</dl>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="chatbot.controllers.TrainingController.start_training">
-<span class="sig-name descname"><span class="pre">start_training</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trainer</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="chatbot.engine.html#chatbot.engine.trainer.Trainer" title="chatbot.engine.trainer.Trainer"><span class="pre">Trainer</span></a></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#chatbot.controllers.TrainingController.start_training" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">start_training</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trainer</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="chatbot.engine.html#chatbot.engine.trainer.Trainer" title="chatbot.engine.trainer.Trainer"><span class="pre">Trainer</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">last_epoch</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#chatbot.controllers.TrainingController.start_training" title="Link to this definition"></a></dt>
 <dd><p>Splits the dataset into training and validation sets,
 creates dataloaders and begins the training process.</p>
 </dd></dl>
 
 </dd></dl>
 
-</section>
-<section id="module-chatbot.datasets">
-<span id="chatbot-datasets-module"></span><h2>chatbot.datasets module<a class="headerlink" href="#module-chatbot.datasets" title="Link to this heading"></a></h2>
-<dl class="py class">
-<dt class="sig sig-object py" id="chatbot.datasets.CornellDialogsDataset">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">chatbot.datasets.</span></span><span class="sig-name descname"><span class="pre">CornellDialogsDataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sequence_pairs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vectorizer</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="chatbot.utils.data.html#chatbot.utils.data.vectorizer.SequenceVectorizer" title="chatbot.utils.data.vectorizer.SequenceVectorizer"><span class="pre">SequenceVectorizer</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#chatbot.datasets.CornellDialogsDataset" title="Link to this definition"></a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Dataset</span></code></p>
-<dl class="py method">
-<dt class="sig sig-object py" id="chatbot.datasets.CornellDialogsDataset.get_num_batches">
-<span class="sig-name descname"><span class="pre">get_num_batches</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">batch_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#chatbot.datasets.CornellDialogsDataset.get_num_batches" title="Link to this definition"></a></dt>
-<dd><p>Given a batch size, returns the number of batches
-in the dataset.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>batch_size</strong> (<em>int</em>) – The batch size.</p>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>The number of batches in the dataset.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>int</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="chatbot.datasets.CornellDialogsDataset.get_vectorizer">
-<span class="sig-name descname"><span class="pre">get_vectorizer</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="chatbot.utils.data.html#chatbot.utils.data.vectorizer.SequenceVectorizer" title="chatbot.utils.data.vectorizer.SequenceVectorizer"><span class="pre">SequenceVectorizer</span></a></span></span><a class="headerlink" href="#chatbot.datasets.CornellDialogsDataset.get_vectorizer" title="Link to this definition"></a></dt>
-<dd><p>Returns the vectorizer.</p>
-</dd></dl>
-
-<dl class="py method">
-<dt class="sig sig-object py" id="chatbot.datasets.CornellDialogsDataset.load_pairs_and_vectorizer">
-<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">load_pairs_and_vectorizer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tokenizer</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_length</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">10</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_count</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">3</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#chatbot.datasets.CornellDialogsDataset" title="chatbot.datasets.CornellDialogsDataset"><span class="pre">CornellDialogsDataset</span></a></span></span><a class="headerlink" href="#chatbot.datasets.CornellDialogsDataset.load_pairs_and_vectorizer" title="Link to this definition"></a></dt>
-<dd><p>Initializes the <cite>CornelDialogsDataset</cite> from a <cite>.txt</cite> file.</p>
+<dl class="py function">
+<dt class="sig sig-object py" id="chatbot.controllers.initialize_from_checkpoint">
+<span class="sig-prename descclassname"><span class="pre">chatbot.controllers.</span></span><span class="sig-name descname"><span class="pre">initialize_from_checkpoint</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vocab_tokens</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">init_params</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_optimizers</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#chatbot.controllers.initialize_from_checkpoint" title="Link to this definition"></a></dt>
+<dd><p>Loads the necessary components required for training or evaluating
+a sequence-to-sequence model from a saved checkpoint.</p>
+<p>In addition to the model components, it also loads the last validation
+loss value and epoch, which are required to resume training.</p>
+<p>Note that the optimizers, loss value and epoch are required only for the
+training process and not for evaluation.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>file</strong> (<em>str</em>) – Path to the <cite>.txt</cite> file.</p></li>
-<li><p><strong>(</strong><strong>Callable</strong><strong>[</strong><strong>[</strong><strong>str</strong><strong>]</strong> (<em>tokenizer</em>) – Tokenizer for
-splitting each sequence before vectorization.</p></li>
-<li><p><strong>List</strong><strong>[</strong><strong>str</strong><strong>]</strong><strong>]</strong> – Tokenizer for
-splitting each sequence before vectorization.</p></li>
-<li><p><strong>max_length</strong> (<em>int</em><em>, </em><em>optional</em>) – Maximum number of tokens allowed
-in each of the pair sequence (default=10).</p></li>
-<li><p><strong>min_count</strong> (<em>int</em><em>, </em><em>optional</em>) – Minimum token count value threshold
-(default=3).</p></li>
+<li><p><strong>path</strong> (<em>str</em>) – Path to the checkpoint.</p></li>
+<li><p><strong>vocab_tokens</strong> (<em>List</em><em>[</em><em>str</em><em>]</em>) – All vocabulary tokens. Used for creating
+the embedding layer and also specifies the output size of the
+decoder.</p></li>
+<li><p><strong>init_params</strong> (<em>Dict</em><em>[</em><em>str</em><em>, </em><em>Any</em><em>]</em>) – Contains the initialization parameters
+for the embedding, encoder, and decoder layers, as well as for the
+optimizers.</p></li>
+<li><p><strong>use_optimizers</strong> (<em>bool</em><em>, </em><em>optional</em>) – If <code class="docutils literal notranslate"><span class="pre">True</span></code> returns the optimizers
+for training. Defaults to <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>An instance of <cite>CornelDialogsDataset</cite>.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>CornelDialogsDataset</p>
+<dd class="field-even"><p><dl class="simple">
+<dt>A serializable dictionary containing the training</dt><dd><p>components.</p>
 </dd>
 </dl>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Dict[str, Any]</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># Load init_params either from a configuration (yaml) file</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># or create it manually</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">seq2seq_params</span> <span class="o">=</span> <span class="p">{</span>
+<span class="gp">... </span>    <span class="s2">&quot;embeddings_path&quot;</span><span class="p">:</span> <span class="s2">&quot;./pretrained_embeddings/glove.6B.50d.txt&quot;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="s2">&quot;embedding_init_params&quot;</span><span class="p">:</span> <span class="p">{</span>
+<span class="gp">... </span>        <span class="s2">&quot;embedding_dim&quot;</span><span class="p">:</span> <span class="mi">50</span><span class="p">,</span>
+<span class="gp">... </span>        <span class="s2">&quot;padding_idx&quot;</span><span class="p">:</span> <span class="mi">0</span>
+<span class="gp">... </span>    <span class="p">}</span>
+<span class="gp">... </span>    <span class="s2">&quot;encoder_init_params&quot;</span><span class="p">:</span> <span class="p">{</span>
+<span class="gp">... </span>        <span class="s2">&quot;hidden_size&quot;</span><span class="p">:</span> <span class="mi">50</span><span class="p">,</span>
+<span class="gp">... </span>        <span class="s2">&quot;num_layers&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+<span class="gp">... </span>        <span class="s2">&quot;dropout&quot;</span><span class="p">:</span> <span class="mf">0.1</span>
+<span class="gp">... </span>    <span class="p">}</span>
+<span class="gp">... </span>    <span class="s2">&quot;decoder_init_params&quot;</span><span class="p">:</span> <span class="p">{</span>
+<span class="gp">... </span>        <span class="s2">&quot;alignment_method&quot;</span><span class="p">:</span> <span class="s2">&quot;dot&quot;</span><span class="p">,</span>
+<span class="gp">... </span>        <span class="s2">&quot;hidden_size&quot;</span><span class="p">:</span> <span class="mi">50</span><span class="p">,</span>
+<span class="gp">... </span>        <span class="s2">&quot;num_layers&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+<span class="gp">... </span>        <span class="s2">&quot;dropout&quot;</span><span class="p">:</span> <span class="mf">0.1</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="p">},</span>
+<span class="gp">... </span>    <span class="s2">&quot;encoder_optimizer_init_params&quot;</span><span class="p">:</span> <span class="p">{</span>
+<span class="gp">... </span>        <span class="s2">&quot;lr&quot;</span><span class="p">:</span> <span class="mf">0.0001</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="p">},</span>
+<span class="gp">... </span>    <span class="s2">&quot;decoder_optimizer_init_params&quot;</span><span class="p">:</span> <span class="p">{</span>
+<span class="gp">... </span>        <span class="s2">&quot;lr&quot;</span><span class="p">:</span> <span class="mf">0.0001</span>
+<span class="gp">... </span>    <span class="p">}</span>
+<span class="gp">... </span><span class="p">}</span>
+<span class="gp">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">training_components</span> <span class="o">=</span> <span class="n">initialize_from_checkpoint</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">path</span><span class="o">=</span><span class="s2">&quot;./checkpoints/checkpoint_1.pth&quot;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">vocab_tokens</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;1st_token&quot;</span><span class="p">,</span> <span class="s2">&quot;2nd_token&quot;</span><span class="p">,</span> <span class="s2">&quot;...&quot;</span><span class="p">],</span>
+<span class="gp">... </span>    <span class="n">init_params</span><span class="o">=</span><span class="n">init_params</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">use_optimizers</span><span class="o">=</span><span class="kc">True</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">embedding_layer</span> <span class="o">=</span> <span class="n">training_components</span><span class="p">[</span><span class="s2">&quot;embedding&quot;</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">encoder_layer</span> <span class="o">=</span> <span class="n">training_components</span><span class="p">[</span><span class="s2">&quot;encoder&quot;</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">decoder_layer</span> <span class="o">=</span> <span class="n">training_components</span><span class="p">[</span><span class="s2">&quot;decoder&quot;</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">encoder_opt</span> <span class="o">=</span> <span class="n">training_components</span><span class="p">[</span><span class="s2">&quot;encoder_optimizer&quot;</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">decoder_opt</span> <span class="o">=</span> <span class="n">training_components</span><span class="p">[</span><span class="s2">&quot;decoder_optimizer&quot;</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">encoder_layer</span>
+<span class="go">EncoderRNN(</span>
+<span class="go">  (emb): Embedding(2, 50, padding_idx=0)</span>
+<span class="go">  (bi_gru): GRU(50, 50, bidirectional=True)</span>
+<span class="go">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">decoder_layer</span>
+<span class="gp">...</span>
+</pre></div>
+</div>
 </dd></dl>
 
+<dl class="py function">
+<dt class="sig sig-object py" id="chatbot.controllers.initialize_seq2seq_components">
+<span class="sig-prename descclassname"><span class="pre">chatbot.controllers.</span></span><span class="sig-name descname"><span class="pre">initialize_seq2seq_components</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vocab_tokens</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">init_params</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_optimizers</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#chatbot.controllers.initialize_seq2seq_components" title="Link to this definition"></a></dt>
+<dd><p>Creates the necessary components required for training or evaluating
+a sequence-to-sequence model.</p>
+<dl class="simple">
+<dt>The components include:</dt><dd><ul class="simple">
+<li><p>Embedding layer</p></li>
+<li><p>Encoder</p></li>
+<li><p>Decoder</p></li>
+<li><p>Encoder/Decoder optimizers (Used only for training)</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>vocab_tokens</strong> (<em>List</em><em>[</em><em>str</em><em>]</em>) – All vocabulary tokens. Used for creating
+the embedding layer and also specifies the output size of the
+decoder.</p></li>
+<li><p><strong>init_params</strong> (<em>Dict</em><em>[</em><em>str</em><em>, </em><em>Any</em><em>]</em>) – Contains the initialization parameters
+for the embedding, encoder, and decoder layers and also for the
+optimizers.</p></li>
+<li><p><strong>use_optimizers</strong> (<em>bool</em><em>, </em><em>optional</em>) – If <code class="docutils literal notranslate"><span class="pre">True</span></code> returns the optimizers
+for training. Defaults to <code class="docutils literal notranslate"><span class="pre">False</span></code>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>A serializable dictionary containing the training</dt><dd><p>components.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Dict[str, Any]</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="c1"># Load init_params either from a configuration (yaml) file</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="c1"># or create it manually</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">seq2seq_params</span> <span class="o">=</span> <span class="p">{</span>
+<span class="gp">... </span>    <span class="s2">&quot;embeddings_path&quot;</span><span class="p">:</span> <span class="s2">&quot;./pretrained_embeddings/glove.6B.50d.txt&quot;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="s2">&quot;embedding_init_params&quot;</span><span class="p">:</span> <span class="p">{</span>
+<span class="gp">... </span>        <span class="s2">&quot;embedding_dim&quot;</span><span class="p">:</span> <span class="mi">50</span><span class="p">,</span>
+<span class="gp">... </span>        <span class="s2">&quot;padding_idx&quot;</span><span class="p">:</span> <span class="mi">0</span>
+<span class="gp">... </span>    <span class="p">}</span>
+<span class="gp">... </span>    <span class="s2">&quot;encoder_init_params&quot;</span><span class="p">:</span> <span class="p">{</span>
+<span class="gp">... </span>        <span class="s2">&quot;hidden_size&quot;</span><span class="p">:</span> <span class="mi">50</span><span class="p">,</span>
+<span class="gp">... </span>        <span class="s2">&quot;num_layers&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+<span class="gp">... </span>        <span class="s2">&quot;dropout&quot;</span><span class="p">:</span> <span class="mf">0.1</span>
+<span class="gp">... </span>    <span class="p">}</span>
+<span class="gp">... </span>    <span class="s2">&quot;decoder_init_params&quot;</span><span class="p">:</span> <span class="p">{</span>
+<span class="gp">... </span>        <span class="s2">&quot;alignment_method&quot;</span><span class="p">:</span> <span class="s2">&quot;dot&quot;</span><span class="p">,</span>
+<span class="gp">... </span>        <span class="s2">&quot;hidden_size&quot;</span><span class="p">:</span> <span class="mi">50</span><span class="p">,</span>
+<span class="gp">... </span>        <span class="s2">&quot;num_layers&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+<span class="gp">... </span>        <span class="s2">&quot;dropout&quot;</span><span class="p">:</span> <span class="mf">0.1</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="p">},</span>
+<span class="gp">... </span>    <span class="s2">&quot;encoder_optimizer_init_params&quot;</span><span class="p">:</span> <span class="p">{</span>
+<span class="gp">... </span>        <span class="s2">&quot;lr&quot;</span><span class="p">:</span> <span class="mf">0.0001</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="p">},</span>
+<span class="gp">... </span>    <span class="s2">&quot;decoder_optimizer_init_params&quot;</span><span class="p">:</span> <span class="p">{</span>
+<span class="gp">... </span>        <span class="s2">&quot;lr&quot;</span><span class="p">:</span> <span class="mf">0.0001</span>
+<span class="gp">... </span>    <span class="p">}</span>
+<span class="gp">... </span><span class="p">}</span>
+<span class="gp">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">training_components</span> <span class="o">=</span> <span class="n">initialize_seq2seq_components</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">vocab_tokens</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;1st_token&quot;</span><span class="p">,</span> <span class="s2">&quot;2nd_token&quot;</span><span class="p">,</span> <span class="s2">&quot;...&quot;</span><span class="p">],</span>
+<span class="gp">... </span>    <span class="n">init_params</span><span class="o">=</span><span class="n">init_params</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">use_optimizers</span><span class="o">=</span><span class="kc">True</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">embedding_layer</span> <span class="o">=</span> <span class="n">training_components</span><span class="p">[</span><span class="s2">&quot;embedding&quot;</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">encoder_layer</span> <span class="o">=</span> <span class="n">training_components</span><span class="p">[</span><span class="s2">&quot;encoder&quot;</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">decoder_layer</span> <span class="o">=</span> <span class="n">training_components</span><span class="p">[</span><span class="s2">&quot;decoder&quot;</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">encoder_opt</span> <span class="o">=</span> <span class="n">training_components</span><span class="p">[</span><span class="s2">&quot;encoder_optimizer&quot;</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">decoder_opt</span> <span class="o">=</span> <span class="n">training_components</span><span class="p">[</span><span class="s2">&quot;decoder_optimizer&quot;</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">encoder_layer</span>
+<span class="go">EncoderRNN(</span>
+<span class="go">  (emb): Embedding(2, 50, padding_idx=0)</span>
+<span class="go">  (bi_gru): GRU(50, 50, bidirectional=True)</span>
+<span class="go">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">decoder_layer</span>
+<span class="gp">...</span>
+</pre></div>
+</div>
 </dd></dl>
 
 </section>

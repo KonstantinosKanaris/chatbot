@@ -41,7 +41,9 @@ def _split_tokenizer(text: str) -> List[str]:
     return text.split(" ")
 
 
-def get_tokenizer(tokenizer: Optional[str] = None) -> Callable[[str], List[str]]:
+def get_tokenizer(
+    tokenizer: Optional[str] = None,
+) -> Callable[[str], List[str]]:
     """Returns a tokenizer function for tokenizing
     a string sequence.
 
@@ -65,7 +67,7 @@ def get_tokenizer(tokenizer: Optional[str] = None) -> Callable[[str], List[str]]
     return _split_tokenizer
 
 
-def unicode_to_ascii(text: str) -> str:
+def _unicode_to_ascii(text: str) -> str:
     """Turns a unicode string to plain `ASCII` character
     by character.
 
@@ -103,7 +105,7 @@ def normalize_text(text: str) -> str:
     Returns:
         str: The normalized text.
     """
-    text = unicode_to_ascii(text.lower().strip())
+    text = _unicode_to_ascii(text.lower().strip())
     text = re.sub(pattern=r"([.!?])", repl=r" \1", string=text)
     text = re.sub(pattern=r"[^a-zA-Z.!?]+", repl=r" ", string=text)
     text = re.sub(pattern=r"\s", repl=" ", string=text).strip()

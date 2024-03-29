@@ -22,14 +22,6 @@ chatbot.controllers module
    :undoc-members:
    :show-inheritance:
 
-chatbot.datasets module
------------------------
-
-.. automodule:: chatbot.datasets
-   :members:
-   :undoc-members:
-   :show-inheritance:
-
 Module contents
 ---------------
 

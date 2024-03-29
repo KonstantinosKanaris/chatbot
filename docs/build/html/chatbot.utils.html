@@ -51,10 +51,14 @@
 <li><a class="reference internal" href="#chatbot.utils.aux.get_tokenizer"><code class="docutils literal notranslate"><span class="pre">get_tokenizer()</span></code></a></li>
 <li><a class="reference internal" href="#chatbot.utils.aux.load_yaml_file"><code class="docutils literal notranslate"><span class="pre">load_yaml_file()</span></code></a></li>
 <li><a class="reference internal" href="#chatbot.utils.aux.normalize_text"><code class="docutils literal notranslate"><span class="pre">normalize_text()</span></code></a></li>
-<li><a class="reference internal" href="#chatbot.utils.aux.unicode_to_ascii"><code class="docutils literal notranslate"><span class="pre">unicode_to_ascii()</span></code></a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#module-chatbot.utils">Module contents</a></li>
+<li><a class="reference internal" href="#module-chatbot.utils">Module contents</a><ul>
+<li><a class="reference internal" href="#chatbot.utils.get_tokenizer"><code class="docutils literal notranslate"><span class="pre">get_tokenizer()</span></code></a></li>
+<li><a class="reference internal" href="#chatbot.utils.load_yaml_file"><code class="docutils literal notranslate"><span class="pre">load_yaml_file()</span></code></a></li>
+<li><a class="reference internal" href="#chatbot.utils.normalize_text"><code class="docutils literal notranslate"><span class="pre">normalize_text()</span></code></a></li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -91,6 +95,15 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="chatbot.utils.data.html">chatbot.utils.data package</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="chatbot.utils.data.html#submodules">Submodules</a></li>
+<li class="toctree-l2"><a class="reference internal" href="chatbot.utils.data.html#module-chatbot.utils.data.datasets">chatbot.utils.data.datasets module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="chatbot.utils.data.html#chatbot.utils.data.datasets.CornellDialogsDataset"><code class="docutils literal notranslate"><span class="pre">CornellDialogsDataset</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="chatbot.utils.data.html#chatbot.utils.data.datasets.CornellDialogsDataset.get_num_batches"><code class="docutils literal notranslate"><span class="pre">CornellDialogsDataset.get_num_batches()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="chatbot.utils.data.html#chatbot.utils.data.datasets.CornellDialogsDataset.get_vectorizer"><code class="docutils literal notranslate"><span class="pre">CornellDialogsDataset.get_vectorizer()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="chatbot.utils.data.html#chatbot.utils.data.datasets.CornellDialogsDataset.load_pairs_and_vectorizer"><code class="docutils literal notranslate"><span class="pre">CornellDialogsDataset.load_pairs_and_vectorizer()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 <li class="toctree-l2"><a class="reference internal" href="chatbot.utils.data.html#module-chatbot.utils.data.vectorizer">chatbot.utils.data.vectorizer module</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="chatbot.utils.data.html#chatbot.utils.data.vectorizer.SequenceVectorizer"><code class="docutils literal notranslate"><span class="pre">SequenceVectorizer</span></code></a><ul>
 <li class="toctree-l4"><a class="reference internal" href="chatbot.utils.data.html#chatbot.utils.data.vectorizer.SequenceVectorizer.from_serializable"><code class="docutils literal notranslate"><span class="pre">SequenceVectorizer.from_serializable()</span></code></a></li>
@@ -132,18 +145,7 @@
 </li>
 </ul>
 </li>
-<li class="toctree-l2"><a class="reference internal" href="chatbot.utils.data.html#module-chatbot.utils.data">Module contents</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="chatbot.utils.data.html#chatbot.utils.data.VocabularyBuilder"><code class="docutils literal notranslate"><span class="pre">VocabularyBuilder</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="chatbot.utils.data.html#chatbot.utils.data.VocabularyBuilder.pairs"><code class="docutils literal notranslate"><span class="pre">VocabularyBuilder.pairs</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="chatbot.utils.data.html#chatbot.utils.data.VocabularyBuilder.tokenizer"><code class="docutils literal notranslate"><span class="pre">VocabularyBuilder.tokenizer</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="chatbot.utils.data.html#chatbot.utils.data.VocabularyBuilder.build_vocabulary"><code class="docutils literal notranslate"><span class="pre">VocabularyBuilder.build_vocabulary()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="chatbot.utils.data.html#chatbot.utils.data.VocabularyBuilder.filter_pairs_by_length"><code class="docutils literal notranslate"><span class="pre">VocabularyBuilder.filter_pairs_by_length()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="chatbot.utils.data.html#chatbot.utils.data.VocabularyBuilder.filter_pairs_by_token_count"><code class="docutils literal notranslate"><span class="pre">VocabularyBuilder.filter_pairs_by_token_count()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="chatbot.utils.data.html#chatbot.utils.data.VocabularyBuilder.from_txt_file"><code class="docutils literal notranslate"><span class="pre">VocabularyBuilder.from_txt_file()</span></code></a></li>
-</ul>
-</li>
-</ul>
-</li>
+<li class="toctree-l2"><a class="reference internal" href="chatbot.utils.data.html#module-chatbot.utils.data">Module contents</a></li>
 </ul>
 </li>
 </ul>
@@ -226,17 +228,74 @@ punctuation
 </dl>
 </dd></dl>
 
+</section>
+<section id="module-chatbot.utils">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-chatbot.utils" title="Link to this heading"></a></h2>
 <dl class="py function">
-<dt class="sig sig-object py" id="chatbot.utils.aux.unicode_to_ascii">
-<span class="sig-prename descclassname"><span class="pre">chatbot.utils.aux.</span></span><span class="sig-name descname"><span class="pre">unicode_to_ascii</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#chatbot.utils.aux.unicode_to_ascii" title="Link to this definition"></a></dt>
-<dd><p>Turns a unicode string to plain <cite>ASCII</cite> character
-by character.</p>
+<dt class="sig sig-object py" id="chatbot.utils.get_tokenizer">
+<span class="sig-prename descclassname"><span class="pre">chatbot.utils.</span></span><span class="sig-name descname"><span class="pre">get_tokenizer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tokenizer</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#chatbot.utils.get_tokenizer" title="Link to this definition"></a></dt>
+<dd><p>Returns a tokenizer function for tokenizing
+a string sequence.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><p><strong>text</strong> (<em>str</em>) – Input string.</p>
+<dd class="field-odd"><p><strong>tokenizer</strong> (<em>str</em><em>, </em><em>optional</em>) – Name of tokenizer
+function. If <code class="docutils literal notranslate"><span class="pre">None</span></code> returns a <code class="docutils literal notranslate"><span class="pre">split()</span></code>
+function, which splits the string sequence
+by whitespace.</p>
 </dd>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>The input text in <cite>ASCII</cite> format.</p>
+<dd class="field-even"><p>The tokenizer function.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Callable[[str], List[str]]</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">chatbot.utils.aux</span> <span class="kn">import</span> <span class="n">get_tokenizer</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">split_tokenizer</span> <span class="o">=</span> <span class="n">get_tokenizer</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tokens</span> <span class="o">=</span> <span class="n">split_tokenizer</span><span class="p">(</span><span class="s2">&quot;A chatbot implementation with PyTorch.&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tokens</span>
+<span class="go">[&#39;A&#39;, &#39;chatbot&#39;, &#39;implementation&#39;, &#39;with&#39;, &#39;PyTorch.&#39;]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="chatbot.utils.load_yaml_file">
+<span class="sig-prename descclassname"><span class="pre">chatbot.utils.</span></span><span class="sig-name descname"><span class="pre">load_yaml_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filepath</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Any</span></span></span><a class="headerlink" href="#chatbot.utils.load_yaml_file" title="Link to this definition"></a></dt>
+<dd><p>Loads a <cite>yaml</cite> configuration file into a dictionary.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>filepath</strong> (<em>str</em>) – The path to the <cite>yaml</cite> file.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The configuration parameters.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Any</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="chatbot.utils.normalize_text">
+<span class="sig-prename descclassname"><span class="pre">chatbot.utils.</span></span><span class="sig-name descname"><span class="pre">normalize_text</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#chatbot.utils.normalize_text" title="Link to this definition"></a></dt>
+<dd><p>Basic normalization for the provided text.</p>
+<p>Normalization includes:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>- lowercasing
+- conversion of a unicode string to plain `ASCII`
+- adding whitespace around punctuation symbols
+- trimming all non-letter characters except for basic
+punctuation
+- replace multiple spaces with single space
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>text</strong> (<em>str</em>) – Input text for normalizing.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The normalized text.</p>
 </dd>
 <dt class="field-odd">Return type<span class="colon">:</span></dt>
 <dd class="field-odd"><p>str</p>
@@ -244,9 +303,6 @@ by character.</p>
 </dl>
 </dd></dl>
 
-</section>
-<section id="module-chatbot.utils">
-<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-chatbot.utils" title="Link to this heading"></a></h2>
 </section>
 </section>
 
