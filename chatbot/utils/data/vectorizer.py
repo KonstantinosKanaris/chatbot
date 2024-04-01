@@ -38,7 +38,7 @@ class SequenceVectorizer:
 
     def vectorize(
         self, sequence: str, use_dataset_max_length: bool = True
-    ) -> Tuple[torch.Tensor, int, torch.Tensor]:
+    ) -> Tuple[torch.Tensor, int]:
         """Converts an input text sequence into a 1-D tensor of
         integers.
 
@@ -55,9 +55,8 @@ class SequenceVectorizer:
 
         Returns:
             Tuple[torch.Tensor, int, torch.Tensor]: A tuple containing
-                the vectorized sequence, the length of the un-padded
-                sequence and the mask of the sequence where mask is the
-                boolean version of the vectorized sequence.
+                the vectorized sequence, and the length of the un-padded
+                sequence.
         """
         # indices = [self.vocab.start_seq_index]
         indices: List[int] = []
@@ -75,8 +74,7 @@ class SequenceVectorizer:
         output = torch.zeros(size=(vector_length,), dtype=torch.int64)
         output[: len(indices)] = torch.tensor(indices, dtype=torch.int64)
         output[len(indices) :] = self.vocab.mask_index  # noqa: E203
-        mask = output.bool()
-        return output, len(indices), mask
+        return output, len(indices)
 
     @classmethod
     def from_serializable(cls, contents: Dict[str, Any]) -> SequenceVectorizer:

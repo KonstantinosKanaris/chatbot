@@ -1,12 +1,13 @@
 import random
 from collections.abc import Iterator
-from typing import Any, Dict, Optional
+from typing import Any, Dict, Optional, Tuple
 
 import mlflow
 import torch
 import torch.utils.data
 from prefetch_generator import BackgroundGenerator
 from torch import nn
+from torchmetrics.text.perplexity import Perplexity
 from tqdm import tqdm
 
 from chatbot import logger
@@ -101,15 +102,18 @@ class Trainer:
         self.early_stopper = early_stopper
         self.sampling_probability: float = 1.0
 
+        self.perplexity = Perplexity(ignore_index=vocab.mask_index).to(
+            self.device
+        )
+
     def compute_metrics(
         self,
         decoder_input: torch.Tensor,
         decoder_hidden: torch.Tensor,
         encoder_state: torch.Tensor,
         target_sequences: torch.Tensor,
-        target_masks: torch.Tensor,
         target_max_length: int,
-    ) -> torch.Tensor:
+    ) -> Dict[str, torch.Tensor]:
         """Performs a forward pass through the decoder.
 
         For each token in the input sequence the loss is computed
@@ -129,7 +133,6 @@ class Trainer:
             decoder_hidden: tensor of shape: math:`(1, N, H)`.
             encoder_state: tensor of shape: math:`(L_{in}, N, H)`.
             target_sequences: tensor of shape: math:`(L_{out}, N)`.
-            target_masks: tensor of shape: math:`(L_{out}, N)`.
             target_max_length: The max sequence length in a batch
                 of sequences.
 
@@ -140,6 +143,7 @@ class Trainer:
             True if random.random() > self.sampling_probability else False
         )
         loss = torch.tensor(data=0, dtype=torch.float32).to(self.device)
+        perplexity = torch.tensor(data=0, dtype=torch.float32).to(self.device)
         all_predicted_indices = torch.zeros(
             size=[target_max_length, target_sequences.size(1)],
             device=self.device,
@@ -150,12 +154,21 @@ class Trainer:
                 input_seq=decoder_input,
                 h_0=decoder_hidden,
                 encoder_state=encoder_state,
-                apply_softmax=True,
+                apply_softmax=False,
             )
 
             # Calculate and accumulate loss
+            if self.loss_fn.__class__.__name__ == "NLLLoss":
+                decoder_output = self.decoder.log_softmax(decoder_output)
+
             mask_loss = self.loss_fn(decoder_output, target_sequences[t])
+            mask_perplexity = self.perplexity(
+                preds=decoder_output.unsqueeze(dim=1),
+                target=target_sequences[t].unsqueeze(dim=1),
+            )
+
             loss += mask_loss
+            perplexity += mask_perplexity.item()
 
             predicted_indices = torch.argmax(decoder_output, dim=1)
             all_predicted_indices[t] = predicted_indices
@@ -164,7 +177,7 @@ class Trainer:
             else:
                 decoder_input = predicted_indices.unsqueeze(0)
 
-        return loss
+        return {"loss": loss, "perplexity": perplexity}
 
     @staticmethod
     def generate_batches(
@@ -186,7 +199,6 @@ class Trainer:
             input_lengths = data_dict["input_length"].numpy()
             target_sequences = data_dict["target_sequence"]
             target_lengths = data_dict["target_length"]
-            target_masks = data_dict["target_mask"]
             sorted_length_indices = input_lengths.argsort()[::-1].tolist()
             yield {
                 "input_sequences": input_sequences[
@@ -201,9 +213,6 @@ class Trainer:
                 "target_max_length": target_lengths[sorted_length_indices]
                 .max()
                 .item(),
-                "target_masks": target_masks[sorted_length_indices].transpose(
-                    0, 1
-                ),
             }
 
     def train(
@@ -239,12 +248,12 @@ class Trainer:
                 decay=self.sampling_decay, epoch=epoch_index
             )
 
-            train_loss = self._train_step(
+            train_loss, train_perplexity = self._train_step(
                 dataloader=train_dataloader,
                 tqdm_bar=tqdm_bar,
                 epoch_index=epoch_index,
             )
-            val_loss = self._val_step(
+            val_loss, val_perplexity = self._val_step(
                 dataloader=val_dataloader,
                 tqdm_bar=tqdm_bar,
                 epoch_index=epoch_index,
@@ -255,6 +264,8 @@ class Trainer:
                 f"===>>> epoch: {epoch_index} | "
                 f"train_loss: {train_loss:.4f} | "
                 f"val_loss: {val_loss:.4f} | "
+                f"train_perplexity: {train_perplexity:.4f} | "
+                f"val_perplexity: {val_perplexity:.4f} | "
                 f"sampling_prob: {self.sampling_probability:.4f}"
             )
 
@@ -307,7 +318,7 @@ class Trainer:
         dataloader: torch.utils.data.DataLoader,
         tqdm_bar: tqdm,
         epoch_index: int,
-    ) -> float:
+    ) -> Tuple[float, float]:
         """Trains a sequence-to-sequence text generation model for a
         single epoch.
 
@@ -322,14 +333,14 @@ class Trainer:
             epoch_index (int): Current epoch.
 
         Returns:
-          float: The training loss.
+          float: The training loss and perplexity.
         """
         batch_generator = self.generate_batches(dataloader)
 
         self.encoder.train()
         self.decoder.train()
 
-        running_loss = 0
+        running_loss, running_perplexity = 0, 0
         for batch_idx, data_dict in enumerate(
             BackgroundGenerator(batch_generator)
         ):
@@ -345,7 +356,6 @@ class Trainer:
             input_lengths = data_dict["input_lengths"].to("cpu")
             target_sequences = data_dict["target_sequences"].to(self.device)
             target_max_length = data_dict["target_max_length"]
-            target_masks = data_dict["target_masks"].to(self.device)
             batch_size = input_sequences.size(1)
 
             encoder_state, encoder_hidden = self.encoder(
@@ -362,14 +372,14 @@ class Trainer:
             # hidden state
             decoder_hidden = encoder_hidden[: self.decoder.num_layers]
 
-            loss = self.compute_metrics(
+            metrics = self.compute_metrics(
                 decoder_input=decoder_input,
                 decoder_hidden=decoder_hidden,
                 encoder_state=encoder_state,
                 target_sequences=target_sequences,
-                target_masks=target_masks,
                 target_max_length=target_max_length,
             )
+            loss, perplexity = metrics["loss"], metrics["perplexity"]
 
             self.encoder.zero_grad()
             self.decoder.zero_grad()
@@ -390,14 +400,18 @@ class Trainer:
                 (loss.item() / target_max_length) - running_loss
             ) / (batch_idx + 1)
 
-        return running_loss
+            running_perplexity += (
+                (perplexity.item() / target_max_length) - running_loss
+            ) / (batch_idx + 1)
+
+        return running_loss, running_perplexity
 
     def _val_step(
         self,
         dataloader: torch.utils.data.DataLoader,
         tqdm_bar: tqdm,
         epoch_index: int,
-    ) -> float:
+    ) -> Tuple[float, float]:
         """Validates a sequence-to-sequence text generation model for a
         single epoch.
 
@@ -411,14 +425,14 @@ class Trainer:
             epoch_index (int): Current epoch.
 
         Returns:
-          float: The validation loss.
+          float: The validation loss and perplexity.
         """
         batch_generator = self.generate_batches(dataloader)
 
         self.encoder.eval()
         self.decoder.eval()
 
-        running_loss = 0
+        running_loss, running_perplexity = 0.0, 0.0
         with torch.inference_mode():
             for batch_idx, data_dict in enumerate(
                 BackgroundGenerator(batch_generator)
@@ -437,7 +451,6 @@ class Trainer:
                     self.device
                 )
                 target_max_length = data_dict["target_max_length"]
-                target_masks = data_dict["target_masks"].to(self.device)
                 batch_size = input_sequences.size(1)
 
                 encoder_state, encoder_hidden = self.encoder(
@@ -455,17 +468,21 @@ class Trainer:
                 decoder_hidden = encoder_hidden[: self.decoder.num_layers]
 
                 # Decoder forward pass and loss calculation
-                loss = self.compute_metrics(
+                metrics = self.compute_metrics(
                     decoder_input=decoder_input,
                     decoder_hidden=decoder_hidden,
                     encoder_state=encoder_state,
                     target_sequences=target_sequences,
-                    target_masks=target_masks,
                     target_max_length=target_max_length,
                 )
+                loss, perplexity = metrics["loss"], metrics["perplexity"]
 
                 running_loss += (
                     (loss.item() / target_max_length) - running_loss
                 ) / (batch_idx + 1)
 
-        return running_loss
+                running_perplexity += (
+                    (perplexity / target_max_length) - running_loss
+                ) / (batch_idx + 1)
+
+        return running_loss, running_perplexity

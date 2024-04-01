@@ -111,17 +111,16 @@ class CornellDialogsDataset(Dataset):
         query_sequence = sequence_pair[0]
         response_sequence = sequence_pair[1]
 
-        input_seq, input_length, _ = self._vectorizer.vectorize(
+        input_seq, input_length = self._vectorizer.vectorize(
             sequence=query_sequence, use_dataset_max_length=True
         )
-        target_seq, target_length, target_mask = self._vectorizer.vectorize(
+        target_seq, target_length = self._vectorizer.vectorize(
             sequence=response_sequence, use_dataset_max_length=True
         )
 
         return {
             "input_sequence": input_seq,
             "target_sequence": target_seq,
-            "target_mask": target_mask,
             "input_length": input_length,
             "target_length": target_length,
         }

@@ -33,7 +33,7 @@ class Evaluator:
         Returns:
             List[str]: The generated tokens.
         """
-        token_indices, indices_length, _ = self.vectorizer.vectorize(
+        token_indices, indices_length = self.vectorizer.vectorize(
             sequence=input_sequence, use_dataset_max_length=True
         )
         token_indices = token_indices.unsqueeze(dim=1).to(self.device)
