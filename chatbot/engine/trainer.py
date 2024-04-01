@@ -77,7 +77,9 @@ class Trainer:
     ) -> None:
 
         if enable_early_stop and not early_stopper:
-            raise TypeError("enable_early_stop is True but early_stopper is None!")
+            raise TypeError(
+                "enable_early_stop is True but early_stopper is None!"
+            )
 
         self.embedding = embedding
         self.encoder = encoder
@@ -137,45 +139,26 @@ class Trainer:
             True if random.random() > self.sampling_probability else False
         )
         loss = torch.tensor(data=0, dtype=torch.float32).to(self.device)
-        if not scheduled_sampling:
-            for t in range(target_max_length):
-                decoder_output, decoder_hidden = self.decoder(
-                    decoder_input, decoder_hidden, encoder_state
-                )
+
+        for t in range(target_max_length):
+            decoder_output, decoder_hidden = self.decoder(
+                decoder_input, decoder_hidden, encoder_state
+            )
+
+            # Calculate and accumulate loss
+            mask_loss = self.loss_fn(
+                y_pred=decoder_output,
+                y_true=target_sequences[t],
+                mask=target_masks[t],
+            )
+            loss += mask_loss
+
+            if not scheduled_sampling:
                 decoder_input = target_sequences[t].view(1, -1)
-
-                # Calculate and accumulate loss
-                mask_loss = self.loss_fn(
-                    y_pred=decoder_output,
-                    y_true=target_sequences[t],
-                    mask=target_masks[t],
+            else:
+                decoder_input = torch.argmax(decoder_output, dim=1).unsqueeze(
+                    dim=0
                 )
-                loss += mask_loss
-
-        else:
-            for t in range(target_max_length):
-                decoder_output, decoder_hidden = self.decoder(
-                    decoder_input, decoder_hidden, encoder_state
-                )
-
-                decoder_input = torch.argmax(decoder_output, dim=1).unsqueeze(dim=0)
-
-                # decoder_input = (
-                #     torch.multinomial(
-                #         input=torch.softmax(decoder_output, dim=1),
-                #         num_samples=1,
-                #     )
-                #     .transpose(0, 1)
-                #     .to(self.device)
-                # )
-
-                # Calculate and accumulate loss
-                mask_loss = self.loss_fn(
-                    y_pred=decoder_output,
-                    y_true=target_sequences[t],
-                    mask=target_masks[t],
-                )
-                loss += mask_loss
 
         return loss
 
@@ -202,15 +185,21 @@ class Trainer:
             target_masks = data_dict["target_mask"]
             sorted_length_indices = input_lengths.argsort()[::-1].tolist()
             yield {
-                "input_sequences": input_sequences[sorted_length_indices].transpose(
+                "input_sequences": input_sequences[
+                    sorted_length_indices
+                ].transpose(0, 1),
+                "input_lengths": data_dict["input_length"][
+                    sorted_length_indices
+                ],
+                "target_sequences": target_sequences[
+                    sorted_length_indices
+                ].transpose(0, 1),
+                "target_max_length": target_lengths[sorted_length_indices]
+                .max()
+                .item(),
+                "target_masks": target_masks[sorted_length_indices].transpose(
                     0, 1
                 ),
-                "input_lengths": data_dict["input_length"][sorted_length_indices],
-                "target_sequences": target_sequences[sorted_length_indices].transpose(
-                    0, 1
-                ),
-                "target_max_length": target_lengths[sorted_length_indices].max().item(),
-                "target_masks": target_masks[sorted_length_indices].transpose(0, 1),
             }
 
     def train(
@@ -337,7 +326,9 @@ class Trainer:
         self.decoder.train()
 
         running_loss = 0
-        for batch_idx, data_dict in enumerate(BackgroundGenerator(batch_generator)):
+        for batch_idx, data_dict in enumerate(
+            BackgroundGenerator(batch_generator)
+        ):
             desc = (
                 f"Training: [{epoch_index}/{self.epochs}] | "
                 f"[{batch_idx}/{len(dataloader)}]"
@@ -353,7 +344,9 @@ class Trainer:
             target_masks = data_dict["target_masks"].to(self.device)
             batch_size = input_sequences.size(1)
 
-            encoder_state, encoder_hidden = self.encoder(input_sequences, input_lengths)
+            encoder_state, encoder_hidden = self.encoder(
+                input_sequences, input_lengths
+            )
 
             # Create initial decoder input starting with an SOS token
             # for each sentence
@@ -389,9 +382,9 @@ class Trainer:
             self.encoder_optimizer.step()
             self.decoder_optimizer.step()
 
-            running_loss += ((loss.item() / target_max_length) - running_loss) / (
-                batch_idx + 1
-            )
+            running_loss += (
+                (loss.item() / target_max_length) - running_loss
+            ) / (batch_idx + 1)
 
         return running_loss
 
@@ -423,7 +416,9 @@ class Trainer:
 
         running_loss = 0
         with torch.inference_mode():
-            for batch_idx, data_dict in enumerate(BackgroundGenerator(batch_generator)):
+            for batch_idx, data_dict in enumerate(
+                BackgroundGenerator(batch_generator)
+            ):
                 desc = (
                     f"Validation: [{epoch_index}/{self.epochs}] | "
                     f"[{batch_idx}/{len(dataloader)}]"
@@ -434,7 +429,9 @@ class Trainer:
                 data_dict = dict(data_dict)
                 input_sequences = data_dict["input_sequences"].to(self.device)
                 input_lengths = data_dict["input_lengths"].to("cpu")
-                target_sequences = data_dict["target_sequences"].to(self.device)
+                target_sequences = data_dict["target_sequences"].to(
+                    self.device
+                )
                 target_max_length = data_dict["target_max_length"]
                 target_masks = data_dict["target_masks"].to(self.device)
                 batch_size = input_sequences.size(1)
@@ -463,8 +460,8 @@ class Trainer:
                     target_max_length=target_max_length,
                 )
 
-                running_loss += ((loss.item() / target_max_length) - running_loss) / (
-                    batch_idx + 1
-                )
+                running_loss += (
+                    (loss.item() / target_max_length) - running_loss
+                ) / (batch_idx + 1)
 
         return running_loss

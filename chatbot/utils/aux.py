@@ -20,7 +20,9 @@ def load_yaml_file(filepath: str) -> Any:
         Any: The configuration parameters.
     """
     if not os.path.isfile(path=filepath):
-        raise FileNotFoundError(errno.ENOENT, os.strerror(errno.ENOENT), filepath)
+        raise FileNotFoundError(
+            errno.ENOENT, os.strerror(errno.ENOENT), filepath
+        )
 
     with open(file=filepath, mode="r", encoding="utf-8") as f:
         config = yaml.full_load(stream=f)

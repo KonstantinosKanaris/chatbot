@@ -68,7 +68,9 @@ class LuongAttnDecoderRNN(nn.Module):
     ) -> None:
         super().__init__()
         if alignment_method not in ["concat", "dot", "general"]:
-            raise ValueError(f"'{alignment_method}' is not a valid attention method.")
+            raise ValueError(
+                f"'{alignment_method}' is not a valid attention method."
+            )
 
         self.num_layers = num_layers
 
@@ -84,7 +86,9 @@ class LuongAttnDecoderRNN(nn.Module):
         self.concat = nn.Linear(2 * hidden_size, hidden_size)
         self.out = nn.Linear(hidden_size, output_size)
 
-        self.attention = AttnLayer(method=alignment_method, hidden_size=hidden_size)
+        self.attention = AttnLayer(
+            method=alignment_method, hidden_size=hidden_size
+        )
 
     def forward(
         self,
@@ -187,7 +191,9 @@ class GreedySearchDecoder(nn.Module):
         self.decoder.eval()
 
         with torch.inference_mode():
-            encoder_state, encoder_hidden = self.encoder(input_seq, input_length)
+            encoder_state, encoder_hidden = self.encoder(
+                input_seq, input_length
+            )
             decoder_hidden = encoder_hidden[: self.decoder.num_layers]
             decoder_input = torch.ones(
                 size=(1, 1), device=self.device, dtype=torch.int64
@@ -204,7 +210,9 @@ class GreedySearchDecoder(nn.Module):
                 )
                 decoder_input = torch.argmax(decoder_output, dim=1)
 
-                all_token_indices = torch.cat((all_token_indices, decoder_input), dim=0)
+                all_token_indices = torch.cat(
+                    (all_token_indices, decoder_input), dim=0
+                )
 
                 if decoder_input.item() == self.eos_idx:
                     break
@@ -274,7 +282,9 @@ class RandomSearchDecoder(nn.Module):
         self.decoder.eval()
 
         with torch.inference_mode():
-            encoder_state, encoder_hidden = self.encoder(input_seq, input_length)
+            encoder_state, encoder_hidden = self.encoder(
+                input_seq, input_length
+            )
             decoder_hidden = encoder_hidden[: self.decoder.num_layers]
             decoder_input = torch.ones(
                 size=(1, 1), device=self.device, dtype=torch.int64
@@ -293,7 +303,9 @@ class RandomSearchDecoder(nn.Module):
                     input=torch.softmax(decoder_output, dim=1), num_samples=1
                 ).squeeze(dim=0)
 
-                all_token_indices = torch.cat((all_token_indices, decoder_input), dim=0)
+                all_token_indices = torch.cat(
+                    (all_token_indices, decoder_input), dim=0
+                )
 
                 if decoder_input.item() == self.eos_idx:
                     break

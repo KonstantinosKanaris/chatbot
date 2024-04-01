@@ -62,7 +62,8 @@ class SequenceVectorizer:
         # indices = [self.vocab.start_seq_index]
         indices: List[int] = []
         indices.extend(
-            self.vocab.lookup_token(token) for token in self.tokenizer(sequence)
+            self.vocab.lookup_token(token)
+            for token in self.tokenizer(sequence)
         )
         indices.append(self.vocab.end_seq_index)
 

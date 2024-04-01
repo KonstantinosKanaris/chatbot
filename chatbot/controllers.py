@@ -96,7 +96,9 @@ def initialize_seq2seq_components(
         **init_params["embedding_init_params"],
     )
 
-    encoder = EncoderRNN(embedding=embedding, **init_params["encoder_init_params"])
+    encoder = EncoderRNN(
+        embedding=embedding, **init_params["encoder_init_params"]
+    )
     decoder = LuongAttnDecoderRNN(
         embedding=embedding,
         output_size=len(vocab_tokens),
@@ -220,7 +222,9 @@ def initialize_from_checkpoint(
     )
     embedding.load_state_dict(state_dict=embedding_state_dict)
 
-    encoder = EncoderRNN(embedding=embedding, **init_params["encoder_init_params"])
+    encoder = EncoderRNN(
+        embedding=embedding, **init_params["encoder_init_params"]
+    )
     decoder = LuongAttnDecoderRNN(
         embedding=embedding,
         output_size=len(vocab_tokens),
@@ -239,8 +243,12 @@ def initialize_from_checkpoint(
             params=decoder.parameters(),
             **init_params["decoder_optimizer_init_params"],
         )
-        encoder_optimizer.load_state_dict(state_dict=encoder_optimizer_state_dict)
-        decoder_optimizer.load_state_dict(state_dict=decoder_optimizer_state_dict)
+        encoder_optimizer.load_state_dict(
+            state_dict=encoder_optimizer_state_dict
+        )
+        decoder_optimizer.load_state_dict(
+            state_dict=decoder_optimizer_state_dict
+        )
 
     return {
         "embedding": embedding,
@@ -438,7 +446,9 @@ class TrainingController:
             )
             last_epoch = training_components["last_epoch"]
             last_best_score = training_components["last_best_score"]
-            logger.info(f"Resume training from checkpoint: {self.checkpoint_path}")
+            logger.info(
+                f"Resume training from checkpoint: {self.checkpoint_path}"
+            )
             logger.info(f"Last validation loss value: {last_best_score:.4f}\n")
             logger.info(f"Resuming from epoch {last_epoch + 1}\n")
             self.early_stopper.val_loss_min = last_best_score
@@ -484,23 +494,32 @@ class TrainingController:
                 random_state=42,
             )
 
-            logger.info("------------------------- Training -------------------------")
-            logger.info(f"Device: {'cuda' if torch.cuda.is_available() else 'cpu'}")
+            logger.info(
+                "------------------------- Training -------------------------"
+            )
+            logger.info(
+                f"Device: {'cuda' if torch.cuda.is_available() else 'cpu'}"
+            )
 
             bar_fmt = (
-                "{desc} {percentage:3.0f}%|{bar}{postfix} " "[{elapsed}<{remaining}]"
+                "{desc} {percentage:3.0f}%|{bar}{postfix} "
+                "[{elapsed}<{remaining}]"
             )
             try:
-                for fold, (train_ids, val_ids) in enumerate(rs.split(X=self.dataset)):
+                for fold, (train_ids, val_ids) in enumerate(
+                    rs.split(X=self.dataset)
+                ):
                     logger.info(
                         f"Training size: {len(train_ids)}, "
                         f"Validation size: {len(val_ids)}\n"
                     )
 
-                    train_dataloader, val_dataloader = self._create_dataloaders(
-                        train_ids=train_ids,
-                        val_ids=val_ids,
-                        batch_size=self.training_params["batch_size"],
+                    train_dataloader, val_dataloader = (
+                        self._create_dataloaders(
+                            train_ids=train_ids,
+                            val_ids=val_ids,
+                            batch_size=self.training_params["batch_size"],
+                        )
                     )
                     tqdm_bar = tqdm(
                         iterable=range(self.training_params["num_epochs"] + 1),

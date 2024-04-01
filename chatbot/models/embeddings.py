@@ -207,7 +207,9 @@ class EmbeddingLayerConstructor:
         embeddings_wrapper = PreTrainedEmbeddings.from_embeddings_file(
             embedding_file=filepath
         )
-        input_embeddings = embeddings_wrapper.make_embedding_matrix(words=vocab_tokens)
+        input_embeddings = embeddings_wrapper.make_embedding_matrix(
+            words=vocab_tokens
+        )
         embedding = nn.Embedding(
             num_embeddings=len(vocab_tokens), **kwargs
         ).from_pretrained(embeddings=input_embeddings, freeze=True)
@@ -258,5 +260,7 @@ class EmbeddingLayerConstructor:
         if filepath and os.path.exists(filepath):
             embedding = cls.from_file(vocab_tokens, filepath, **kwargs)
         else:
-            embedding = cls.without_pretrained_embeddings(vocab_tokens, **kwargs)
+            embedding = cls.without_pretrained_embeddings(
+                vocab_tokens, **kwargs
+            )
         return embedding

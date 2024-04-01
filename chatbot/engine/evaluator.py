@@ -16,7 +16,9 @@ class Evaluator:
         self.vocab = vectorizer.vocab
         self.device = "cuda" if torch.cuda.is_available() else "cpu"
 
-    def evaluate(self, input_sequence: str, searcher: torch.nn.Module) -> List[str]:
+    def evaluate(
+        self, input_sequence: str, searcher: torch.nn.Module
+    ) -> List[str]:
         """Generates a list of tokens in response to the input query.
 
         Implements a forward pass through the decoder and samples its

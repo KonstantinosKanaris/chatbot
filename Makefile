@@ -10,6 +10,8 @@ TESTS_DIR := $(addsuffix /tests,$(CWD))
 PYTHON_VERSION_FULL := $(wordlist 2,4,$(subst ., ,$(shell python --version 2>&1)))
 PYTHON_VERSION := $(addsuffix $(word 2,${PYTHON_VERSION_FULL}),$(word 1,${PYTHON_VERSION_FULL}))
 
+MAX_LINE_LENGTH = 79
+
 .DEFAULT: help
 
 .PHONY: help
@@ -45,12 +47,12 @@ help:
 .PHONY: black
 black: ## Run the black tool and update files that need to
 	@echo "$(BGreen)Running black$(Color_Off)"
-	black --line-length 79 $(SRC_DIR)
+	black --line-length $(MAX_LINE_LENGTH) $(SRC_DIR)
 
 .PHONY: isort
 isort:
 	@echo "$(BGreen)Running isort$(Color_Off)"
-	isort --profile black $(SRC_DIR)
+	isort --profile black --line-length $(MAX_LINE_LENGTH) $(SRC_DIR)
 
 .PHONY: pretty
 pretty:
@@ -59,12 +61,12 @@ pretty: isort black
 .PHONY: check-black
 check-black:
 	@echo "$(BGreen)Checking black$(Color_Off)"
-	black --line-length 79 --check $(SRC_DIR)
+	black --line-length $(MAX_LINE_LENGTH) --check $(SRC_DIR)
 
 .PHONY: check-isort
 check-isort:
 	@echo "$(BGreen)Checking isort$(Color_Off)"
-	isort $(SRC_DIR) --check-only
+	isort --line-length $(MAX_LINE_LENGTH) $(SRC_DIR) --check-only
 
 .PHONY: mypy
 mypy:  ## Run the mypy tool
@@ -76,7 +78,7 @@ mypy:  ## Run the mypy tool
 flake8: ## Run the flake8 tool
 	@echo "$(BGreen)Running flake8$(Color_Off)"
 	@echo $(CWD)
-	flake8 --ignore W503,E203,E402 $(SRC_DIR)
+	flake8 --max-line-length $(MAX_LINE_LENGTH) --ignore W503,E203,E402 $(SRC_DIR)
 
 .PHONY: lint
 lint:

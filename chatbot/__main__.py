@@ -49,7 +49,8 @@ def parse_arguments() -> argparse.Namespace:
         choices={"yes", "no"},
         required=False,
         default="no",
-        help="If `yes` the training will " "resume from the last saved checkpoint.",
+        help="If `yes` the training will "
+        "resume from the last saved checkpoint.",
     )
 
     evaluate.add_argument(
@@ -81,7 +82,9 @@ if __name__ == "__main__":
         )
 
         checkpoint_path = str(
-            os.path.join(config["checkpoints_dir"], config["checkpoint_filename"])
+            os.path.join(
+                config["checkpoints_dir"], config["checkpoint_filename"]
+            )
         )
         training_controller = TrainingController(
             dataset=dataset,
@@ -90,13 +93,19 @@ if __name__ == "__main__":
             resume=resume,
         )
         trainer, last_epoch = training_controller.prepare_for_training()
-        training_controller.start_training(trainer=trainer, last_epoch=last_epoch)
+        training_controller.start_training(
+            trainer=trainer, last_epoch=last_epoch
+        )
     elif arguments.mode == "evaluate":
         dataset = CornellDialogsDataset.load_pairs_and_vectorizer(
             file=config["data_path"],
             tokenizer=tokenizer,
-            min_length=config["evaluation_parameters"]["data"]["min_seq_length"],
-            max_length=config["evaluation_parameters"]["data"]["max_seq_length"],
+            min_length=config["evaluation_parameters"]["data"][
+                "min_seq_length"
+            ],
+            max_length=config["evaluation_parameters"]["data"][
+                "max_seq_length"
+            ],
             min_count=config["evaluation_parameters"]["data"]["min_count"],
         )
         vectorizer = dataset.get_vectorizer()

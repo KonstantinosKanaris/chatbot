@@ -42,7 +42,9 @@ class CornellDialogsDataset(Dataset):
         Returns:
             CornelDialogsDataset: An instance of `CornelDialogsDataset`.
         """
-        vocab_builder = VocabularyBuilder.from_txt_file(file=file, tokenizer=tokenizer)
+        vocab_builder = VocabularyBuilder.from_txt_file(
+            file=file, tokenizer=tokenizer
+        )
 
         pairs, vocabulary = vocab_builder.build_vocabulary(
             min_length=min_length,

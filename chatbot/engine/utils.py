@@ -88,7 +88,7 @@ def write_checkpoint(
     if not os.path.isdir(s=os.path.dirname(path)):
         os.makedirs(name=os.path.dirname(path), exist_ok=True)
 
-    logger.info(f"Saving checkpoint to {path}")
+    logger.info(f"Saving checkpoint to {path}\n")
 
     torch.save(
         obj={
@@ -196,7 +196,9 @@ class EarlyStopping:
             self.val_loss_min = val_loss
         elif score < self.best_score + self.delta:
             self.counter += 1
-            logger.info(f"EarlyStopping counter: {self.counter} out of {self.patience}")
+            logger.info(
+                f"EarlyStopping counter: {self.counter} out of {self.patience}"
+            )
             if self.counter >= self.patience:
                 self.early_stop = True
         else:
