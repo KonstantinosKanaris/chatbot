@@ -7,6 +7,7 @@ import torch
 import torch.utils.data
 from prefetch_generator import BackgroundGenerator
 from torch import nn
+from torch.optim.lr_scheduler import ReduceLROnPlateau
 from torchmetrics.text.perplexity import Perplexity
 from tqdm import tqdm
 
@@ -45,6 +46,9 @@ class Trainer:
             :attr:`early_stopper` for stopping the training process
             if the validation loss doesn't decrease for a number of epochs.
             Defaults to ``False``.
+        enable_lr_scheduler (bool, optional): If ``True``, activates the
+            learning rate schedulers for the encoder and decoder. Defaults
+            to ``False``.
         last_epoch (int, optional): Used in case of resuming training
             from the last checkpoint (default=0).
         sampling_decay (int | float, optional): Decay value for the
@@ -53,8 +57,12 @@ class Trainer:
         early_stopper (EarlyStopping, optional): Stops the training process
             if the validation loss doesn't decrease for a number of epochs.
             Defaults to ``None``.
-        scheduler (ReduceLROnPlateau, optional): Reduces the learning rate when
-            the validation loss stops improving. Defaults to ``None``.
+        encoder_lr_scheduler (ReduceLROnPlateau, optional): Reduces the
+            learning rate of the encoder when the validation loss stops
+            decreasing. Defaults to ``None``.
+        decoder_lr_scheduler (ReduceLROnPlateau, optional): Reduces the
+            learning rate of the decoder when the validation loss stops
+            decreasing. Defaults to ``None``.
     """
 
     def __init__(
@@ -71,15 +79,24 @@ class Trainer:
         clip_factor: Optional[float | int] = None,
         resume: bool = False,
         enable_early_stop: bool = False,
+        enable_lr_scheduler: bool = False,
         last_epoch: int = 0,
         sampling_decay: int | float = 1.5,
         early_stopper: Optional[Any] = None,
-        scheduler: Optional[torch.optim.lr_scheduler.ReduceLROnPlateau] = None,
+        encoder_lr_scheduler: Optional[ReduceLROnPlateau] = None,
+        decoder_lr_scheduler: Optional[ReduceLROnPlateau] = None,
     ) -> None:
 
         if enable_early_stop and not early_stopper:
             raise TypeError(
                 "enable_early_stop is True but early_stopper is None!"
+            )
+        if enable_lr_scheduler and (
+            not encoder_lr_scheduler or not decoder_lr_scheduler
+        ):
+            raise TypeError(
+                "enable_lr_scheduler is True but the lr scheduler for "
+                "the encoder and/or the decoder is None!"
             )
 
         self.embedding = embedding
@@ -89,11 +106,13 @@ class Trainer:
         self.decoder_optimizer = decoder_optimizer
         self.loss_fn = loss_fn
         self.vocab = vocab
-        self.scheduler = scheduler
+        self.encoder_lr_scheduler = encoder_lr_scheduler
+        self.decoder_lr_scheduler = decoder_lr_scheduler
         self.checkpoint_path = checkpoint_path
         self.epochs = epochs
         self.resume = resume
         self.enable_early_stop = enable_early_stop
+        self.enable_lr_scheduler = enable_lr_scheduler
         self.last_epoch = last_epoch
         self.sampling_decay = sampling_decay
         self.clip_factor = clip_factor
@@ -299,8 +318,13 @@ class Trainer:
                     path=self.checkpoint_path,
                 )
 
-            if self.scheduler:
-                self.scheduler.step(val_loss)
+            if (
+                self.enable_lr_scheduler
+                and self.encoder_lr_scheduler
+                and self.decoder_lr_scheduler
+            ):
+                self.encoder_lr_scheduler.step(val_loss)
+                self.decoder_lr_scheduler.step(val_loss)
 
             if (
                 self.enable_early_stop
@@ -349,7 +373,14 @@ class Trainer:
                 f"[{batch_idx}/{len(dataloader)}]"
             )
             tqdm_bar.set_description(desc=desc)
-            tqdm_bar.set_postfix({"loss": running_loss})
+            tqdm_bar.set_postfix(
+                {
+                    "loss": running_loss,
+                    "perplexity": running_perplexity,
+                    "encoder_lr": self.encoder_optimizer.param_groups[0]["lr"],
+                    "decoder_lr": self.decoder_optimizer.param_groups[0]["lr"],
+                }
+            )
 
             data_dict = dict(data_dict)
             input_sequences = data_dict["input_sequences"].to(self.device)
@@ -442,7 +473,18 @@ class Trainer:
                     f"[{batch_idx}/{len(dataloader)}]"
                 )
                 tqdm_bar.set_description(desc=desc)
-                tqdm_bar.set_postfix({"loss": running_loss})
+                tqdm_bar.set_postfix(
+                    {
+                        "loss": running_loss,
+                        "perplexity": running_perplexity,
+                        "encoder_lr": self.encoder_optimizer.param_groups[0][
+                            "lr"
+                        ],
+                        "decoder_lr": self.decoder_optimizer.param_groups[0][
+                            "lr"
+                        ],
+                    }
+                )
 
                 data_dict = dict(data_dict)
                 input_sequences = data_dict["input_sequences"].to(self.device)

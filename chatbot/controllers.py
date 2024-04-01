@@ -4,6 +4,7 @@ import mlflow
 import torch
 from sklearn.model_selection import ShuffleSplit
 from torch import nn
+from torch.optim.lr_scheduler import ReduceLROnPlateau
 from torch.utils.data import DataLoader, SubsetRandomSampler
 from tqdm.auto import tqdm
 
@@ -391,15 +392,32 @@ class TrainingController:
     def _load_training_params(self) -> Dict[str, Any]:
         """Returns all the training hyperparameters from the
         configuration file."""
+
+        encoder_init_params = {
+            f"encoder_{key}": val
+            for key, val in {
+                **self.hyperparameters["encoder_init_params"],
+                **self.hyperparameters["encoder_optimizer_init_params"],
+                **self.hyperparameters["encoder_lr_scheduler_init_params"],
+            }.items()
+        }
+
+        decoder_init_params = {
+            f"decoder_{key}": val
+            for key, val in {
+                **self.hyperparameters["decoder_init_params"],
+                **self.hyperparameters["decoder_optimizer_init_params"],
+                **self.hyperparameters["decoder_lr_scheduler_init_params"],
+            }.items()
+        }
+
         return {
             "vocab_size": len(self.vectorizer.vocab),
             **self.hyperparameters["data"],
             **self.hyperparameters["general"],
             **self.hyperparameters["embedding_init_params"],
-            **self.hyperparameters["encoder_init_params"],
-            **self.hyperparameters["decoder_init_params"],
-            **self.hyperparameters["encoder_optimizer_init_params"],
-            **self.hyperparameters["decoder_optimizer_init_params"],
+            **encoder_init_params,
+            **decoder_init_params,
         }
 
     def _create_dataloaders(
@@ -469,12 +487,25 @@ class TrainingController:
 
         loss_fn = nn.NLLLoss(ignore_index=self.vectorizer.vocab.mask_index)
 
+        encoder_lr_scheduler = ReduceLROnPlateau(
+            optimizer=training_components["encoder_optimizer"],
+            mode="min",
+            **self.hyperparameters["encoder_lr_scheduler_init_params"],
+        )
+        decoder_lr_scheduler = ReduceLROnPlateau(
+            optimizer=training_components["decoder_optimizer"],
+            mode="min",
+            **self.hyperparameters["decoder_lr_scheduler_init_params"],
+        )
+
         trainer = Trainer(
             embedding=training_components["embedding"],
             encoder=training_components["encoder"],
             decoder=training_components["decoder"],
             encoder_optimizer=training_components["encoder_optimizer"],
             decoder_optimizer=training_components["decoder_optimizer"],
+            encoder_lr_scheduler=encoder_lr_scheduler,
+            decoder_lr_scheduler=decoder_lr_scheduler,
             loss_fn=loss_fn,
             vocab=self.vectorizer.vocab,
             checkpoint_path=self.checkpoint_path,
@@ -485,6 +516,7 @@ class TrainingController:
             sampling_decay=self.training_params["sampling_decay"],
             resume=self.resume,
             enable_early_stop=self.training_params["enable_early_stop"],
+            enable_lr_scheduler=self.training_params["enable_lr_scheduler"],
         )
         return trainer, last_epoch
 

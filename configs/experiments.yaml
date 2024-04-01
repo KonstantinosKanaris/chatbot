@@ -46,12 +46,11 @@ hyperparameters:
       batch_size: 64
     general:
       num_epochs: 50
-      lr_patience: 2
-      lr_reduce_factor: 0.25
       ea_patience: 10
       ea_delta: 0
       clip_factor: 50
       enable_early_stop: True
+      enable_lr_scheduler: True
       sampling_decay: 10
     embedding_init_params:
       embedding_dim: 50
@@ -66,6 +65,14 @@ hyperparameters:
       num_layers: 1
       dropout: 0.1
     encoder_optimizer_init_params:
-      lr: 0.0001
+      lr: 0.001
+      weight_decay: 0.001
     decoder_optimizer_init_params:
-      lr: 0.0001
+      lr: 0.001
+      weight_decay: 0.001
+    encoder_lr_scheduler_init_params:
+      factor: 0.5
+      patience: 1
+    decoder_lr_scheduler_init_params:
+      factor: 0.5
+      patience: 1
