@@ -151,7 +151,7 @@ class SequenceVocabulary(Vocabulary):
             `END-OF-SEQUENCE` token.
         unk_index (int): Index associated with the `UNK` token.
         mask_index (int): Index associated with the `MASK` token.
-        begin_seq_index (int): Index associated with the
+        start_seq_index (int): Index associated with the
             `START-OF-SEQUENCE` token.
         end_seq_index (int): Index associated with the
             `END-OF-SEQUENCE` token.
@@ -173,7 +173,7 @@ class SequenceVocabulary(Vocabulary):
 
         self.mask_index = self.add_token(token=mask_token)
         self.unk_index = self.add_token(token=unk_token)
-        self.begin_seq_index = self.add_token(token=begin_seq_token)
+        self.start_seq_index = self.add_token(token=begin_seq_token)
         self.end_seq_index = self.add_token(token=end_seq_token)
 
     def lookup_token(self, token: str) -> int:

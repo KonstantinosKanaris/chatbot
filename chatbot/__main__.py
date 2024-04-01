@@ -75,9 +75,9 @@ if __name__ == "__main__":
         dataset = CornellDialogsDataset.load_pairs_and_vectorizer(
             file=config["data_path"],
             tokenizer=tokenizer,
-            min_length=config["hyperparameters"]["general"]["min_seq_length"],
-            max_length=config["hyperparameters"]["general"]["max_seq_length"],
-            min_count=config["hyperparameters"]["general"]["min_count"],
+            min_length=config["hyperparameters"]["data"]["min_seq_length"],
+            max_length=config["hyperparameters"]["data"]["max_seq_length"],
+            min_count=config["hyperparameters"]["data"]["min_count"],
         )
 
         checkpoint_path = str(
@@ -95,9 +95,9 @@ if __name__ == "__main__":
         dataset = CornellDialogsDataset.load_pairs_and_vectorizer(
             file=config["data_path"],
             tokenizer=tokenizer,
-            min_length=config["hyperparameters"]["general"]["min_seq_length"],
-            max_length=config["evaluation_parameters"]["general"]["max_seq_length"],
-            min_count=config["evaluation_parameters"]["general"]["min_count"],
+            min_length=config["evaluation_parameters"]["data"]["min_seq_length"],
+            max_length=config["evaluation_parameters"]["data"]["max_seq_length"],
+            min_count=config["evaluation_parameters"]["data"]["min_count"],
         )
         vectorizer = dataset.get_vectorizer()
 

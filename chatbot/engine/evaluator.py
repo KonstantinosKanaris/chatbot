@@ -55,7 +55,7 @@ class Evaluator:
             if token
             not in [
                 self.vocab.lookup_index(self.vocab.end_seq_index),
-                self.vocab.lookup_index(self.vocab.begin_seq_index),
+                self.vocab.lookup_index(self.vocab.start_seq_index),
                 self.vocab.lookup_index(self.vocab.mask_index),
             ]
         ]

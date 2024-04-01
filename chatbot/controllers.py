@@ -379,6 +379,7 @@ class TrainingController:
         configuration file."""
         return {
             "vocab_size": len(self.vectorizer.vocab),
+            **self.hyperparameters["data"],
             **self.hyperparameters["general"],
             **self.hyperparameters["embedding_init_params"],
             **self.hyperparameters["encoder_init_params"],
@@ -459,8 +460,7 @@ class TrainingController:
             encoder_optimizer=training_components["encoder_optimizer"],
             decoder_optimizer=training_components["decoder_optimizer"],
             loss_fn=loss_fn,
-            sos_index=self.vectorizer.vocab.begin_seq_index,
-            eos_index=self.vectorizer.vocab.end_seq_index,
+            vocab=self.vectorizer.vocab,
             checkpoint_path=self.checkpoint_path,
             epochs=self.training_params["num_epochs"],
             last_epoch=last_epoch,
@@ -478,16 +478,25 @@ class TrainingController:
         with mlflow.start_run():
             mlflow.log_params(params=self.training_params)
 
-            rs = ShuffleSplit(n_splits=1, test_size=0.2, random_state=42)
+            rs = ShuffleSplit(
+                n_splits=1,
+                test_size=self.training_params["validation_size"],
+                random_state=42,
+            )
 
             logger.info("------------------------- Training -------------------------")
-            logger.info(f"Device: {'cuda' if torch.cuda.is_available() else 'cpu'}\n")
+            logger.info(f"Device: {'cuda' if torch.cuda.is_available() else 'cpu'}")
 
             bar_fmt = (
                 "{desc} {percentage:3.0f}%|{bar}{postfix} " "[{elapsed}<{remaining}]"
             )
             try:
                 for fold, (train_ids, val_ids) in enumerate(rs.split(X=self.dataset)):
+                    logger.info(
+                        f"Training size: {len(train_ids)}, "
+                        f"Validation size: {len(val_ids)}\n"
+                    )
+
                     train_dataloader, val_dataloader = self._create_dataloaders(
                         train_ids=train_ids,
                         val_ids=val_ids,

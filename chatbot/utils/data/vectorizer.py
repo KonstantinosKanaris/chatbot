@@ -59,7 +59,7 @@ class SequenceVectorizer:
                 sequence and the mask of the sequence where mask is the
                 boolean version of the vectorized sequence.
         """
-        # indices = [self.vocab.begin_seq_index]
+        # indices = [self.vocab.start_seq_index]
         indices: List[int] = []
         indices.extend(
             self.vocab.lookup_token(token) for token in self.tokenizer(sequence)

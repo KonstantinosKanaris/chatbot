@@ -5,22 +5,24 @@
 # - data_path               : The path to the txt file containing pairs of text sequences.
 # - checkpoint_path         : Path to the checkpoint containing the trained model.
 # - embeddings_path         : Path to pre-trained embeddings file, i.e. GLoVe embeddings.
-# - num_samples             : Number of surnames to generate.
+# - min_seq_length          : Minimum number of tokens allowed in each of the pair of
+#                             sequences.
 # - max_seq_length          : Maximum number of tokens allowed in each of the pair of
 #                             sequences.
 # - min_count               : Minimum token count value threshold.
 # - embedding_dim           : Dimensions of token embeddings.
+# - padding_idx             : The PAD token index. Equal to 0.
 # - hidden_size             : Hidden size of `rnn`, `gru` or `lstm` model.
 # - dropout                 : Dropout value to apply after the `rnn`, `gru or `lstm`
-# - num_layers              : Number of rnn layers in the encoder and the decoder.
+# - num_layers              : Number of rnn layers in the encoder/decoder.
 # - alignment_method        : Name of the alignment score method used in the attention layer.
 #                             The available methods are: `concat`, `dot` and `general`.
 #-----------------------------------------------------------------------------------
 data_path: ./data/cornell_movie_dialogs/processed/formatted_dialogs.txt
 checkpoint_path: ./checkpoints/checkpoint_100d_2l_50ep_10_pa_8length.pth
 evaluation_parameters:
-  embeddings_path: ./pretrained_embeddings/glove.6B.300d.txt
-  general:
+  embeddings_path:
+  data:
     min_seq_length: 2
     max_seq_length: 10
     min_count: 3

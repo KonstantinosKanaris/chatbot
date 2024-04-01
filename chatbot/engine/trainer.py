@@ -11,6 +11,7 @@ from tqdm import tqdm
 
 from chatbot import logger
 from chatbot.engine.utils import inverse_sigmoid_decay, write_checkpoint
+from chatbot.utils.data.vocabulary import SequenceVocabulary
 
 
 class Trainer:
@@ -33,8 +34,7 @@ class Trainer:
         decoder_optimizer (torch.optim.Optimizer): The optimizer for updating
             the parameters of the decoder.
         loss_fn (torch.nn.Model): Loss to optimize.
-        sos_index (int): The `START_OF_SENTENCE` token index.
-        eos_index (int): The `END_OF_SENTENCE` token index.
+        vocab (SequenceVocabulary): The dataset's vocabulary.
         epochs (int, optional): Number of training epochs (default=5).
         clip_factor (float, optional): Max norm value for gradient clipping.
             Defaults to ``None``.
@@ -64,8 +64,7 @@ class Trainer:
         encoder_optimizer: torch.optim.Optimizer,
         decoder_optimizer: torch.optim.Optimizer,
         loss_fn: torch.nn.Module,
-        sos_index: int,
-        eos_index: int,
+        vocab: SequenceVocabulary,
         checkpoint_path: str,
         epochs: int = 5,
         clip_factor: Optional[float | int] = None,
@@ -86,8 +85,7 @@ class Trainer:
         self.encoder_optimizer = encoder_optimizer
         self.decoder_optimizer = decoder_optimizer
         self.loss_fn = loss_fn
-        self.sos_index = sos_index
-        self.eos_index = eos_index
+        self.vocab = vocab
         self.scheduler = scheduler
         self.checkpoint_path = checkpoint_path
         self.epochs = epochs
@@ -160,14 +158,16 @@ class Trainer:
                     decoder_input, decoder_hidden, encoder_state
                 )
 
-                decoder_input = (
-                    torch.multinomial(
-                        input=torch.softmax(decoder_output, dim=1),
-                        num_samples=1,
-                    )
-                    .transpose(0, 1)
-                    .to(self.device)
-                )
+                decoder_input = torch.argmax(decoder_output, dim=1).unsqueeze(dim=0)
+
+                # decoder_input = (
+                #     torch.multinomial(
+                #         input=torch.softmax(decoder_output, dim=1),
+                #         num_samples=1,
+                #     )
+                #     .transpose(0, 1)
+                #     .to(self.device)
+                # )
 
                 # Calculate and accumulate loss
                 mask_loss = self.loss_fn(
@@ -358,7 +358,7 @@ class Trainer:
             # Create initial decoder input starting with an SOS token
             # for each sentence
             decoder_input = torch.LongTensor(
-                [[self.sos_index for _ in range(batch_size)]]
+                [[self.vocab.start_seq_index for _ in range(batch_size)]]
             ).to(self.device)
 
             # Set initial decoder hidden state to the encoder's final
@@ -446,7 +446,7 @@ class Trainer:
                 # Create initial decoder input starting with an SOS token
                 # for each sentence
                 decoder_input = torch.LongTensor(
-                    [[self.sos_index for _ in range(batch_size)]]
+                    [[self.vocab.start_seq_index for _ in range(batch_size)]]
                 ).to(self.device)
 
                 # Set initial decoder hidden state to the encoder's final

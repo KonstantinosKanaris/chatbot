@@ -5,8 +5,15 @@
 # - checkpoint_filename     : The name of the checkpoint file.
 # - data_path               : The path to the txt file containing pairs of text sequences.
 # - embeddings_path         : Path to pre-trained embeddings file, i.e. GLoVe embeddings.
-# - num_epochs              : An integer indicating how many epochs to train for.
+# - min_seq_length          : Minimum number of tokens allowed in each of the pair of
+#                             sequences.
+# - max_seq_length          : Maximum number of tokens allowed in each of the pair of
+#                             sequences.
+# - min_count               : Minimum token count value threshold.
+# - validation_size         : Float number between 0.0 and 1.0 representing the proportion
+#                             of the dataset to include in the validation split.
 # - batch_size              : How many samples per batch to load.
+# - num_epochs              : An integer indicating how many epochs to train for.
 # - lr_patience             : Number of epochs to wait before reducing the learning
 #                             rate.
 # - lr_reduce_factor        : How much to reduce the learning rate, i.e. lr * factor.
@@ -14,52 +21,52 @@
 # - ea_delta                : Minimum change in monitored quantity to qualify as an
 #                             improvement.
 # - clip_factor             : Max norm value for gradient clipping.
-# - max_seq_length          : Maximum number of tokens allowed in each of the pair of
-#                             sequences.
-# - min_count               : Minimum token count value threshold.
+# - enable_early_stop       : If ``True``, enables early stop functionality.
+# - sampling_decay          : Integer >= 1. Smaller value results in a quicker drop of the
+#                             sample probability per epoch.
 # - alignment_method        : Name of the alignment score method used in the attention layer.
 #                             The available methods are: `concat`, `dot` and `general`.
 # - embedding_dim           : Dimensions of token embeddings.
 # - hidden_size             : Hidden size of `rnn`, `gru` or `lstm` model.
 # - dropout                 : Dropout value to apply after the `rnn`, `gru or `lstm`
 #                             layer.
-# - encoder_num_layers      : Number of `rnn`, `gru` or `lstm` layers in the encoder layer.
-# - decoder_num_layers      : Number of `rnn`, `gru` or `lstm` layers in the decoder layer.
-# - teacher_forcing_ratio   :
-# - encoder_lr              : The learning rate of the encoder optimizer.
-# - decoder_lr              : The learning rate of the decoder optimizer.
+# - num_layers              : Number of GRU layers in the encoder/decoder layer.
+# - lr                      : The learning rate of the encoder/decoder optimizer.
 #----------------------------------------------------------------------------------------
 checkpoints_dir: ./checkpoints
 checkpoint_filename: checkpoint_100d_2l_50ep_10_pa_8length.pth
 data_path: ./data/cornell_movie_dialogs/processed/formatted_dialogs.txt
 hyperparameters:
-    embeddings_path: ./pretrained_embeddings/glove.6B.100d.txt
+    embeddings_path:
+    data:
+      min_seq_length: 2
+      max_seq_length: 10
+      min_count: 3
+      validation_size: 0.3
+      batch_size: 64
     general:
       num_epochs: 2
-      batch_size: 64
       lr_patience: 2
       lr_reduce_factor: 0.25
       ea_patience: 10
       ea_delta: 0
       clip_factor: 50
-      min_seq_length: 3
-      max_seq_length: 10
-      min_count: 3
       enable_early_stop: True
       sampling_decay: 10
+      sampling_temperature: 1
     embedding_init_params:
-      embedding_dim: 100
+      embedding_dim: 50
       padding_idx: 0
     encoder_init_params:
-      hidden_size: 100
-      num_layers: 2
+      hidden_size: 50
+      num_layers: 1
       dropout: 0.1
     decoder_init_params:
       alignment_method: dot
-      hidden_size: 100
-      num_layers: 2
+      hidden_size: 50
+      num_layers: 1
       dropout: 0.1
     encoder_optimizer_init_params:
       lr: 0.0001
     decoder_optimizer_init_params:
-      lr: 0.0005
+      lr: 0.0001
