@@ -130,7 +130,8 @@ class Trainer:
             encoder_state: tensor of shape: math:`(L_{in}, N, H)`.
             target_sequences: tensor of shape: math:`(L_{out}, N)`.
             target_masks: tensor of shape: math:`(L_{out}, N)`.
-            target_max_length: an integer number.
+            target_max_length: The max sequence length in a batch
+                of sequences.
 
         Returns: loss
             * **loss**: tensor of shape: math`()`.
@@ -139,26 +140,29 @@ class Trainer:
             True if random.random() > self.sampling_probability else False
         )
         loss = torch.tensor(data=0, dtype=torch.float32).to(self.device)
-
+        all_predicted_indices = torch.zeros(
+            size=[target_max_length, target_sequences.size(1)],
+            device=self.device,
+            dtype=torch.int64,
+        )
         for t in range(target_max_length):
             decoder_output, decoder_hidden = self.decoder(
-                decoder_input, decoder_hidden, encoder_state
+                input_seq=decoder_input,
+                h_0=decoder_hidden,
+                encoder_state=encoder_state,
+                apply_softmax=True,
             )
 
             # Calculate and accumulate loss
-            mask_loss = self.loss_fn(
-                y_pred=decoder_output,
-                y_true=target_sequences[t],
-                mask=target_masks[t],
-            )
+            mask_loss = self.loss_fn(decoder_output, target_sequences[t])
             loss += mask_loss
 
+            predicted_indices = torch.argmax(decoder_output, dim=1)
+            all_predicted_indices[t] = predicted_indices
             if not scheduled_sampling:
                 decoder_input = target_sequences[t].view(1, -1)
             else:
-                decoder_input = torch.argmax(decoder_output, dim=1).unsqueeze(
-                    dim=0
-                )
+                decoder_input = predicted_indices.unsqueeze(0)
 
         return loss
 

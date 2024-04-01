@@ -3,6 +3,7 @@ from typing import Any, Dict, List, Tuple
 import mlflow
 import torch
 from sklearn.model_selection import ShuffleSplit
+from torch import nn
 from torch.utils.data import DataLoader, SubsetRandomSampler
 from tqdm.auto import tqdm
 
@@ -12,7 +13,6 @@ from chatbot.engine.utils import EarlyStopping, Timer, set_seeds
 from chatbot.models.decoders import LuongAttnDecoderRNN
 from chatbot.models.embeddings import EmbeddingLayerConstructor
 from chatbot.models.encoders import EncoderRNN
-from chatbot.models.loss import MaskedNLLLoss
 from chatbot.utils.data.datasets import CornellDialogsDataset
 
 
@@ -310,6 +310,13 @@ class TrainingController:
         >>> # but with the same format.
         >>> hyperparameters = {
         ...     "embeddings_path": "./pretrained_embeddings/glove.6B.50d.txt",
+        ...     "data": {
+        ...         "min_seq_length": 1,
+        ...         "max_seq_length": 10,
+        ...         "min_count": 3,
+        ...         "validation_size": 0.3,
+        ...         "batch_size": 64
+        ...     },
         ...     "general": {
         ...         "num_epochs": 10,
         ...         "batch_size": 64,
@@ -318,9 +325,8 @@ class TrainingController:
         ...         "ea_patience": 7,
         ...         "ea_delta": 0.005,
         ...         "clip_factor": 50,
-        ...         "max_seq_length": 10,
-        ...         "min_count": 3,
-        ...         "enable_early_stop": True
+        ...         "enable_early_stop": True,
+        ...         "sampling_decay": 10
         ...     },
         ...     "embedding_init_params": {
         ...         "embedding_dim": 50,
@@ -461,7 +467,7 @@ class TrainingController:
                 use_optimizers=True,
             )
 
-        loss_fn = MaskedNLLLoss()
+        loss_fn = nn.NLLLoss(ignore_index=self.vectorizer.vocab.mask_index)
 
         trainer = Trainer(
             embedding=training_components["embedding"],

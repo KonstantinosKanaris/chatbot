@@ -39,13 +39,13 @@ data_path: ./data/cornell_movie_dialogs/processed/formatted_dialogs.txt
 hyperparameters:
     embeddings_path:
     data:
-      min_seq_length: 2
-      max_seq_length: 10
+      min_seq_length: 1
+      max_seq_length: 8
       min_count: 3
       validation_size: 0.3
       batch_size: 64
     general:
-      num_epochs: 2
+      num_epochs: 50
       lr_patience: 2
       lr_reduce_factor: 0.25
       ea_patience: 10
@@ -53,7 +53,6 @@ hyperparameters:
       clip_factor: 50
       enable_early_stop: True
       sampling_decay: 10
-      sampling_temperature: 1
     embedding_init_params:
       embedding_dim: 50
       padding_idx: 0

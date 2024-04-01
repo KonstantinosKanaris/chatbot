@@ -387,6 +387,13 @@ tokens to numbers.</p>
 <span class="gp">&gt;&gt;&gt; </span><span class="c1"># but with the same format.</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">hyperparameters</span> <span class="o">=</span> <span class="p">{</span>
 <span class="gp">... </span>    <span class="s2">&quot;embeddings_path&quot;</span><span class="p">:</span> <span class="s2">&quot;./pretrained_embeddings/glove.6B.50d.txt&quot;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="s2">&quot;data&quot;</span><span class="p">:</span> <span class="p">{</span>
+<span class="gp">... </span>        <span class="s2">&quot;min_seq_length&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+<span class="gp">... </span>        <span class="s2">&quot;max_seq_length&quot;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span>
+<span class="gp">... </span>        <span class="s2">&quot;min_count&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
+<span class="gp">... </span>        <span class="s2">&quot;validation_size&quot;</span><span class="p">:</span> <span class="mf">0.3</span><span class="p">,</span>
+<span class="gp">... </span>        <span class="s2">&quot;batch_size&quot;</span><span class="p">:</span> <span class="mi">64</span>
+<span class="gp">... </span>    <span class="p">},</span>
 <span class="gp">... </span>    <span class="s2">&quot;general&quot;</span><span class="p">:</span> <span class="p">{</span>
 <span class="gp">... </span>        <span class="s2">&quot;num_epochs&quot;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span>
 <span class="gp">... </span>        <span class="s2">&quot;batch_size&quot;</span><span class="p">:</span> <span class="mi">64</span><span class="p">,</span>
@@ -395,9 +402,8 @@ tokens to numbers.</p>
 <span class="gp">... </span>        <span class="s2">&quot;ea_patience&quot;</span><span class="p">:</span> <span class="mi">7</span><span class="p">,</span>
 <span class="gp">... </span>        <span class="s2">&quot;ea_delta&quot;</span><span class="p">:</span> <span class="mf">0.005</span><span class="p">,</span>
 <span class="gp">... </span>        <span class="s2">&quot;clip_factor&quot;</span><span class="p">:</span> <span class="mi">50</span><span class="p">,</span>
-<span class="gp">... </span>        <span class="s2">&quot;max_seq_length&quot;</span><span class="p">:</span> <span class="mi">10</span><span class="p">,</span>
-<span class="gp">... </span>        <span class="s2">&quot;min_count&quot;</span><span class="p">:</span> <span class="mi">3</span><span class="p">,</span>
-<span class="gp">... </span>        <span class="s2">&quot;enable_early_stop&quot;</span><span class="p">:</span> <span class="kc">True</span>
+<span class="gp">... </span>        <span class="s2">&quot;enable_early_stop&quot;</span><span class="p">:</span> <span class="kc">True</span><span class="p">,</span>
+<span class="gp">... </span>        <span class="s2">&quot;sampling_decay&quot;</span><span class="p">:</span> <span class="mi">10</span>
 <span class="gp">... </span>    <span class="p">},</span>
 <span class="gp">... </span>    <span class="s2">&quot;embedding_init_params&quot;</span><span class="p">:</span> <span class="p">{</span>
 <span class="gp">... </span>        <span class="s2">&quot;embedding_dim&quot;</span><span class="p">:</span> <span class="mi">50</span><span class="p">,</span>

@@ -89,12 +89,14 @@ class LuongAttnDecoderRNN(nn.Module):
         self.attention = AttnLayer(
             method=alignment_method, hidden_size=hidden_size
         )
+        self.log_softmax = nn.LogSoftmax(dim=1)
 
     def forward(
         self,
         input_seq: torch.Tensor,
         h_0: torch.Tensor,
         encoder_state: torch.Tensor,
+        apply_softmax: bool = False,
     ) -> Tuple[torch.Tensor, torch.Tensor]:
         """The forward pass of the decoder.
 
@@ -105,6 +107,8 @@ class LuongAttnDecoderRNN(nn.Module):
             input_seq (torch.Tensor): Batch of single token sequences.
             h_0 (torch.Tensor): The last hidden state of the encoder.
             encoder_state (torch.Tensor): The output of the encoder.
+            apply_softmax (bool, False): If ``True`` applies
+            ``nn.LogSoftmax`` to the output. Defaults to ``False``.
 
         Returns:
             Tuple[torch.Tensor, torch.Tensor]: The predictive distribution
@@ -126,7 +130,9 @@ class LuongAttnDecoderRNN(nn.Module):
         concat_output = torch.tanh(self.concat(concat_input))
 
         # Predict new token using Luong eq. 6
-        output = torch.softmax(self.out(concat_output), dim=1)
+        output = self.out(concat_output)
+        if apply_softmax:
+            output = self.log_softmax(output)
 
         return output, hidden
 

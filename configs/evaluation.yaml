@@ -23,18 +23,18 @@ checkpoint_path: ./checkpoints/checkpoint_100d_2l_50ep_10_pa_8length.pth
 evaluation_parameters:
   embeddings_path:
   data:
-    min_seq_length: 2
-    max_seq_length: 10
+    min_seq_length: 1
+    max_seq_length: 8
     min_count: 3
   embedding_init_params:
-    embedding_dim: 300
+    embedding_dim: 50
     padding_idx: 0
   encoder_init_params:
-    hidden_size: 300
-    dropout: 0.2
-    num_layers: 3
+    hidden_size: 50
+    dropout: 0.1
+    num_layers: 1
   decoder_init_params:
     alignment_method: dot
-    hidden_size: 300
-    dropout: 0.2
-    num_layers: 3
+    hidden_size: 50
+    dropout: 0.1
+    num_layers: 1

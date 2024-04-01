@@ -6,7 +6,7 @@ import torch
 from chatbot import __title__, logger
 from chatbot.controllers import TrainingController, initialize_from_checkpoint
 from chatbot.engine.evaluator import Evaluator
-from chatbot.models.decoders import RandomSearchDecoder
+from chatbot.models.decoders import GreedySearchDecoder
 from chatbot.utils.aux import get_tokenizer, load_yaml_file
 from chatbot.utils.data.datasets import CornellDialogsDataset
 
@@ -122,7 +122,7 @@ if __name__ == "__main__":
         encoder = evaluation_components["encoder"].to(device)
         decoder = evaluation_components["decoder"].to(device)
 
-        searcher = RandomSearchDecoder(
+        searcher = GreedySearchDecoder(
             encoder=encoder,
             decoder=decoder,
             eos_idx=vectorizer.vocab.end_seq_index,
