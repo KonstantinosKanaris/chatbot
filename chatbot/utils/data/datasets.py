@@ -21,6 +21,7 @@ class CornellDialogsDataset(Dataset):
         cls,
         file: str,
         tokenizer: Callable[[str], List[str]],
+        min_length: int = 1,
         max_length: int = 10,
         min_count: int = 3,
     ) -> CornellDialogsDataset:
@@ -31,6 +32,8 @@ class CornellDialogsDataset(Dataset):
             file (str): Path to the `.txt` file.
             tokenizer (Callable[[str], List[str]]: Tokenizer for
                 splitting each sequence before vectorization.
+            min_length (int, optional): Minimum number of tokens allowed
+                in each of the pair of sequences (default=1).
             max_length (int, optional): Maximum number of tokens allowed
                 in each of the pair sequence (default=10).
             min_count (int, optional): Minimum token count value threshold
@@ -42,6 +45,7 @@ class CornellDialogsDataset(Dataset):
         vocab_builder = VocabularyBuilder.from_txt_file(file=file, tokenizer=tokenizer)
 
         pairs, vocabulary = vocab_builder.build_vocabulary(
+            min_length=min_length,
             max_length=max_length,
             min_count=min_count,
         )

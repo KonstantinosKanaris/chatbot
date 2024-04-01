@@ -32,6 +32,9 @@ class Trainer:
             the parameters of the encoder.
         decoder_optimizer (torch.optim.Optimizer): The optimizer for updating
             the parameters of the decoder.
+        loss_fn (torch.nn.Model): Loss to optimize.
+        sos_index (int): The `START_OF_SENTENCE` token index.
+        eos_index (int): The `END_OF_SENTENCE` token index.
         epochs (int, optional): Number of training epochs (default=5).
         clip_factor (float, optional): Max norm value for gradient clipping.
             Defaults to ``None``.
@@ -61,7 +64,8 @@ class Trainer:
         encoder_optimizer: torch.optim.Optimizer,
         decoder_optimizer: torch.optim.Optimizer,
         loss_fn: torch.nn.Module,
-        bos_index: int,
+        sos_index: int,
+        eos_index: int,
         checkpoint_path: str,
         epochs: int = 5,
         clip_factor: Optional[float | int] = None,
@@ -82,7 +86,8 @@ class Trainer:
         self.encoder_optimizer = encoder_optimizer
         self.decoder_optimizer = decoder_optimizer
         self.loss_fn = loss_fn
-        self.bos_index = bos_index
+        self.sos_index = sos_index
+        self.eos_index = eos_index
         self.scheduler = scheduler
         self.checkpoint_path = checkpoint_path
         self.epochs = epochs
@@ -96,7 +101,7 @@ class Trainer:
         self.early_stopper = early_stopper
         self.sampling_probability: float = 1.0
 
-    def compute_loss(
+    def compute_metrics(
         self,
         decoder_input: torch.Tensor,
         decoder_hidden: torch.Tensor,
@@ -116,8 +121,8 @@ class Trainer:
         an estimated token coming from the decoder's output.
 
         The estimation from the decoder is obtained by sampling a token
-        according to decoder's output probability (multinomial) distribution
-        over the vocabulary.
+        according to decoder's output probability distribution over the
+        vocabulary.
 
         Args:
             decoder_input: tensor of shape: math:`(1, N)`.
@@ -148,6 +153,7 @@ class Trainer:
                     mask=target_masks[t],
                 )
                 loss += mask_loss
+
         else:
             for t in range(target_max_length):
                 decoder_output, decoder_hidden = self.decoder(
@@ -352,14 +358,14 @@ class Trainer:
             # Create initial decoder input starting with an SOS token
             # for each sentence
             decoder_input = torch.LongTensor(
-                [[self.bos_index for _ in range(batch_size)]]
+                [[self.sos_index for _ in range(batch_size)]]
             ).to(self.device)
 
             # Set initial decoder hidden state to the encoder's final
             # hidden state
             decoder_hidden = encoder_hidden[: self.decoder.num_layers]
 
-            loss = self.compute_loss(
+            loss = self.compute_metrics(
                 decoder_input=decoder_input,
                 decoder_hidden=decoder_hidden,
                 encoder_state=encoder_state,
@@ -440,7 +446,7 @@ class Trainer:
                 # Create initial decoder input starting with an SOS token
                 # for each sentence
                 decoder_input = torch.LongTensor(
-                    [[self.bos_index for _ in range(batch_size)]]
+                    [[self.sos_index for _ in range(batch_size)]]
                 ).to(self.device)
 
                 # Set initial decoder hidden state to the encoder's final
@@ -448,7 +454,7 @@ class Trainer:
                 decoder_hidden = encoder_hidden[: self.decoder.num_layers]
 
                 # Decoder forward pass and loss calculation
-                loss = self.compute_loss(
+                loss = self.compute_metrics(
                     decoder_input=decoder_input,
                     decoder_hidden=decoder_hidden,
                     encoder_state=encoder_state,

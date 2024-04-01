@@ -283,7 +283,9 @@ class VocabularyBuilder:
         logger.info(f"Loaded {len(pairs)} sequence pairs.")
         return cls(pairs=pairs, tokenizer=tokenizer)
 
-    def _filter_pair_by_length(self, pair: List[str], max_length: int) -> bool:
+    def _filter_pair_by_length(
+        self, pair: List[str], min_length: int, max_length: int
+    ) -> bool:
         """Returns ``True`` if both sequences in the provided pair have length
         less than or equal to the maximum threshold.
 
@@ -293,16 +295,18 @@ class VocabularyBuilder:
 
         Args:
             pair (List[str]): A pair of query and response sequences.
-            max_length (int): Maximum number of tokens allowed
-                in each of the pair of sequences.
+            min_length (int): Minimum number of tokens allowed in each
+                of the pair of sequences.
+            max_length (int): Maximum number of tokens allowed in each
+                of the pair of sequences.
         """
         return (
-            len(self.tokenizer(pair[0])) <= max_length
-            and len(self.tokenizer(pair[1])) <= max_length
+            min_length <= len(self.tokenizer(pair[0])) <= max_length
+            and min_length <= len(self.tokenizer(pair[1])) <= max_length
         )
 
     def filter_pairs_by_length(
-        self, pairs: List[List[str]], max_length: int
+        self, pairs: List[List[str]], min_length: int, max_length: int
     ) -> List[List[str]]:
         """Removing pairs whose sequences (either of them) have length greater
         than or equal to the specified maximum threshold..
@@ -314,12 +318,18 @@ class VocabularyBuilder:
         Args:
             pairs (List[List[str]]): The query and response
                 sequence pairs.
-            max_length (int): Maximum number of tokens allowed
-                in each of the pair of sequences.
+            min_length (int): Minimum number of tokens allowed in each
+                of the pair of sequences.
+            max_length (int): Maximum number of tokens allowed in each
+                of the pair of sequences.
         Returns:
             List[List[str]]: The filtered pairs.
         """
-        return [pair for pair in pairs if self._filter_pair_by_length(pair, max_length)]
+        return [
+            pair
+            for pair in pairs
+            if self._filter_pair_by_length(pair, min_length, max_length)
+        ]
 
     def filter_pairs_by_token_count(
         self, pairs: List[List[str]], min_count: int
@@ -365,6 +375,7 @@ class VocabularyBuilder:
 
     def build_vocabulary(
         self,
+        min_length: int = 1,
         max_length: int = 10,
         min_count: int = 3,
     ) -> Tuple[List[List[str]], SequenceVocabulary]:
@@ -380,6 +391,8 @@ class VocabularyBuilder:
             greater than the specified maximum threshold.
 
         Args:
+            min_length (int, optional): Minimum number of tokens allowed
+                in each of the pair of sequences (default=1).
             max_length (int, optional): Maximum number of tokens allowed
                 in each of the pair of sequences (default=10).
             min_count (int, optional): Minimum token count value threshold
@@ -390,7 +403,7 @@ class VocabularyBuilder:
                 response sequence pairs and the populated vocabulary.
         """
         filtered_pairs = self.filter_pairs_by_length(
-            pairs=self.pairs, max_length=max_length
+            pairs=self.pairs, min_length=min_length, max_length=max_length
         )
         logger.info(
             f"Filtered (based on sequence length) to "

@@ -200,7 +200,12 @@ def initialize_from_checkpoint(
         >>> decoder_layer
         ...
     """
-    checkpoint = torch.load(f=path)
+    try:
+        checkpoint = torch.load(f=path)
+    except RuntimeError:
+        checkpoint = torch.load(
+            f=path, map_location="cuda" if torch.cuda.is_available() else "cpu"
+        )
 
     embedding_state_dict = checkpoint["embedding"]
     encoder_state_dict = checkpoint["encoder"]
@@ -222,7 +227,7 @@ def initialize_from_checkpoint(
         **init_params["decoder_init_params"],
     )
     encoder.load_state_dict(state_dict=encoder_state_dict)
-    decoder.load_state_dict(state_dict=decoder_state_dict)
+    decoder.load_state_dict(state_dict=decoder_state_dict, strict=False)
 
     encoder_optimizer, decoder_optimizer = None, None
     if use_optimizers:
@@ -454,7 +459,8 @@ class TrainingController:
             encoder_optimizer=training_components["encoder_optimizer"],
             decoder_optimizer=training_components["decoder_optimizer"],
             loss_fn=loss_fn,
-            bos_index=self.vectorizer.vocab.begin_seq_index,
+            sos_index=self.vectorizer.vocab.begin_seq_index,
+            eos_index=self.vectorizer.vocab.end_seq_index,
             checkpoint_path=self.checkpoint_path,
             epochs=self.training_params["num_epochs"],
             last_epoch=last_epoch,

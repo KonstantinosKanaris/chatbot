@@ -77,7 +77,7 @@ def _unicode_to_ascii(text: str) -> str:
     Returns:
         str: The input text in `ASCII` format.
     """
-    all_letters = string.ascii_letters + " .,;'"
+    all_letters = string.ascii_letters + " .,;'?!"
     return "".join(
         c
         for c in unicodedata.normalize("NFD", text)
@@ -97,6 +97,7 @@ def normalize_text(text: str) -> str:
         - adding whitespace around punctuation symbols
         - trimming all non-letter characters except for basic
         punctuation
+        - Replace multiple periods with a single period
         - replace multiple spaces with single space
 
     Args:
@@ -108,5 +109,6 @@ def normalize_text(text: str) -> str:
     text = _unicode_to_ascii(text.lower().strip())
     text = re.sub(pattern=r"([.!?])", repl=r" \1", string=text)
     text = re.sub(pattern=r"[^a-zA-Z.!?]+", repl=r" ", string=text)
-    text = re.sub(pattern=r"\s", repl=" ", string=text).strip()
+    text = re.sub(pattern=r"( . . .)", repl=".", string=text)
+    text = re.sub(pattern=r"\s+", repl=" ", string=text).strip()
     return text

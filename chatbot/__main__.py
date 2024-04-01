@@ -6,7 +6,7 @@ import torch
 from chatbot import __title__, logger
 from chatbot.controllers import TrainingController, initialize_from_checkpoint
 from chatbot.engine.evaluator import Evaluator
-from chatbot.models.decoders import GreedySearchDecoder
+from chatbot.models.decoders import RandomSearchDecoder
 from chatbot.utils.aux import get_tokenizer, load_yaml_file
 from chatbot.utils.data.datasets import CornellDialogsDataset
 
@@ -75,8 +75,9 @@ if __name__ == "__main__":
         dataset = CornellDialogsDataset.load_pairs_and_vectorizer(
             file=config["data_path"],
             tokenizer=tokenizer,
-            max_length=config["hyperparameters"]["general"]["max_seq_length"] + 1,
-            min_count=config["hyperparameters"]["general"]["min_count"] + 1,
+            min_length=config["hyperparameters"]["general"]["min_seq_length"],
+            max_length=config["hyperparameters"]["general"]["max_seq_length"],
+            min_count=config["hyperparameters"]["general"]["min_count"],
         )
 
         checkpoint_path = str(
@@ -94,8 +95,9 @@ if __name__ == "__main__":
         dataset = CornellDialogsDataset.load_pairs_and_vectorizer(
             file=config["data_path"],
             tokenizer=tokenizer,
-            max_length=config["evaluation_parameters"]["general"]["max_seq_length"] + 1,
-            min_count=config["evaluation_parameters"]["general"]["min_count"] + 1,
+            min_length=config["hyperparameters"]["general"]["min_seq_length"],
+            max_length=config["evaluation_parameters"]["general"]["max_seq_length"],
+            min_count=config["evaluation_parameters"]["general"]["min_count"],
         )
         vectorizer = dataset.get_vectorizer()
 
@@ -111,7 +113,7 @@ if __name__ == "__main__":
         encoder = evaluation_components["encoder"].to(device)
         decoder = evaluation_components["decoder"].to(device)
 
-        searcher = GreedySearchDecoder(
+        searcher = RandomSearchDecoder(
             encoder=encoder,
             decoder=decoder,
             eos_idx=vectorizer.vocab.end_seq_index,

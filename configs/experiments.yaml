@@ -35,14 +35,15 @@ data_path: ./data/cornell_movie_dialogs/processed/formatted_dialogs.txt
 hyperparameters:
     embeddings_path: ./pretrained_embeddings/glove.6B.100d.txt
     general:
-      num_epochs: 50
+      num_epochs: 2
       batch_size: 64
       lr_patience: 2
       lr_reduce_factor: 0.25
       ea_patience: 10
       ea_delta: 0
       clip_factor: 50
-      max_seq_length: 8
+      min_seq_length: 3
+      max_seq_length: 10
       min_count: 3
       enable_early_stop: True
       sampling_decay: 10
