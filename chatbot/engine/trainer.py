@@ -8,6 +8,7 @@ import torch.utils.data
 from prefetch_generator import BackgroundGenerator
 from torch import nn
 from torch.optim.lr_scheduler import ReduceLROnPlateau
+from torchmetrics.text import BLEUScore
 from torchmetrics.text.perplexity import Perplexity
 from tqdm import tqdm
 
@@ -124,6 +125,45 @@ class Trainer:
         self.perplexity = Perplexity(ignore_index=vocab.mask_index).to(
             self.device
         )
+        self.bleu_score = BLEUScore(n_gram=1, smooth=True, weights=(1,))
+
+    def batched_bleu_score(
+        self, y_preds: torch.Tensor, y_targets: torch.Tensor
+    ) -> float:
+        """Calculates the BLEU-n score between a batch of
+        predicted token indices and a batch of target token
+        indices.
+
+        Args:
+            y_preds: tensor of shape :math:`(N, L)` where
+                :math:`N` is the batch size and :math:`L`
+                the maximum length of the sequences.
+            y_targets: tensor of shape :math:`(N, L)` where
+                :math:`N` is the batch size and :math:`L`
+                the maximum length of the sequences.
+
+        Returns:
+            float: The BLEU score.
+        """
+        batch_size = y_targets.size(0)
+
+        predicted_sequences = self.vocab.indices_to_tokens(
+            input_tensor=y_preds
+        )
+        target_sequences = self.vocab.indices_to_tokens(input_tensor=y_targets)
+
+        blue_score_per_batch = 0.0
+        for pred_tokens, target_tokens in list(
+            zip(predicted_sequences, target_sequences)
+        ):
+            pred_seq = " ".join(token for token in pred_tokens)
+            target_seq = " ".join(token for token in target_tokens)
+
+            bleu_value = self.bleu_score([pred_seq], [[target_seq]])
+            blue_score_per_batch += bleu_value.item()
+
+        blue_score_per_batch /= batch_size
+        return blue_score_per_batch
 
     def compute_metrics(
         self,
@@ -132,11 +172,12 @@ class Trainer:
         encoder_state: torch.Tensor,
         target_sequences: torch.Tensor,
         target_max_length: int,
-    ) -> Dict[str, torch.Tensor]:
+    ) -> Tuple[torch.Tensor, Dict[str, float]]:
         """Performs a forward pass through the decoder.
 
-        For each token in the input sequence the loss is computed
-        and accumulated.
+        For each token in the input sequence the loss and perplexity
+        are computed and accumulated. Also, the bleu score per batch
+        is calculated.
 
         Implements a scheduled sampling mechanism which, based on
         the :attr:`sampling_probability`, decides whether to use
@@ -155,18 +196,17 @@ class Trainer:
             target_max_length: The max sequence length in a batch
                 of sequences.
 
-        Returns: loss
-            * **loss**: tensor of shape: math`()`.
+        Returns:
+            Dict[str, torch.Tensor]: The loss value and the evaluation
+                metrics.
         """
         scheduled_sampling = (
             True if random.random() > self.sampling_probability else False
         )
         loss = torch.tensor(data=0, dtype=torch.float32).to(self.device)
-        perplexity = torch.tensor(
-            data=0, dtype=torch.float32, requires_grad=False
-        ).to(self.device)
+        perplexity = 0.0
         all_predicted_indices = torch.zeros(
-            size=[target_max_length, target_sequences.size(1)],
+            size=[target_sequences.size(0), target_sequences.size(1)],
             device=self.device,
             dtype=torch.int64,
         )
@@ -198,7 +238,15 @@ class Trainer:
             else:
                 decoder_input = predicted_indices.unsqueeze(0)
 
-        return {"loss": loss, "perplexity": perplexity}
+        blue_score_per_batch = self.batched_bleu_score(
+            y_preds=all_predicted_indices.transpose(0, 1),
+            y_targets=target_sequences.transpose(0, 1),
+        )
+
+        return loss, {
+            "perplexity": perplexity,
+            "bleu_score": blue_score_per_batch,
+        }
 
     @staticmethod
     def generate_batches(
@@ -269,16 +317,22 @@ class Trainer:
                 decay=self.sampling_decay, epoch=epoch_index
             )
 
-            train_loss, train_perplexity = self._train_step(
+            train_metrics = self._train_step(
                 dataloader=train_dataloader,
                 tqdm_bar=tqdm_bar,
                 epoch_index=epoch_index,
             )
-            val_loss, val_perplexity = self._val_step(
+            val_metrics = self._val_step(
                 dataloader=val_dataloader,
                 tqdm_bar=tqdm_bar,
                 epoch_index=epoch_index,
             )
+            train_loss = train_metrics["loss"]
+            train_perplexity = train_metrics["perplexity"]
+            train_bleu_score = train_metrics["bleu_score"]
+            val_loss = val_metrics["loss"]
+            val_perplexity = val_metrics["perplexity"]
+            val_bleu_score = val_metrics["bleu_score"]
 
             print("\n")
             logger.info(
@@ -287,6 +341,8 @@ class Trainer:
                 f"val_loss: {val_loss:.4f} | "
                 f"train_perplexity: {train_perplexity:.4f} | "
                 f"val_perplexity: {val_perplexity:.4f} | "
+                f"train_bleu: {train_bleu_score:.4f} | "
+                f"val_bleu: {val_bleu_score:.4f} | "
                 f"sampling_prob: {self.sampling_probability:.4f}"
             )
 
@@ -344,7 +400,7 @@ class Trainer:
         dataloader: torch.utils.data.DataLoader,
         tqdm_bar: tqdm,
         epoch_index: int,
-    ) -> Tuple[float, float]:
+    ) -> Dict[str, float]:
         """Trains a sequence-to-sequence text generation model for a
         single epoch.
 
@@ -359,17 +415,19 @@ class Trainer:
             epoch_index (int): Current epoch.
 
         Returns:
-          float: The training loss and perplexity.
+          Dict[str, float]: The training loss and metrics such as
+            perplexity and bleu score.
         """
         batch_generator = self.generate_batches(dataloader)
 
         self.encoder.train()
         self.decoder.train()
 
-        running_loss, running_perplexity = 0, 0
+        running_loss, running_perplexity, running_bleu_score = 0.0, 0.0, 0.0
         for batch_idx, data_dict in enumerate(
             BackgroundGenerator(batch_generator)
         ):
+            # Update tqdm bar
             desc = (
                 f"Training: [{epoch_index}/{self.epochs}] | "
                 f"[{batch_idx}/{len(dataloader)}]"
@@ -379,11 +437,13 @@ class Trainer:
                 {
                     "loss": running_loss,
                     "perplexity": running_perplexity,
+                    "bleu_score": running_bleu_score,
                     "encoder_lr": self.encoder_optimizer.param_groups[0]["lr"],
                     "decoder_lr": self.decoder_optimizer.param_groups[0]["lr"],
                 }
             )
 
+            # Put data on target device
             data_dict = dict(data_dict)
             input_sequences = data_dict["input_sequences"].to(self.device)
             input_lengths = data_dict["input_lengths"].to("cpu")
@@ -405,14 +465,17 @@ class Trainer:
             # hidden state
             decoder_hidden = encoder_hidden[: self.decoder.num_layers]
 
-            metrics = self.compute_metrics(
+            loss, metrics = self.compute_metrics(
                 decoder_input=decoder_input,
                 decoder_hidden=decoder_hidden,
                 encoder_state=encoder_state,
                 target_sequences=target_sequences,
                 target_max_length=target_max_length,
             )
-            loss, perplexity = metrics["loss"], metrics["perplexity"]
+            perplexity, bleu_score = (
+                metrics["perplexity"],
+                metrics["bleu_score"],
+            )
 
             self.encoder.zero_grad()
             self.decoder.zero_grad()
@@ -434,17 +497,25 @@ class Trainer:
             ) / (batch_idx + 1)
 
             running_perplexity += (
-                (perplexity.item() / target_max_length) - running_loss
+                (perplexity / target_max_length) - running_perplexity
             ) / (batch_idx + 1)
 
-        return running_loss, running_perplexity
+            running_bleu_score += (
+                (bleu_score / target_max_length) - running_bleu_score
+            ) / (batch_idx + 1)
+
+        return {
+            "loss": running_loss,
+            "perplexity": running_perplexity,
+            "bleu_score": running_bleu_score,
+        }
 
     def _val_step(
         self,
         dataloader: torch.utils.data.DataLoader,
         tqdm_bar: tqdm,
         epoch_index: int,
-    ) -> Tuple[float, float]:
+    ) -> Dict[str, float]:
         """Validates a sequence-to-sequence text generation model for a
         single epoch.
 
@@ -458,18 +529,20 @@ class Trainer:
             epoch_index (int): Current epoch.
 
         Returns:
-          float: The validation loss and perplexity.
+          Dict[str, float]: The validation loss and metrics such as perplexity
+            and bleu score.
         """
         batch_generator = self.generate_batches(dataloader)
 
         self.encoder.eval()
         self.decoder.eval()
 
-        running_loss, running_perplexity = 0.0, 0.0
+        running_loss, running_perplexity, running_bleu_score = 0.0, 0.0, 0.0
         with torch.inference_mode():
             for batch_idx, data_dict in enumerate(
                 BackgroundGenerator(batch_generator)
             ):
+                # Update tqdm bar
                 desc = (
                     f"Validation: [{epoch_index}/{self.epochs}] | "
                     f"[{batch_idx}/{len(dataloader)}]"
@@ -479,6 +552,7 @@ class Trainer:
                     {
                         "loss": running_loss,
                         "perplexity": running_perplexity,
+                        "bleu_score": running_bleu_score,
                         "encoder_lr": self.encoder_optimizer.param_groups[0][
                             "lr"
                         ],
@@ -488,6 +562,7 @@ class Trainer:
                     }
                 )
 
+                # Put data on target device
                 data_dict = dict(data_dict)
                 input_sequences = data_dict["input_sequences"].to(self.device)
                 input_lengths = data_dict["input_lengths"].to("cpu")
@@ -512,21 +587,32 @@ class Trainer:
                 decoder_hidden = encoder_hidden[: self.decoder.num_layers]
 
                 # Decoder forward pass and loss calculation
-                metrics = self.compute_metrics(
+                loss, metrics = self.compute_metrics(
                     decoder_input=decoder_input,
                     decoder_hidden=decoder_hidden,
                     encoder_state=encoder_state,
                     target_sequences=target_sequences,
                     target_max_length=target_max_length,
                 )
-                loss, perplexity = metrics["loss"], metrics["perplexity"]
+                perplexity, bleu_score = (
+                    metrics["perplexity"],
+                    metrics["bleu_score"],
+                )
 
                 running_loss += (
                     (loss.item() / target_max_length) - running_loss
                 ) / (batch_idx + 1)
 
                 running_perplexity += (
-                    (perplexity / target_max_length) - running_loss
+                    (perplexity / target_max_length) - running_perplexity
                 ) / (batch_idx + 1)
 
-        return running_loss, running_perplexity
+                running_bleu_score += (
+                    (bleu_score / target_max_length) - running_bleu_score
+                ) / (batch_idx + 1)
+
+        return {
+            "loss": running_loss,
+            "perplexity": running_perplexity,
+            "bleu_score": running_bleu_score,
+        }

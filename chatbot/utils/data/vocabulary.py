@@ -3,6 +3,7 @@ from __future__ import annotations
 from collections import Counter
 from typing import Callable, Dict, List, Optional, Tuple
 
+import torch
 from tqdm.auto import tqdm
 
 from chatbot import logger
@@ -194,6 +195,37 @@ class SequenceVocabulary(Vocabulary):
             return self.token_to_idx.get(token, self.unk_index)
         else:
             return self.token_to_idx[token]
+
+    def indices_to_tokens(self, input_tensor: torch.Tensor) -> List[List[str]]:
+        """Converts a batch of sequences with token indices to
+        a human-readable format.
+
+        Utilizes the vocabulary to match indices to tokens.
+
+        Args:
+            input_tensor (torch.Tensor): tensor of shape
+                :math:`(N, L)` where :math:`N` the batch
+                size and :math:`L` the sequence length.
+
+        Returns:
+            List[List[str]]: List of lists where each inner
+                each contains a string with the joined tokens.
+        """
+        all_token_sequences = []
+        for sequence_indices in input_tensor:
+            tokens_per_sequence = []
+            for token_index in sequence_indices:
+                if token_index.item() not in [
+                    self.start_seq_index,
+                    self.end_seq_index,
+                    self.mask_index,
+                ]:
+                    tokens_per_sequence.append(
+                        self.lookup_index(token_index.item())
+                    )
+            all_token_sequences.append(tokens_per_sequence)
+
+        return all_token_sequences
 
 
 class VocabularyBuilder:

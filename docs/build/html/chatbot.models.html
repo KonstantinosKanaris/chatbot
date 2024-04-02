@@ -90,13 +90,6 @@
 </li>
 </ul>
 </li>
-<li><a class="reference internal" href="#module-chatbot.models.loss">chatbot.models.loss module</a><ul>
-<li><a class="reference internal" href="#chatbot.models.loss.MaskedNLLLoss"><code class="docutils literal notranslate"><span class="pre">MaskedNLLLoss</span></code></a><ul>
-<li><a class="reference internal" href="#chatbot.models.loss.MaskedNLLLoss.forward"><code class="docutils literal notranslate"><span class="pre">MaskedNLLLoss.forward()</span></code></a></li>
-</ul>
-</li>
-</ul>
-</li>
 <li><a class="reference internal" href="#module-chatbot.models.samplers">chatbot.models.samplers module</a><ul>
 <li><a class="reference internal" href="#chatbot.models.samplers.GreedySearchSampler"><code class="docutils literal notranslate"><span class="pre">GreedySearchSampler</span></code></a><ul>
 <li><a class="reference internal" href="#chatbot.models.samplers.GreedySearchSampler.forward"><code class="docutils literal notranslate"><span class="pre">GreedySearchSampler.forward()</span></code></a></li>
@@ -133,10 +126,6 @@
 </li>
 <li><a class="reference internal" href="#chatbot.models.LuongAttnDecoderRNN"><code class="docutils literal notranslate"><span class="pre">LuongAttnDecoderRNN</span></code></a><ul>
 <li><a class="reference internal" href="#chatbot.models.LuongAttnDecoderRNN.forward"><code class="docutils literal notranslate"><span class="pre">LuongAttnDecoderRNN.forward()</span></code></a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#chatbot.models.MaskedNLLLoss"><code class="docutils literal notranslate"><span class="pre">MaskedNLLLoss</span></code></a><ul>
-<li><a class="reference internal" href="#chatbot.models.MaskedNLLLoss.forward"><code class="docutils literal notranslate"><span class="pre">MaskedNLLLoss.forward()</span></code></a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#chatbot.models.PreTrainedEmbeddings"><code class="docutils literal notranslate"><span class="pre">PreTrainedEmbeddings</span></code></a><ul>
@@ -757,52 +746,6 @@ of the rnn layer of the encoder. Defaults to
 </dd></dl>
 
 </section>
-<section id="module-chatbot.models.loss">
-<span id="chatbot-models-loss-module"></span><h2>chatbot.models.loss module<a class="headerlink" href="#module-chatbot.models.loss" title="Link to this heading"></a></h2>
-<dl class="py class">
-<dt class="sig sig-object py" id="chatbot.models.loss.MaskedNLLLoss">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">chatbot.models.loss.</span></span><span class="sig-name descname"><span class="pre">MaskedNLLLoss</span></span><a class="headerlink" href="#chatbot.models.loss.MaskedNLLLoss" title="Link to this definition"></a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></p>
-<p>Computes the negative log likelihood loss.</p>
-<p>Ignores target values, i.e., PAD values, specified by the
-input <cite>mask</cite> tensor.</p>
-<dl class="simple">
-<dt>Inputs: y_pred, y_true, mask</dt><dd><ul class="simple">
-<li><p><strong>y_pred</strong>: tensor of shape <span class="math notranslate nohighlight">\((N, V)\)</span>.</p></li>
-<li><p><strong>y_true</strong>: tensor of shape <span class="math notranslate nohighlight">\((N)\)</span>.</p></li>
-<li><p><strong>mask</strong>: tensor of shape <span class="math notranslate nohighlight">\((N)\)</span>.</p></li>
-</ul>
-</dd>
-</dl>
-<p>where:</p>
-<div class="math notranslate nohighlight">
-\[\begin{split}\begin{aligned}
-    N ={} &amp; \text{batch size} \\
-    V ={} &amp; \text{vocabulary size}
-\end{aligned}\end{split}\]</div>
-<dl class="simple">
-<dt>Outputs: loss</dt><dd><ul class="simple">
-<li><p><strong>loss</strong>: tensor of shape <span class="math notranslate nohighlight">\(()\)</span>.</p></li>
-</ul>
-</dd>
-</dl>
-<dl class="py method">
-<dt class="sig sig-object py" id="chatbot.models.loss.MaskedNLLLoss.forward">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">y_pred</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_true</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mask</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tensor</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tensor</span></span></span><a class="headerlink" href="#chatbot.models.loss.MaskedNLLLoss.forward" title="Link to this definition"></a></dt>
-<dd><p>Define the computation performed at every call.</p>
-<p>Should be overridden by all subclasses.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>Although the recipe for forward pass needs to be defined within
-this function, one should call the <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code> instance afterwards
-instead of this since the former takes care of running the
-registered hooks while the latter silently ignores them.</p>
-</div>
-</dd></dl>
-
-</dd></dl>
-
-</section>
 <section id="module-chatbot.models.samplers">
 <span id="chatbot-models-samplers-module"></span><h2>chatbot.models.samplers module<a class="headerlink" href="#module-chatbot.models.samplers" title="Link to this heading"></a></h2>
 <dl class="py class">
@@ -1385,49 +1328,6 @@ value will be set to zero. (default=0.1).</p></li>
 <dd class="field-odd"><p>Tuple[torch.Tensor, torch.Tensor]</p>
 </dd>
 </dl>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="py class">
-<dt class="sig sig-object py" id="chatbot.models.MaskedNLLLoss">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">chatbot.models.</span></span><span class="sig-name descname"><span class="pre">MaskedNLLLoss</span></span><a class="headerlink" href="#chatbot.models.MaskedNLLLoss" title="Link to this definition"></a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></p>
-<p>Computes the negative log likelihood loss.</p>
-<p>Ignores target values, i.e., PAD values, specified by the
-input <cite>mask</cite> tensor.</p>
-<dl class="simple">
-<dt>Inputs: y_pred, y_true, mask</dt><dd><ul class="simple">
-<li><p><strong>y_pred</strong>: tensor of shape <span class="math notranslate nohighlight">\((N, V)\)</span>.</p></li>
-<li><p><strong>y_true</strong>: tensor of shape <span class="math notranslate nohighlight">\((N)\)</span>.</p></li>
-<li><p><strong>mask</strong>: tensor of shape <span class="math notranslate nohighlight">\((N)\)</span>.</p></li>
-</ul>
-</dd>
-</dl>
-<p>where:</p>
-<div class="math notranslate nohighlight">
-\[\begin{split}\begin{aligned}
-    N ={} &amp; \text{batch size} \\
-    V ={} &amp; \text{vocabulary size}
-\end{aligned}\end{split}\]</div>
-<dl class="simple">
-<dt>Outputs: loss</dt><dd><ul class="simple">
-<li><p><strong>loss</strong>: tensor of shape <span class="math notranslate nohighlight">\(()\)</span>.</p></li>
-</ul>
-</dd>
-</dl>
-<dl class="py method">
-<dt class="sig sig-object py" id="chatbot.models.MaskedNLLLoss.forward">
-<em class="property"><span class="pre">static</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">y_pred</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_true</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mask</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tensor</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tensor</span></span></span><a class="headerlink" href="#chatbot.models.MaskedNLLLoss.forward" title="Link to this definition"></a></dt>
-<dd><p>Define the computation performed at every call.</p>
-<p>Should be overridden by all subclasses.</p>
-<div class="admonition note">
-<p class="admonition-title">Note</p>
-<p>Although the recipe for forward pass needs to be defined within
-this function, one should call the <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code> instance afterwards
-instead of this since the former takes care of running the
-registered hooks while the latter silently ignores them.</p>
-</div>
 </dd></dl>
 
 </dd></dl>

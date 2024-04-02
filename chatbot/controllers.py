@@ -231,8 +231,9 @@ def initialize_from_checkpoint(
         output_size=len(vocab_tokens),
         **init_params["decoder_init_params"],
     )
+
     encoder.load_state_dict(state_dict=encoder_state_dict)
-    decoder.load_state_dict(state_dict=decoder_state_dict, strict=False)
+    decoder.load_state_dict(state_dict=decoder_state_dict)
 
     encoder_optimizer, decoder_optimizer = None, None
     if use_optimizers:

@@ -57,6 +57,7 @@
 </li>
 <li><a class="reference internal" href="#module-chatbot.engine.trainer">chatbot.engine.trainer module</a><ul>
 <li><a class="reference internal" href="#chatbot.engine.trainer.Trainer"><code class="docutils literal notranslate"><span class="pre">Trainer</span></code></a><ul>
+<li><a class="reference internal" href="#chatbot.engine.trainer.Trainer.batched_bleu_score"><code class="docutils literal notranslate"><span class="pre">Trainer.batched_bleu_score()</span></code></a></li>
 <li><a class="reference internal" href="#chatbot.engine.trainer.Trainer.compute_metrics"><code class="docutils literal notranslate"><span class="pre">Trainer.compute_metrics()</span></code></a></li>
 <li><a class="reference internal" href="#chatbot.engine.trainer.Trainer.generate_batches"><code class="docutils literal notranslate"><span class="pre">Trainer.generate_batches()</span></code></a></li>
 <li><a class="reference internal" href="#chatbot.engine.trainer.Trainer.train"><code class="docutils literal notranslate"><span class="pre">Trainer.train()</span></code></a></li>
@@ -80,6 +81,7 @@
 </li>
 <li><a class="reference internal" href="#chatbot.engine.Timer"><code class="docutils literal notranslate"><span class="pre">Timer</span></code></a></li>
 <li><a class="reference internal" href="#chatbot.engine.Trainer"><code class="docutils literal notranslate"><span class="pre">Trainer</span></code></a><ul>
+<li><a class="reference internal" href="#chatbot.engine.Trainer.batched_bleu_score"><code class="docutils literal notranslate"><span class="pre">Trainer.batched_bleu_score()</span></code></a></li>
 <li><a class="reference internal" href="#chatbot.engine.Trainer.compute_metrics"><code class="docutils literal notranslate"><span class="pre">Trainer.compute_metrics()</span></code></a></li>
 <li><a class="reference internal" href="#chatbot.engine.Trainer.generate_batches"><code class="docutils literal notranslate"><span class="pre">Trainer.generate_batches()</span></code></a></li>
 <li><a class="reference internal" href="#chatbot.engine.Trainer.train"><code class="docutils literal notranslate"><span class="pre">Trainer.train()</span></code></a></li>
@@ -216,11 +218,38 @@ decreasing. Defaults to <code class="docutils literal notranslate"><span class="
 </dd>
 </dl>
 <dl class="py method">
+<dt class="sig sig-object py" id="chatbot.engine.trainer.Trainer.batched_bleu_score">
+<span class="sig-name descname"><span class="pre">batched_bleu_score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">y_preds</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_targets</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tensor</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#chatbot.engine.trainer.Trainer.batched_bleu_score" title="Link to this definition"></a></dt>
+<dd><p>Calculates the BLEU-n score between a batch of
+predicted token indices and a batch of target token
+indices.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>y_preds</strong> – tensor of shape <span class="math notranslate nohighlight">\((N, L)\)</span> where
+<span class="math notranslate nohighlight">\(N\)</span> is the batch size and <span class="math notranslate nohighlight">\(L\)</span>
+the maximum length of the sequences.</p></li>
+<li><p><strong>y_targets</strong> – tensor of shape <span class="math notranslate nohighlight">\((N, L)\)</span> where
+<span class="math notranslate nohighlight">\(N\)</span> is the batch size and <span class="math notranslate nohighlight">\(L\)</span>
+the maximum length of the sequences.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The BLEU score.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="chatbot.engine.trainer.Trainer.compute_metrics">
-<span class="sig-name descname"><span class="pre">compute_metrics</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">decoder_input</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">decoder_hidden</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">encoder_state</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_sequences</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_max_length</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Tensor</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#chatbot.engine.trainer.Trainer.compute_metrics" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">compute_metrics</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">decoder_input</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">decoder_hidden</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">encoder_state</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_sequences</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_max_length</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Tensor</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#chatbot.engine.trainer.Trainer.compute_metrics" title="Link to this definition"></a></dt>
 <dd><p>Performs a forward pass through the decoder.</p>
-<p>For each token in the input sequence the loss is computed
-and accumulated.</p>
+<p>For each token in the input sequence the loss and perplexity
+are computed and accumulated. Also, the bleu score per batch
+is calculated.</p>
 <p>Implements a scheduled sampling mechanism which, based on
 the <code class="xref py py-attr docutils literal notranslate"><span class="pre">sampling_probability</span></code>, decides whether to use
 the actual target token as next input to the decoder or
@@ -239,11 +268,15 @@ vocabulary.</p>
 of sequences.</p></li>
 </ul>
 </dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>The loss value and the evaluation</dt><dd><p>metrics.</p>
+</dd>
 </dl>
-<dl class="simple">
-<dt>Returns: loss</dt><dd><ul class="simple">
-<li><p><strong>loss</strong>: tensor of shape: math`()`.</p></li>
-</ul>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Dict[str, torch.Tensor]</p>
 </dd>
 </dl>
 </dd></dl>
@@ -529,11 +562,38 @@ decreasing. Defaults to <code class="docutils literal notranslate"><span class="
 </dd>
 </dl>
 <dl class="py method">
+<dt class="sig sig-object py" id="chatbot.engine.Trainer.batched_bleu_score">
+<span class="sig-name descname"><span class="pre">batched_bleu_score</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">y_preds</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">y_targets</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tensor</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">float</span></span></span><a class="headerlink" href="#chatbot.engine.Trainer.batched_bleu_score" title="Link to this definition"></a></dt>
+<dd><p>Calculates the BLEU-n score between a batch of
+predicted token indices and a batch of target token
+indices.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>y_preds</strong> – tensor of shape <span class="math notranslate nohighlight">\((N, L)\)</span> where
+<span class="math notranslate nohighlight">\(N\)</span> is the batch size and <span class="math notranslate nohighlight">\(L\)</span>
+the maximum length of the sequences.</p></li>
+<li><p><strong>y_targets</strong> – tensor of shape <span class="math notranslate nohighlight">\((N, L)\)</span> where
+<span class="math notranslate nohighlight">\(N\)</span> is the batch size and <span class="math notranslate nohighlight">\(L\)</span>
+the maximum length of the sequences.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The BLEU score.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
 <dt class="sig sig-object py" id="chatbot.engine.Trainer.compute_metrics">
-<span class="sig-name descname"><span class="pre">compute_metrics</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">decoder_input</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">decoder_hidden</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">encoder_state</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_sequences</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_max_length</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Tensor</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#chatbot.engine.Trainer.compute_metrics" title="Link to this definition"></a></dt>
+<span class="sig-name descname"><span class="pre">compute_metrics</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">decoder_input</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">decoder_hidden</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">encoder_state</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_sequences</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">target_max_length</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Tensor</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#chatbot.engine.Trainer.compute_metrics" title="Link to this definition"></a></dt>
 <dd><p>Performs a forward pass through the decoder.</p>
-<p>For each token in the input sequence the loss is computed
-and accumulated.</p>
+<p>For each token in the input sequence the loss and perplexity
+are computed and accumulated. Also, the bleu score per batch
+is calculated.</p>
 <p>Implements a scheduled sampling mechanism which, based on
 the <code class="xref py py-attr docutils literal notranslate"><span class="pre">sampling_probability</span></code>, decides whether to use
 the actual target token as next input to the decoder or
@@ -552,11 +612,15 @@ vocabulary.</p>
 of sequences.</p></li>
 </ul>
 </dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>The loss value and the evaluation</dt><dd><p>metrics.</p>
+</dd>
 </dl>
-<dl class="simple">
-<dt>Returns: loss</dt><dd><ul class="simple">
-<li><p><strong>loss</strong>: tensor of shape: math`()`.</p></li>
-</ul>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Dict[str, torch.Tensor]</p>
 </dd>
 </dl>
 </dd></dl>
