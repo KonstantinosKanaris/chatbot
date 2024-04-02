@@ -162,7 +162,9 @@ class Trainer:
             True if random.random() > self.sampling_probability else False
         )
         loss = torch.tensor(data=0, dtype=torch.float32).to(self.device)
-        perplexity = torch.tensor(data=0, dtype=torch.float32).to(self.device)
+        perplexity = torch.tensor(
+            data=0, dtype=torch.float32, requires_grad=False
+        ).to(self.device)
         all_predicted_indices = torch.zeros(
             size=[target_max_length, target_sequences.size(1)],
             device=self.device,

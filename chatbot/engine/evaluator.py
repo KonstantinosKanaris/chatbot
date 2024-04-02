@@ -28,7 +28,7 @@ class Evaluator:
             input_sequence (str): The input query.
             searcher (torch.nn.Module): A search decoder for sampling the
                 decoder's predictions. Available searcher decoders:
-                `GreedySearchDecoder` and `RandomSearchDecoder`.
+                `GreedySearchSampler` and `RandomSearchSampler`.
 
         Returns:
             List[str]: The generated tokens.

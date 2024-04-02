@@ -44,6 +44,14 @@ chatbot.models.loss module
    :undoc-members:
    :show-inheritance:
 
+chatbot.models.samplers module
+------------------------------
+
+.. automodule:: chatbot.models.samplers
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
 Module contents
 ---------------
 

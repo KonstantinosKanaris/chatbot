@@ -56,16 +56,8 @@
 </ul>
 </li>
 <li><a class="reference internal" href="#module-chatbot.models.decoders">chatbot.models.decoders module</a><ul>
-<li><a class="reference internal" href="#chatbot.models.decoders.GreedySearchDecoder"><code class="docutils literal notranslate"><span class="pre">GreedySearchDecoder</span></code></a><ul>
-<li><a class="reference internal" href="#chatbot.models.decoders.GreedySearchDecoder.forward"><code class="docutils literal notranslate"><span class="pre">GreedySearchDecoder.forward()</span></code></a></li>
-</ul>
-</li>
 <li><a class="reference internal" href="#chatbot.models.decoders.LuongAttnDecoderRNN"><code class="docutils literal notranslate"><span class="pre">LuongAttnDecoderRNN</span></code></a><ul>
 <li><a class="reference internal" href="#chatbot.models.decoders.LuongAttnDecoderRNN.forward"><code class="docutils literal notranslate"><span class="pre">LuongAttnDecoderRNN.forward()</span></code></a></li>
-</ul>
-</li>
-<li><a class="reference internal" href="#chatbot.models.decoders.RandomSearchDecoder"><code class="docutils literal notranslate"><span class="pre">RandomSearchDecoder</span></code></a><ul>
-<li><a class="reference internal" href="#chatbot.models.decoders.RandomSearchDecoder.forward"><code class="docutils literal notranslate"><span class="pre">RandomSearchDecoder.forward()</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -105,6 +97,17 @@
 </li>
 </ul>
 </li>
+<li><a class="reference internal" href="#module-chatbot.models.samplers">chatbot.models.samplers module</a><ul>
+<li><a class="reference internal" href="#chatbot.models.samplers.GreedySearchSampler"><code class="docutils literal notranslate"><span class="pre">GreedySearchSampler</span></code></a><ul>
+<li><a class="reference internal" href="#chatbot.models.samplers.GreedySearchSampler.forward"><code class="docutils literal notranslate"><span class="pre">GreedySearchSampler.forward()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#chatbot.models.samplers.RandomSearchSampler"><code class="docutils literal notranslate"><span class="pre">RandomSearchSampler</span></code></a><ul>
+<li><a class="reference internal" href="#chatbot.models.samplers.RandomSearchSampler.forward"><code class="docutils literal notranslate"><span class="pre">RandomSearchSampler.forward()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
 <li><a class="reference internal" href="#module-chatbot.models">Module contents</a><ul>
 <li><a class="reference internal" href="#chatbot.models.AttnLayer"><code class="docutils literal notranslate"><span class="pre">AttnLayer</span></code></a><ul>
 <li><a class="reference internal" href="#chatbot.models.AttnLayer.forward"><code class="docutils literal notranslate"><span class="pre">AttnLayer.forward()</span></code></a></li>
@@ -124,8 +127,8 @@
 <li><a class="reference internal" href="#chatbot.models.EncoderRNN.forward"><code class="docutils literal notranslate"><span class="pre">EncoderRNN.forward()</span></code></a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#chatbot.models.GreedySearchDecoder"><code class="docutils literal notranslate"><span class="pre">GreedySearchDecoder</span></code></a><ul>
-<li><a class="reference internal" href="#chatbot.models.GreedySearchDecoder.forward"><code class="docutils literal notranslate"><span class="pre">GreedySearchDecoder.forward()</span></code></a></li>
+<li><a class="reference internal" href="#chatbot.models.GreedySearchSampler"><code class="docutils literal notranslate"><span class="pre">GreedySearchSampler</span></code></a><ul>
+<li><a class="reference internal" href="#chatbot.models.GreedySearchSampler.forward"><code class="docutils literal notranslate"><span class="pre">GreedySearchSampler.forward()</span></code></a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#chatbot.models.LuongAttnDecoderRNN"><code class="docutils literal notranslate"><span class="pre">LuongAttnDecoderRNN</span></code></a><ul>
@@ -145,8 +148,8 @@
 <li><a class="reference internal" href="#chatbot.models.PreTrainedEmbeddings.make_embedding_matrix"><code class="docutils literal notranslate"><span class="pre">PreTrainedEmbeddings.make_embedding_matrix()</span></code></a></li>
 </ul>
 </li>
-<li><a class="reference internal" href="#chatbot.models.RandomSearchDecoder"><code class="docutils literal notranslate"><span class="pre">RandomSearchDecoder</span></code></a><ul>
-<li><a class="reference internal" href="#chatbot.models.RandomSearchDecoder.forward"><code class="docutils literal notranslate"><span class="pre">RandomSearchDecoder.forward()</span></code></a></li>
+<li><a class="reference internal" href="#chatbot.models.RandomSearchSampler"><code class="docutils literal notranslate"><span class="pre">RandomSearchSampler</span></code></a><ul>
+<li><a class="reference internal" href="#chatbot.models.RandomSearchSampler.forward"><code class="docutils literal notranslate"><span class="pre">RandomSearchSampler.forward()</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -265,65 +268,6 @@ energies.</p>
 <section id="module-chatbot.models.decoders">
 <span id="chatbot-models-decoders-module"></span><h2>chatbot.models.decoders module<a class="headerlink" href="#module-chatbot.models.decoders" title="Link to this heading"></a></h2>
 <dl class="py class">
-<dt class="sig sig-object py" id="chatbot.models.decoders.GreedySearchDecoder">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">chatbot.models.decoders.</span></span><span class="sig-name descname"><span class="pre">GreedySearchDecoder</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">encoder</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Module</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">decoder</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Module</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eos_idx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#chatbot.models.decoders.GreedySearchDecoder" title="Link to this definition"></a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></p>
-<p>Implements greedy decoding.</p>
-<p>Selects the most probable token, i.e <cite>argmax</cite> from the model’s
-vocabulary at each decoding time-step as candidate to the output
-sequence.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>encoder</strong> (<em>torch.nn.Module</em>) – The encoder layer of a seq-to-seq model.</p></li>
-<li><p><strong>decoder</strong> (<em>torch.nn.Module</em>) – The decoder layer of a seq-to-seq model.</p></li>
-<li><p><strong>eos_idx</strong> (<em>int</em>) – The end-of-sentence token index.</p></li>
-</ul>
-</dd>
-</dl>
-<dl>
-<dt>Inputs: input_seq, input_length, max_seq_length</dt><dd><ul class="simple">
-<li><p><strong>input_seq</strong>: tensor of shape <span class="math notranslate nohighlight">\((L_{in}, 1)\)</span>.</p></li>
-<li><p><strong>input_length</strong>: tensor of shape <span class="math notranslate nohighlight">\((1, )\)</span>.</p></li>
-<li><p><strong>max_seq_length</strong>: An integer number.</p></li>
-</ul>
-</dd>
-<dt>Outputs: all_token_indices</dt><dd><ul class="simple">
-<li><p><strong>all_token_indices</strong>: tensor of shape <span class="math notranslate nohighlight">\((L_{out})\)</span>.</p></li>
-</ul>
-<p>where:</p>
-<div class="math notranslate nohighlight">
-\[\begin{split}\begin{aligned}
-    L_{in} ={} &amp; \text{input sequence length} \\
-    L_{out} ={} &amp; \text{max_seq_length}
-\end{aligned}\end{split}\]</div>
-</dd>
-</dl>
-<dl class="py method">
-<dt class="sig sig-object py" id="chatbot.models.decoders.GreedySearchDecoder.forward">
-<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_seq</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input_length</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_seq_length</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tensor</span></span></span><a class="headerlink" href="#chatbot.models.decoders.GreedySearchDecoder.forward" title="Link to this definition"></a></dt>
-<dd><p>Forward pass of the Greedy Search Sampler.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>input_seq</strong> (<em>torch.Tensor</em>) – Input tokenized sequence.</p></li>
-<li><p><strong>input_length</strong> (<em>torch.Tensor</em>) – Length of input sequence.</p></li>
-<li><p><strong>max_seq_length</strong> (<em>int</em>) – The maximum sequence length in the
-entire dataset.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p>The predicted output indices.</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>torch.Tensor</p>
-</dd>
-</dl>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="py class">
 <dt class="sig sig-object py" id="chatbot.models.decoders.LuongAttnDecoderRNN">
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">chatbot.models.decoders.</span></span><span class="sig-name descname"><span class="pre">LuongAttnDecoderRNN</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">alignment_method</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">embedding</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Embedding</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">hidden_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">output_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">num_layers</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dropout</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#chatbot.models.decoders.LuongAttnDecoderRNN" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></p>
@@ -398,68 +342,6 @@ value will be set to zero. (default=0.1).</p></li>
 <dt class="field-even">Returns<span class="colon">:</span></dt>
 <dd class="field-even"><p><dl class="simple">
 <dt>The predictive distribution</dt><dd><p>and the attentional hidden state of the decoder.</p>
-</dd>
-</dl>
-</p>
-</dd>
-<dt class="field-odd">Return type<span class="colon">:</span></dt>
-<dd class="field-odd"><p>Tuple[torch.Tensor, torch.Tensor]</p>
-</dd>
-</dl>
-</dd></dl>
-
-</dd></dl>
-
-<dl class="py class">
-<dt class="sig sig-object py" id="chatbot.models.decoders.RandomSearchDecoder">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">chatbot.models.decoders.</span></span><span class="sig-name descname"><span class="pre">RandomSearchDecoder</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">encoder</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Module</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">decoder</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Module</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eos_idx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#chatbot.models.decoders.RandomSearchDecoder" title="Link to this definition"></a></dt>
-<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></p>
-<p>Implements multinomial sampling during decoding.</p>
-<p>Samples a token according to the output probability distribution over
-the vocabulary.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>encoder</strong> (<em>torch.nn.Module</em>) – The encoder layer of a seq-to-seq model.</p></li>
-<li><p><strong>decoder</strong> (<em>torch.nn.Module</em>) – The decoder layer of a seq-to-seq model.</p></li>
-<li><p><strong>eos_idx</strong> (<em>int</em>) – The end-of-sentence token index.</p></li>
-</ul>
-</dd>
-</dl>
-<dl>
-<dt>Inputs: input_seq, input_length, max_seq_length</dt><dd><ul class="simple">
-<li><p><strong>input_seq</strong>: tensor of shape <span class="math notranslate nohighlight">\((L_{in}, 1)\)</span>.</p></li>
-<li><p><strong>input_length</strong>: tensor of shape <span class="math notranslate nohighlight">\((1, )\)</span>.</p></li>
-<li><p><strong>max_seq_length</strong>: An integer number.</p></li>
-</ul>
-</dd>
-<dt>Outputs: all_token_indices</dt><dd><ul class="simple">
-<li><p><strong>all_token_indices</strong>: tensor of shape <span class="math notranslate nohighlight">\((L_{out})\)</span>.</p></li>
-</ul>
-<p>where:</p>
-<div class="math notranslate nohighlight">
-\[\begin{split}\begin{aligned}
-    L_{in} ={} &amp; \text{input sequence length} \\
-    L_{out} ={} &amp; \text{max_seq_length}
-\end{aligned}\end{split}\]</div>
-</dd>
-</dl>
-<dl class="py method">
-<dt class="sig sig-object py" id="chatbot.models.decoders.RandomSearchDecoder.forward">
-<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_seq</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input_length</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_seq_length</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tensor</span></span></span><a class="headerlink" href="#chatbot.models.decoders.RandomSearchDecoder.forward" title="Link to this definition"></a></dt>
-<dd><p>Forward pass of the Greedy Search Sampler.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters<span class="colon">:</span></dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>input_seq</strong> (<em>torch.Tensor</em>) – Input tokenized sequence.</p></li>
-<li><p><strong>input_length</strong> (<em>torch.Tensor</em>) – Length of input sequence.</p></li>
-<li><p><strong>max_seq_length</strong> (<em>int</em>) – The maximum sequence length in the
-entire dataset.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns<span class="colon">:</span></dt>
-<dd class="field-even"><p><dl class="simple">
-<dt>The predicted token indices</dt><dd><p>along with their predicted scores.</p>
 </dd>
 </dl>
 </p>
@@ -921,6 +803,130 @@ registered hooks while the latter silently ignores them.</p>
 </dd></dl>
 
 </section>
+<section id="module-chatbot.models.samplers">
+<span id="chatbot-models-samplers-module"></span><h2>chatbot.models.samplers module<a class="headerlink" href="#module-chatbot.models.samplers" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="chatbot.models.samplers.GreedySearchSampler">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">chatbot.models.samplers.</span></span><span class="sig-name descname"><span class="pre">GreedySearchSampler</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">encoder</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Module</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">decoder</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Module</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eos_idx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#chatbot.models.samplers.GreedySearchSampler" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></p>
+<p>Implements greedy decoding.</p>
+<p>Selects the most probable token, i.e <cite>argmax</cite> from the model’s
+vocabulary at each decoding time-step as candidate to the output
+sequence.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>encoder</strong> (<em>torch.nn.Module</em>) – The encoder layer of a seq-to-seq model.</p></li>
+<li><p><strong>decoder</strong> (<em>torch.nn.Module</em>) – The decoder layer of a seq-to-seq model.</p></li>
+<li><p><strong>eos_idx</strong> (<em>int</em>) – The end-of-sentence token index.</p></li>
+</ul>
+</dd>
+</dl>
+<dl>
+<dt>Inputs: input_seq, input_length, max_seq_length</dt><dd><ul class="simple">
+<li><p><strong>input_seq</strong>: tensor of shape <span class="math notranslate nohighlight">\((L_{in}, 1)\)</span>.</p></li>
+<li><p><strong>input_length</strong>: tensor of shape <span class="math notranslate nohighlight">\((1, )\)</span>.</p></li>
+<li><p><strong>max_seq_length</strong>: An integer number.</p></li>
+</ul>
+</dd>
+<dt>Outputs: all_token_indices</dt><dd><ul class="simple">
+<li><p><strong>all_token_indices</strong>: tensor of shape <span class="math notranslate nohighlight">\((L_{out})\)</span>.</p></li>
+</ul>
+<p>where:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+    L_{in} ={} &amp; \text{input sequence length} \\
+    L_{out} ={} &amp; \text{max_seq_length}
+\end{aligned}\end{split}\]</div>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="chatbot.models.samplers.GreedySearchSampler.forward">
+<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_seq</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input_length</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_seq_length</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tensor</span></span></span><a class="headerlink" href="#chatbot.models.samplers.GreedySearchSampler.forward" title="Link to this definition"></a></dt>
+<dd><p>Forward pass of the Greedy Search Sampler.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>input_seq</strong> (<em>torch.Tensor</em>) – Input tokenized sequence.</p></li>
+<li><p><strong>input_length</strong> (<em>torch.Tensor</em>) – Length of input sequence.</p></li>
+<li><p><strong>max_seq_length</strong> (<em>int</em>) – The maximum sequence length in the
+entire dataset.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The predicted output indices.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>torch.Tensor</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="chatbot.models.samplers.RandomSearchSampler">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">chatbot.models.samplers.</span></span><span class="sig-name descname"><span class="pre">RandomSearchSampler</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">encoder</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Module</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">decoder</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Module</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eos_idx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#chatbot.models.samplers.RandomSearchSampler" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></p>
+<p>Implements multinomial sampling during decoding.</p>
+<p>Samples a token according to the output probability distribution over
+the vocabulary.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>encoder</strong> (<em>torch.nn.Module</em>) – The encoder layer of a seq-to-seq model.</p></li>
+<li><p><strong>decoder</strong> (<em>torch.nn.Module</em>) – The decoder layer of a seq-to-seq model.</p></li>
+<li><p><strong>eos_idx</strong> (<em>int</em>) – The end-of-sentence token index.</p></li>
+</ul>
+</dd>
+</dl>
+<dl>
+<dt>Inputs: input_seq, input_length, max_seq_length</dt><dd><ul class="simple">
+<li><p><strong>input_seq</strong>: tensor of shape <span class="math notranslate nohighlight">\((L_{in}, 1)\)</span>.</p></li>
+<li><p><strong>input_length</strong>: tensor of shape <span class="math notranslate nohighlight">\((1, )\)</span>.</p></li>
+<li><p><strong>max_seq_length</strong>: An integer number.</p></li>
+</ul>
+</dd>
+<dt>Outputs: all_token_indices</dt><dd><ul class="simple">
+<li><p><strong>all_token_indices</strong>: tensor of shape <span class="math notranslate nohighlight">\((L_{out})\)</span>.</p></li>
+</ul>
+<p>where:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{aligned}
+    L_{in} ={} &amp; \text{input sequence length} \\
+    L_{out} ={} &amp; \text{max_seq_length}
+\end{aligned}\end{split}\]</div>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="chatbot.models.samplers.RandomSearchSampler.forward">
+<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_seq</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input_length</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_seq_length</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tensor</span></span></span><a class="headerlink" href="#chatbot.models.samplers.RandomSearchSampler.forward" title="Link to this definition"></a></dt>
+<dd><p>Forward pass of the Greedy Search Sampler.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>input_seq</strong> (<em>torch.Tensor</em>) – Input tokenized sequence.</p></li>
+<li><p><strong>input_length</strong> (<em>torch.Tensor</em>) – Length of input sequence.</p></li>
+<li><p><strong>max_seq_length</strong> (<em>int</em>) – The maximum sequence length in the
+entire dataset.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>The predicted token indices</dt><dd><p>along with their predicted scores.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Tuple[torch.Tensor, torch.Tensor]</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
 <section id="module-chatbot.models">
 <span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-chatbot.models" title="Link to this heading"></a></h2>
 <dl class="py class">
@@ -1238,8 +1244,8 @@ of the rnn layer of the encoder. Defaults to
 </dd></dl>
 
 <dl class="py class">
-<dt class="sig sig-object py" id="chatbot.models.GreedySearchDecoder">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">chatbot.models.</span></span><span class="sig-name descname"><span class="pre">GreedySearchDecoder</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">encoder</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Module</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">decoder</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Module</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eos_idx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#chatbot.models.GreedySearchDecoder" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="chatbot.models.GreedySearchSampler">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">chatbot.models.</span></span><span class="sig-name descname"><span class="pre">GreedySearchSampler</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">encoder</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Module</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">decoder</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Module</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eos_idx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#chatbot.models.GreedySearchSampler" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></p>
 <p>Implements greedy decoding.</p>
 <p>Selects the most probable token, i.e <cite>argmax</cite> from the model’s
@@ -1273,8 +1279,8 @@ sequence.</p>
 </dd>
 </dl>
 <dl class="py method">
-<dt class="sig sig-object py" id="chatbot.models.GreedySearchDecoder.forward">
-<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_seq</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input_length</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_seq_length</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tensor</span></span></span><a class="headerlink" href="#chatbot.models.GreedySearchDecoder.forward" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="chatbot.models.GreedySearchSampler.forward">
+<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_seq</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input_length</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_seq_length</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tensor</span></span></span><a class="headerlink" href="#chatbot.models.GreedySearchSampler.forward" title="Link to this definition"></a></dt>
 <dd><p>Forward pass of the Greedy Search Sampler.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -1584,8 +1590,8 @@ word1 x1_0 x1_1 x1_2 x1_3 ... x1_N
 </dd></dl>
 
 <dl class="py class">
-<dt class="sig sig-object py" id="chatbot.models.RandomSearchDecoder">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">chatbot.models.</span></span><span class="sig-name descname"><span class="pre">RandomSearchDecoder</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">encoder</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Module</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">decoder</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Module</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eos_idx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#chatbot.models.RandomSearchDecoder" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="chatbot.models.RandomSearchSampler">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">chatbot.models.</span></span><span class="sig-name descname"><span class="pre">RandomSearchSampler</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">encoder</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Module</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">decoder</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Module</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">eos_idx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#chatbot.models.RandomSearchSampler" title="Link to this definition"></a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Module</span></code></p>
 <p>Implements multinomial sampling during decoding.</p>
 <p>Samples a token according to the output probability distribution over
@@ -1618,8 +1624,8 @@ the vocabulary.</p>
 </dd>
 </dl>
 <dl class="py method">
-<dt class="sig sig-object py" id="chatbot.models.RandomSearchDecoder.forward">
-<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_seq</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input_length</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_seq_length</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tensor</span></span></span><a class="headerlink" href="#chatbot.models.RandomSearchDecoder.forward" title="Link to this definition"></a></dt>
+<dt class="sig sig-object py" id="chatbot.models.RandomSearchSampler.forward">
+<span class="sig-name descname"><span class="pre">forward</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_seq</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">input_length</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tensor</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_seq_length</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tensor</span></span></span><a class="headerlink" href="#chatbot.models.RandomSearchSampler.forward" title="Link to this definition"></a></dt>
 <dd><p>Forward pass of the Greedy Search Sampler.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>

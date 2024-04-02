@@ -93,7 +93,7 @@ class EncoderRNN(nn.Module):
         self.emb = embedding
 
         self.bi_gru = nn.GRU(
-            input_size=hidden_size,
+            input_size=self.emb.embedding_dim,
             hidden_size=hidden_size,
             num_layers=num_layers,
             dropout=(0 if num_layers == 1 else dropout),

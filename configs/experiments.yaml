@@ -56,12 +56,12 @@ hyperparameters:
       embedding_dim: 50
       padding_idx: 0
     encoder_init_params:
-      hidden_size: 50
+      hidden_size: 100
       num_layers: 1
       dropout: 0.1
     decoder_init_params:
       alignment_method: dot
-      hidden_size: 50
+      hidden_size: 100
       num_layers: 1
       dropout: 0.1
     encoder_optimizer_init_params:
