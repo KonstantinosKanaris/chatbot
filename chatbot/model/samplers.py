@@ -1,9 +1,49 @@
+from typing import Dict
+
 import torch
 from torch import nn
 
 
+class SamplersFactory:
+    """A factory class for registering and instantiating
+    decoder samplers.
+
+    Attributes:
+        _samplers (Dict[str, Any]): A dictionary to store
+            registered models.
+    """
+
+    def __init__(self) -> None:
+        self._samplers: Dict[str, type[torch.nn.Module]] = {}
+
+    def register_model(
+        self, name: str, sampler: type[torch.nn.Module]
+    ) -> None:
+        """Registers a sample with the given name.
+
+        Args:
+            name (str): The name of the model to register.
+            sampler (type[torch.nn.Module]): The sampler's class
+                type.
+        """
+        self._samplers[name] = sampler
+
+    def get_sampler(self, name: str, **kwargs) -> torch.nn.Module:
+        """Instantiates and returns a sampler by name.
+
+        Args:
+            name (str): The name of the sampler to instantiate.
+            **kwargs: Initialization parameters for the sampler.
+
+        Returns:
+            torch.nn.Module: An instance of the specified sampler.
+        """
+        sampler = self._samplers[name]
+        return sampler(**kwargs)
+
+
 class GreedySearchSampler(nn.Module):
-    r"""Implements greedy decoding.
+    r"""Implements greedy search decoding.
 
     Selects the most probable token, i.e `argmax` from the model's
     vocabulary at each decoding time-step as candidate to the output
@@ -14,9 +54,9 @@ class GreedySearchSampler(nn.Module):
         decoder (torch.nn.Module): The decoder layer of a seq-to-seq model.
         eos_idx (int): The end-of-sentence token index.
 
-    Inputs: input_seq, input_length, max_seq_length
+    Inputs: input_seq, query_length, max_seq_length
         * **input_seq**: tensor of shape :math:`(L_{in}, 1)`.
-        * **input_length**: tensor of shape :math:`(1, )`.
+        * **query_length**: tensor of shape :math:`(1, )`.
         * **max_seq_length**: An integer number.
 
     Outputs: all_token_indices
@@ -44,14 +84,14 @@ class GreedySearchSampler(nn.Module):
     def forward(
         self,
         input_seq: torch.Tensor,
-        input_length: torch.Tensor,
+        query_length: torch.Tensor,
         max_seq_length: int,
     ) -> torch.Tensor:
         """Forward pass of the Greedy Search Sampler.
 
         Args:
             input_seq (torch.Tensor): Input tokenized sequence.
-            input_length (torch.Tensor): Length of input sequence.
+            query_length (torch.Tensor): Length of input sequence.
             max_seq_length (int): The maximum sequence length in the
                 entire dataset.
 
@@ -63,7 +103,7 @@ class GreedySearchSampler(nn.Module):
 
         with torch.inference_mode():
             encoder_state, encoder_hidden = self.encoder(
-                input_seq, input_length
+                input_seq, query_length
             )
             decoder_hidden = encoder_hidden[: self.decoder.num_layers]
             decoder_input = torch.ones(
@@ -94,7 +134,7 @@ class GreedySearchSampler(nn.Module):
 
 
 class RandomSearchSampler(nn.Module):
-    r"""Implements multinomial sampling during decoding.
+    r"""Implements multinomial sampling search during decoding.
 
     Samples a token according to the output probability distribution over
     the vocabulary.
@@ -104,9 +144,9 @@ class RandomSearchSampler(nn.Module):
         decoder (torch.nn.Module): The decoder layer of a seq-to-seq model.
         eos_idx (int): The end-of-sentence token index.
 
-    Inputs: input_seq, input_length, max_seq_length
+    Inputs: input_seq, query_length, max_seq_length
         * **input_seq**: tensor of shape :math:`(L_{in}, 1)`.
-        * **input_length**: tensor of shape :math:`(1, )`.
+        * **query_length**: tensor of shape :math:`(1, )`.
         * **max_seq_length**: An integer number.
 
     Outputs: all_token_indices
@@ -134,14 +174,14 @@ class RandomSearchSampler(nn.Module):
     def forward(
         self,
         input_seq: torch.Tensor,
-        input_length: torch.Tensor,
+        query_length: torch.Tensor,
         max_seq_length: int,
     ) -> torch.Tensor:
         """Forward pass of the Greedy Search Sampler.
 
         Args:
             input_seq (torch.Tensor): Input tokenized sequence.
-            input_length (torch.Tensor): Length of input sequence.
+            query_length (torch.Tensor): Length of input sequence.
             max_seq_length (int): The maximum sequence length in the
                 entire dataset.
 
@@ -154,7 +194,7 @@ class RandomSearchSampler(nn.Module):
 
         with torch.inference_mode():
             encoder_state, encoder_hidden = self.encoder(
-                input_seq, input_length
+                input_seq, query_length
             )
             decoder_hidden = encoder_hidden[: self.decoder.num_layers]
             decoder_input = torch.ones(
@@ -171,7 +211,7 @@ class RandomSearchSampler(nn.Module):
                     decoder_input, decoder_hidden, encoder_state
                 )
                 decoder_input = torch.multinomial(
-                    input=torch.softmax(decoder_output, dim=1), num_samples=1
+                    input=decoder_output, num_samples=1
                 ).squeeze(dim=0)
 
                 all_token_indices = torch.cat(

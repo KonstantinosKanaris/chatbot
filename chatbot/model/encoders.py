@@ -8,8 +8,9 @@ from torch.nn.utils.rnn import pack_padded_sequence, pad_packed_sequence
 class EncoderRNN(nn.Module):
     r"""Encoder layer for a seq2seq model.
 
-    Encodes a variable-length input sequence of tokens into a
-    fixed-length vector representation.
+    Encodes a batch of variable-length query sequences,
+    comprised of tokens, into a fixed-length vector
+    representation.
 
     Args:
         embedding (nn.Embedding): The embedding layer.
@@ -19,9 +20,9 @@ class EncoderRNN(nn.Module):
             If non-zero, the :attr:`num_layers` should be greater than 1,
             otherwise the dropout value will be set to zero. (default=0).
 
-    Inputs: input_sequences, input_lengths, h_0
-        * **input_sequences**: tensor of shape :math:`(L, N)`.
-        * **input_lengths**: tensor of shape :math:`(N)`.
+    Inputs: x_queries, query_lengths, h_0
+        * **x_queries**: tensor of shape :math:`(L, N)`.
+        * **query_lengths**: tensor of shape :math:`(N)`.
         * **h_0**: tensor of shape :math:`(2 * \text{num_layers}, H)` or
           :math:`(2 * \text{num_layers}, N, H)` containing the initial
           hidden state for the input sequence. Defaults to ``None``.
@@ -32,7 +33,7 @@ class EncoderRNN(nn.Module):
             \begin{aligned}
                 N ={} & \text{batch size} \\
                 L ={} & \text{max sequence length} \\
-                H ={} & \text{hidden\_size}
+                H ={} & \text{hidden_size}
             \end{aligned}
 
     Outputs: output, h_n
@@ -64,7 +65,7 @@ class EncoderRNN(nn.Module):
         ... )
         >>> # Create a sample of input sequences. In practice sequences
         >>> # with length less than the maximum are padded with the mask index
-        >>> input_sequences = torch.randint(
+        >>> x_queries = torch.randint(
         ...     low=0,
         ...     high=num_vocab_tokens,
         ...     size=(batch_size, max_seq_len),
@@ -72,11 +73,10 @@ class EncoderRNN(nn.Module):
         ... )
         >>> # Find the length of each sequence (without the mask index)
         >>> # in the input sequences
-        >>> input_lengths = torch.sum(input_sequences != 0, dim=1)
-
+        >>> query_lengths = torch.sum(x_queries != 0, dim=1)
         >>> output, h_n = encoder(
-        ...     input_sequences=input_sequences,
-        ...     input_lengths=input_lengths
+        ...     x_queries=x_queries,
+        ...     query_lengths=query_lengths
         ... )
     """
 
@@ -102,15 +102,15 @@ class EncoderRNN(nn.Module):
 
     def forward(
         self,
-        input_sequences: torch.Tensor,
-        input_lengths: torch.Tensor,
+        x_queries: torch.Tensor,
+        query_lengths: torch.Tensor,
         h_0: Optional[torch.Tensor] = None,
     ) -> Tuple[torch.Tensor, torch.Tensor]:
         """The forward pass of the encoder.
 
         Args:
-            input_sequences (torch.Tensor): A batch of input sequences.
-            input_lengths (torch.Tensor): Holds the length of each
+            x_queries (torch.Tensor): A batch of input sequences.
+            query_lengths (torch.Tensor): Holds the length of each
                 input sequence.
             h_0 (torch.Tensor, optional): Initial hidden state
                 of the rnn layer of the encoder. Defaults to
@@ -120,11 +120,11 @@ class EncoderRNN(nn.Module):
             Tuple[torch.Tensor, torch.Tensor]: Output and hidden
                 state of the encoder layer.
         """
-        embedded_input = self.emb(input_sequences)
+        embedded_input = self.emb(x_queries)
 
         packed_input = pack_padded_sequence(
             input=embedded_input,
-            lengths=input_lengths,
+            lengths=query_lengths,
         )
 
         output, h_n = self.bi_gru(packed_input, h_0)

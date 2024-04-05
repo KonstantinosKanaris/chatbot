@@ -1,31 +1,28 @@
 #----------------------------------------------------------------------------------------
-# The hidden size and embedding dimension must have the same value.
 #----------------------------------------------------------------------------------------
+# - train_data_path         : The path to the txt file containing the training pairs
+#                             in order to build the vocabulary.
+# - val_data_path           : The path to the txt file containing the validation pairs.
 # - checkpoints_dir         : The directory path to save checkpoints during training.
 # - checkpoint_filename     : The name of the checkpoint file.
-# - data_path               : The path to the txt file containing pairs of text sequences.
 # - embeddings_path         : Path to pre-trained embeddings file, i.e. GLoVe embeddings.
-# - min_seq_length          : Minimum number of tokens allowed in each of the pair of
-#                             sequences.
-# - max_seq_length          : Maximum number of tokens allowed in each of the pair of
-#                             sequences.
-# - min_count               : Minimum token count value threshold.
-# - validation_size         : Float number between 0.0 and 1.0 representing the proportion
-#                             of the dataset to include in the validation split.
 # - batch_size              : How many samples per batch to load.
 # - num_epochs              : An integer indicating how many epochs to train for.
-# - lr_patience             : Number of epochs to wait before reducing the learning
-#                             rate.
-# - lr_reduce_factor        : How much to reduce the learning rate, i.e. lr * factor.
 # - ea_patience             : Number of epochs to wait before early stopping.
 # - ea_delta                : Minimum change in monitored quantity to qualify as an
 #                             improvement.
 # - clip_factor             : Max norm value for gradient clipping.
 # - enable_early_stop       : If ``True``, enables early stop functionality.
+# - enable_lr_scheduler     : If ``True``, enables the learning schedulers for the encoder
+#                             and decoder layers.
 # - sampling_decay          : Integer >= 1. Smaller value results in a quicker drop of the
 #                             sample probability per epoch.
+# - sampling_method         : Samples the decoders' predictions. Available
+#                             methods: ``greedy``, ``random``.
 # - alignment_method        : Name of the alignment score method used in the attention layer.
 #                             The available methods are: `concat`, `dot` and `general`.
+# - temperature             : Float number > 0. Used to control the randomness of the decoder's
+#                             predictions by scaling the logits before applying softmax.
 # - embedding_dim           : Dimensions of token embeddings.
 # - hidden_size             : Hidden size of `rnn`, `gru` or `lstm` model.
 # - dropout                 : Dropout value to apply after the `rnn`, `gru or `lstm`
@@ -33,46 +30,44 @@
 # - num_layers              : Number of GRU layers in the encoder/decoder layer.
 # - lr                      : The learning rate of the encoder/decoder optimizer.
 #----------------------------------------------------------------------------------------
+train_data_path: ./data/cornell-dialogs/assets/train_set.txt
+val_data_path: ./data/cornell-dialogs/assets/val_set.txt
 checkpoints_dir: ./checkpoints
-checkpoint_filename: checkpoint_100d_2l_50ep_10_pa_8length.pth
-data_path: ./data/cornell_movie_dialogs/processed/formatted_dialogs.txt
+checkpoint_filename: base_model.pth
 hyperparameters:
     embeddings_path:
-    data:
-      min_seq_length: 1
-      max_seq_length: 8
-      min_count: 3
-      validation_size: 0.3
-      batch_size: 64
     general:
+      batch_size: 64
       num_epochs: 50
-      ea_patience: 10
+      ea_patience: 6
       ea_delta: 0
       clip_factor: 50
       enable_early_stop: True
       enable_lr_scheduler: True
-      sampling_decay: 10
+      sampling_decay: 16
+      sampling_method: random
     embedding_init_params:
       embedding_dim: 50
       padding_idx: 0
     encoder_init_params:
-      hidden_size: 100
+      hidden_size: 50
       num_layers: 1
       dropout: 0.1
     decoder_init_params:
       alignment_method: dot
-      hidden_size: 100
+      hidden_size: 50
       num_layers: 1
       dropout: 0.1
+      temperature: 1.0
     encoder_optimizer_init_params:
-      lr: 0.001
+      lr: 0.0001
       weight_decay: 0.001
     decoder_optimizer_init_params:
-      lr: 0.001
+      lr: 0.0001
       weight_decay: 0.001
     encoder_lr_scheduler_init_params:
-      factor: 0.5
+      factor: 0.3
       patience: 1
     decoder_lr_scheduler_init_params:
-      factor: 0.5
+      factor: 0.3
       patience: 1

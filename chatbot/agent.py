@@ -2,19 +2,18 @@ from typing import Any, Dict, List, Tuple
 
 import mlflow
 import torch
-from sklearn.model_selection import ShuffleSplit
 from torch import nn
 from torch.optim.lr_scheduler import ReduceLROnPlateau
-from torch.utils.data import DataLoader, SubsetRandomSampler
+from torch.utils.data import DataLoader
 from tqdm.auto import tqdm
 
 from chatbot import logger
+from chatbot.data.vocabulary import SequenceVocabulary
 from chatbot.engine.trainer import Trainer
 from chatbot.engine.utils import EarlyStopping, Timer, set_seeds
-from chatbot.models.decoders import LuongAttnDecoderRNN
-from chatbot.models.embeddings import EmbeddingLayerConstructor
-from chatbot.models.encoders import EncoderRNN
-from chatbot.utils.data.datasets import CornellDialogsDataset
+from chatbot.model.decoders import LuongAttnDecoderRNN
+from chatbot.model.embeddings import EmbeddingLayerConstructor
+from chatbot.model.encoders import EncoderRNN
 
 
 def initialize_seq2seq_components(
@@ -67,9 +66,11 @@ def initialize_seq2seq_components(
         ...     },
         ...     "encoder_optimizer_init_params": {
         ...         "lr": 0.0001,
+        ...         "weight_decay": 0.001
         ...     },
         ...     "decoder_optimizer_init_params": {
-        ...         "lr": 0.0001
+        ...         "lr": 0.0001,
+        ...         "weight_decay": 0.001
         ...     }
         ... }
         >>>
@@ -133,7 +134,7 @@ def initialize_from_checkpoint(
     use_optimizers: bool = False,
 ) -> Dict[str, Any]:
     """Loads the necessary components required for training or evaluating
-    a sequence-to-sequence model from a saved checkpoint.
+    a sequence-to-sequence model, from a saved checkpoint.
 
     In addition to the model components, it also loads the last validation
     loss value and epoch, which are required to resume training.
@@ -175,12 +176,15 @@ def initialize_from_checkpoint(
         ...         "hidden_size": 50,
         ...         "num_layers": 1,
         ...         "dropout": 0.1,
+        ...         "temperature": 1.0
         ...     },
         ...     "encoder_optimizer_init_params": {
         ...         "lr": 0.0001,
+        ...         "weight_decay": 0.001
         ...     },
         ...     "decoder_optimizer_init_params": {
-        ...         "lr": 0.0001
+        ...         "lr": 0.0001,
+        ...         "weight_decay": 0.001,
         ...     }
         ... }
         >>>
@@ -209,7 +213,6 @@ def initialize_from_checkpoint(
         checkpoint = torch.load(
             f=path, map_location="cuda" if torch.cuda.is_available() else "cpu"
         )
-
     embedding_state_dict = checkpoint["embedding"]
     encoder_state_dict = checkpoint["encoder"]
     decoder_state_dict = checkpoint["decoder"]
@@ -263,123 +266,42 @@ def initialize_from_checkpoint(
     }
 
 
-class TrainingController:
+class Agent:
     """Controls the flow of the training process of a seq-to-seq
     model with PyTorch.
 
-    The flow includes:
-
-    .. code-block:: text
-
-        - Initialization of encoder and decoder layers
-        - Setting up encoder and decoder optimizers
-        - Splitting data into validation and training sets
-        - Creation of dataloaders
-        - Start of training process
-
     Args:
-        dataset (CornellDialogsDataset): The cornell dialogs dataset.
+        vocabulary (SequenceVocabulary): The dataset's vocabulary.
         hyperparameters (Dict[str, Any]): Set of hyperparameters.
         checkpoint_path (str): Path to save or load a checkpoint.
         resume (optional, bool): If ``True``, resumes training from
             a saved checkpoint. Defaults to ``False``.
 
     Attributes:
-        dataset (CornellDialogsDataset): The cornell dialogs dataset.
+        vocabulary (SequenceVocabulary): The dataset's vocabulary.
         hyperparameters (Dict[str, Any]): Set of hyperparameters.
         checkpoint_path (str): Path to save checkpoint.
         resume (bool): If ``True``, resumes training from a saved
             checkpoint.
-        vectorizer (SequenceVectorizer): Class responsible for converting
-            tokens to numbers.
-
-    Example:
-        >>> # Create a `Dataset` object from the dataset's txt file
-        >>> # and with a `split()` tokenizer
-        >>> from chatbot.utils.data.datasets import CornellDialogsDataset
-        >>> from chatbot.utils.aux import get_tokenizer
-        >>>
-        >>> split_tokenizer = get_tokenizer(tokenizer=None)
-        >>> dataset = CornellDialogsDataset.load_pairs_and_vectorizer(
-        ...     file="./cornel_dialogs.txt",
-        ...     tokenizer=split_tokenizer,
-        ...     min_count=3,
-        ...     max_length=10
-        ... )
-        >>>
-        >>> # Define training hyperparameters in the following format:
-        >>> # Note that the hyperparameters are defined in a yaml file
-        >>> # but with the same format.
-        >>> hyperparameters = {
-        ...     "embeddings_path": "./pretrained_embeddings/glove.6B.50d.txt",
-        ...     "data": {
-        ...         "min_seq_length": 1,
-        ...         "max_seq_length": 10,
-        ...         "min_count": 3,
-        ...         "validation_size": 0.3,
-        ...         "batch_size": 64
-        ...     },
-        ...     "general": {
-        ...         "num_epochs": 10,
-        ...         "batch_size": 64,
-        ...         "lr_patience": 3,
-        ...         "lr_reduce_factor": 0.25,
-        ...         "ea_patience": 7,
-        ...         "ea_delta": 0.005,
-        ...         "clip_factor": 50,
-        ...         "enable_early_stop": True,
-        ...         "sampling_decay": 10
-        ...     },
-        ...     "embedding_init_params": {
-        ...         "embedding_dim": 50,
-        ...         "padding_idx": 0
-        ...     }
-        ...     "encoder_init_params": {
-        ...         "hidden_size": 50,
-        ...         "num_layers": 1,
-        ...         "dropout": 0.1
-        ...     }
-        ...     "decoder_init_params": {
-        ...         "alignment_method": "dot",
-        ...         "hidden_size": 50,
-        ...         "num_layers": 1,
-        ...         "dropout": 0.1,
-        ...     },
-        ...     "encoder_optimizer_init_params": {
-        ...         "lr": 0.0001,
-        ...     },
-        ...     "decoder_optimizer_init_params": {
-        ...         "lr": 0.0001
-        ...     }
-        ... }
-        >>>
-        >>> # Initialize the training controller
-        >>> training_controller = TrainingController(
-        ...     dataset=dataset,
-        ...     hyperparameters=hyperparameters,
-        ...     checkpoints_path="./checkpoints/checkpoint_1.pth"
-        ... )
-        >>>
-        >>> # Start training process
-        >>> trainer, last_epoch = training_controller.prepare_for_training()
-        >>> training_controller.start_training(
-        ...     trainer=trainer, last_epoch=last_epoch
-        ... )
+        training_params (Dict[str, Any]): Training parameters from
+            the configuration file.
+        early_stopper (EarlyStopping): Stops the training process
+            if the validation loss does not decrease for a number
+            of epochs.
     """
 
     def __init__(
         self,
-        dataset: CornellDialogsDataset,
+        vocabulary: SequenceVocabulary,
         hyperparameters: Dict[str, Any],
         checkpoint_path: str,
         resume: bool = False,
     ) -> None:
-        self.dataset = dataset
+        self.vocabulary = vocabulary
         self.hyperparameters = hyperparameters
         self.checkpoint_path = checkpoint_path
         self.resume = resume
 
-        self.vectorizer = dataset.get_vectorizer()
         self.training_params = self._load_training_params()
         self.early_stopper = EarlyStopping(
             patience=self.training_params["ea_patience"],
@@ -393,7 +315,6 @@ class TrainingController:
     def _load_training_params(self) -> Dict[str, Any]:
         """Returns all the training hyperparameters from the
         configuration file."""
-
         encoder_init_params = {
             f"encoder_{key}": val
             for key, val in {
@@ -413,42 +334,12 @@ class TrainingController:
         }
 
         return {
-            "vocab_size": len(self.vectorizer.vocab),
-            **self.hyperparameters["data"],
+            "vocab_size": len(self.vocabulary),
             **self.hyperparameters["general"],
             **self.hyperparameters["embedding_init_params"],
             **encoder_init_params,
             **decoder_init_params,
         }
-
-    def _create_dataloaders(
-        self, train_ids, val_ids, batch_size
-    ) -> Tuple[DataLoader, DataLoader]:
-        """Creates training and validation dataloaders from
-        a sample of training and validation indices.
-
-        Args:
-            train_ids (numpy.ndarray): Sample of training indices.
-            val_ids (numpy.ndarray): Sample of validation indices.
-            batch_size (int): Number of samples per batch to load.
-
-        Returns:
-            Tuple[DataLoader, DataLoader]: The training
-                and validation dataloaders.
-        """
-        train_dataloader = DataLoader(
-            dataset=self.dataset,
-            batch_size=batch_size,
-            drop_last=True,
-            sampler=SubsetRandomSampler(train_ids),
-        )
-        val_dataloader = DataLoader(
-            dataset=self.dataset,
-            batch_size=batch_size,
-            drop_last=True,
-            sampler=SubsetRandomSampler(val_ids),
-        )
-        return train_dataloader, val_dataloader
 
     def prepare_for_training(self) -> Tuple[Trainer, int]:
         """Loads the training components, including the embedding,
@@ -465,7 +356,7 @@ class TrainingController:
         if self.resume:
             training_components = initialize_from_checkpoint(
                 path=self.checkpoint_path,
-                vocab_tokens=list(self.vectorizer.vocab.token_to_idx.keys()),
+                vocab_tokens=list(self.vocabulary.token_to_idx.keys()),
                 init_params=self.hyperparameters,
                 use_optimizers=True,
             )
@@ -481,12 +372,12 @@ class TrainingController:
         else:
             last_epoch = 0
             training_components = initialize_seq2seq_components(
-                vocab_tokens=list(self.vectorizer.vocab.token_to_idx.keys()),
+                vocab_tokens=list(self.vocabulary.token_to_idx.keys()),
                 init_params=self.hyperparameters,
                 use_optimizers=True,
             )
 
-        loss_fn = nn.NLLLoss(ignore_index=self.vectorizer.vocab.mask_index)
+        loss_fn = nn.NLLLoss(ignore_index=self.vocabulary.mask_index)
 
         encoder_lr_scheduler = ReduceLROnPlateau(
             optimizer=training_components["encoder_optimizer"],
@@ -508,30 +399,31 @@ class TrainingController:
             encoder_lr_scheduler=encoder_lr_scheduler,
             decoder_lr_scheduler=decoder_lr_scheduler,
             loss_fn=loss_fn,
-            vocab=self.vectorizer.vocab,
+            vocab=self.vocabulary,
             checkpoint_path=self.checkpoint_path,
             epochs=self.training_params["num_epochs"],
             last_epoch=last_epoch,
             clip_factor=self.training_params["clip_factor"],
             early_stopper=self.early_stopper,
             sampling_decay=self.training_params["sampling_decay"],
+            sampling_method=self.training_params["sampling_method"],
             resume=self.resume,
             enable_early_stop=self.training_params["enable_early_stop"],
             enable_lr_scheduler=self.training_params["enable_lr_scheduler"],
         )
         return trainer, last_epoch
 
-    def start_training(self, trainer: Trainer, last_epoch: int = 0) -> None:
+    def start_training(
+        self,
+        trainer: Trainer,
+        train_dataloader: DataLoader,
+        val_dataloader: DataLoader,
+        last_epoch: int = 0,
+    ) -> None:
         """Splits the dataset into training and validation sets,
         creates dataloaders and begins the training process."""
         with mlflow.start_run():
             mlflow.log_params(params=self.training_params)
-
-            rs = ShuffleSplit(
-                n_splits=1,
-                test_size=self.training_params["validation_size"],
-                random_state=42,
-            )
 
             logger.info(
                 "------------------------- Training -------------------------"
@@ -545,35 +437,20 @@ class TrainingController:
                 "[{elapsed}<{remaining}]"
             )
             try:
-                for fold, (train_ids, val_ids) in enumerate(
-                    rs.split(X=self.dataset)
-                ):
-                    logger.info(
-                        f"Training size: {len(train_ids)}, "
-                        f"Validation size: {len(val_ids)}\n"
+                tqdm_bar = tqdm(
+                    iterable=range(self.training_params["num_epochs"] + 1),
+                    total=self.training_params["num_epochs"],
+                    bar_format=bar_fmt,
+                    initial=last_epoch + 1,
+                    position=0,
+                    leave=False,
+                )
+                with Timer() as t:
+                    trainer.train(
+                        train_dataloader=train_dataloader,
+                        val_dataloader=val_dataloader,
+                        tqdm_bar=tqdm_bar,
                     )
-
-                    train_dataloader, val_dataloader = (
-                        self._create_dataloaders(
-                            train_ids=train_ids,
-                            val_ids=val_ids,
-                            batch_size=self.training_params["batch_size"],
-                        )
-                    )
-                    tqdm_bar = tqdm(
-                        iterable=range(self.training_params["num_epochs"] + 1),
-                        total=self.training_params["num_epochs"],
-                        bar_format=bar_fmt,
-                        initial=last_epoch + 1,
-                        position=0,
-                        leave=False,
-                    )
-                    with Timer() as t:
-                        trainer.train(
-                            train_dataloader=train_dataloader,
-                            val_dataloader=val_dataloader,
-                            tqdm_bar=tqdm_bar,
-                        )
-                    logger.info(f"Training took {t.elapsed} seconds.\n")
+                logger.info(f"Training took {t.elapsed} seconds.\n")
             except KeyboardInterrupt:
                 logger.info("Exiting loop.\n")

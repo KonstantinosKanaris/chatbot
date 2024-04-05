@@ -2,14 +2,12 @@
 # Configuration for running the chatbot in evaluation mode.
 # All values must be the same with the values from the training configuration.
 #-----------------------------------------------------------------------------------
-# - data_path               : The path to the txt file containing pairs of text sequences.
+# - train_data_path         : The path to the txt file containing the training pairs
+#                             in order to build the vocabulary.
 # - checkpoint_path         : Path to the checkpoint containing the trained model.
 # - embeddings_path         : Path to pre-trained embeddings file, i.e. GLoVe embeddings.
-# - min_seq_length          : Minimum number of tokens allowed in each of the pair of
-#                             sequences.
-# - max_seq_length          : Maximum number of tokens allowed in each of the pair of
-#                             sequences.
-# - min_count               : Minimum token count value threshold.
+# - sampler                 : Decoder search sampler. The available samplers are: `greedy`,
+#                             and `random`.
 # - embedding_dim           : Dimensions of token embeddings.
 # - padding_idx             : The PAD token index. Equal to 0.
 # - hidden_size             : Hidden size of `rnn`, `gru` or `lstm` model.
@@ -18,23 +16,20 @@
 # - alignment_method        : Name of the alignment score method used in the attention layer.
 #                             The available methods are: `concat`, `dot` and `general`.
 #-----------------------------------------------------------------------------------
-data_path: ./data/cornell_movie_dialogs/processed/formatted_dialogs.txt
-checkpoint_path: ./checkpoints/checkpoint_100d_2l_50ep_10_pa_8length.pth
+train_data_path: ./data/cornell-dialogs/assets/train_set.txt
+checkpoint_path: ./checkpoints/base_model.pth
 evaluation_parameters:
   embeddings_path:
-  data:
-    min_seq_length: 1
-    max_seq_length: 8
-    min_count: 3
+  sampler: random
   embedding_init_params:
-    embedding_dim: 50
+    embedding_dim: 128
     padding_idx: 0
   encoder_init_params:
-    hidden_size: 50
+    hidden_size: 128
     dropout: 0.1
-    num_layers: 1
+    num_layers: 2
   decoder_init_params:
     alignment_method: dot
-    hidden_size: 50
+    hidden_size: 128
     dropout: 0.1
-    num_layers: 1
+    num_layers: 2

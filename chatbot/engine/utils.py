@@ -4,10 +4,11 @@ import math
 import os
 import time
 from datetime import timedelta
-from typing import Optional
+from typing import Dict, Iterator, Optional
 
 import numpy as np
 import torch
+import torch.utils.data
 
 from chatbot import logger
 
@@ -23,6 +24,35 @@ def set_seeds(seed: int = 42) -> None:
 
     # Set the seed for CUDA torch operations (ones that happen on the GPU)
     torch.cuda.manual_seed(seed)
+
+
+def generate_batches(
+    dataloader: torch.utils.data.DataLoader,
+) -> Iterator[Dict[str, torch.Tensor]]:
+    """Creates a batch generator from a `DataLoader` that
+    yields data dictionaries upon iteration.
+
+    Args:
+        dataloader (torch.utils.data.DataLoader): The input
+            dataloader.
+
+    Returns:
+        Iterator[Dict[str, torch.Tensor]]: An iterator over
+            data dictionaries.
+    """
+    for data_dict in dataloader:
+        query_lengths = data_dict["query_length"].numpy()
+        sorted_length_indices = query_lengths.argsort()[::-1].tolist()
+        query_sequences = data_dict["x_query"][sorted_length_indices]
+        query_lengths = data_dict["query_length"][sorted_length_indices]
+        response_sequences = data_dict["y_response"][sorted_length_indices]
+        response_lengths = data_dict["response_length"][sorted_length_indices]
+        yield {
+            "x_queries": query_sequences.transpose(0, 1),
+            "query_lengths": query_lengths,
+            "y_responses": response_sequences.transpose(0, 1),
+            "response_lengths": response_lengths,
+        }
 
 
 def inverse_sigmoid_decay(decay: int | float, epoch: int) -> float:

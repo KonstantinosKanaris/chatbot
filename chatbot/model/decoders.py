@@ -25,11 +25,16 @@ class LuongAttnDecoderRNN(nn.Module):
         embedding (nn.Embedding): The embedding layer.
         hidden_size (int): The number of features in the hidden state.
         output_size (int): The size of the vocabulary.
-        num_layers (int, optional): The number of recurrent layers (default=1).
-        dropout (float, optional): The dropout value applied to the embedded
-            input sequence and to the GRU layer. If non-zero, the
-            :attr:`num_layers` should be greater than 1, otherwise the dropout
-            value will be set to zero. (default=0.1).
+        num_layers (int, optional): The number of recurrent layers
+            (default=1).
+        dropout (float, optional): The dropout value applied to the
+            embedded input sequence and to the GRU layer. If non-zero,
+            the :attr:`num_layers` should be greater than 1, otherwise
+            the dropout value will be set to zero. (default=0.1).
+        temperature (float, optional): Used to control the randomness of
+            the decoder's predictions by scaling the logits before applying
+            softmax. Must be greater than zero. If ``temperature = 1`` there
+            is no effect to the output logits (default=1).
 
     Inputs: input_seq, h_0, encoder_state
         * **input_seq**: tensor of shape :math:`(1, N)`.
@@ -65,6 +70,7 @@ class LuongAttnDecoderRNN(nn.Module):
         output_size: int,
         num_layers: int = 1,
         dropout: float = 0.1,
+        temperature: float = 1.0,
     ) -> None:
         super().__init__()
         if alignment_method not in ["concat", "dot", "general"]:
@@ -73,8 +79,8 @@ class LuongAttnDecoderRNN(nn.Module):
             )
 
         self.num_layers = num_layers
-
         self.emb = embedding
+        self.temperature = temperature
 
         self.emb_dropout = nn.Dropout(p=dropout)
         self.gru = nn.GRU(
@@ -85,18 +91,15 @@ class LuongAttnDecoderRNN(nn.Module):
         )
         self.concat = nn.Linear(2 * hidden_size, hidden_size)
         self.out = nn.Linear(hidden_size, output_size)
-
         self.attention = AttnLayer(
             method=alignment_method, hidden_size=hidden_size
         )
-        self.log_softmax = nn.LogSoftmax(dim=1)
 
     def forward(
         self,
         input_seq: torch.Tensor,
         h_0: torch.Tensor,
         encoder_state: torch.Tensor,
-        apply_softmax: bool = False,
     ) -> Tuple[torch.Tensor, torch.Tensor]:
         """The forward pass of the decoder.
 
@@ -107,8 +110,6 @@ class LuongAttnDecoderRNN(nn.Module):
             input_seq (torch.Tensor): Batch of single token sequences.
             h_0 (torch.Tensor): The last hidden state of the encoder.
             encoder_state (torch.Tensor): The output of the encoder.
-            apply_softmax (bool, False): If ``True`` applies
-            ``nn.LogSoftmax`` to the output. Defaults to ``False``.
 
         Returns:
             Tuple[torch.Tensor, torch.Tensor]: The predictive distribution
@@ -130,8 +131,8 @@ class LuongAttnDecoderRNN(nn.Module):
         concat_output = torch.tanh(self.concat(concat_input))
 
         # Predict new token using Luong eq. 6
-        output = self.out(concat_output)
-        if apply_softmax:
-            output = self.log_softmax(output)
+        output = torch.softmax(
+            self.out(concat_output) * self.temperature, dim=1
+        )
 
         return output, hidden

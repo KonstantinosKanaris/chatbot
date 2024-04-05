@@ -7,17 +7,17 @@ Subpackages
 .. toctree::
    :maxdepth: 4
 
+   chatbot.data
    chatbot.engine
-   chatbot.models
-   chatbot.utils
+   chatbot.model
 
 Submodules
 ----------
 
-chatbot.controllers module
---------------------------
+chatbot.agent module
+--------------------
 
-.. automodule:: chatbot.controllers
+.. automodule:: chatbot.agent
    :members:
    :undoc-members:
    :show-inheritance:

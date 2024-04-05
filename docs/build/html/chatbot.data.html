@@ -1,0 +1,1176 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>chatbot.data package &mdash; chatbot  documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+
+  
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/jquery.js?v=5d32c60e"></script>
+        <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
+        <script src="_static/documentation_options.js?v=5929fcd5"></script>
+        <script src="_static/doctools.js?v=888ff710"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html" class="icon icon-home">
+            chatbot
+          </a>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <!-- Local TOC -->
+              <div class="local-toc"><ul>
+<li><a class="reference internal" href="#">chatbot.data package</a><ul>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-chatbot.data.datasets">chatbot.data.datasets module</a><ul>
+<li><a class="reference internal" href="#chatbot.data.datasets.CornellDialogsDataset"><code class="docutils literal notranslate"><span class="pre">CornellDialogsDataset</span></code></a><ul>
+<li><a class="reference internal" href="#chatbot.data.datasets.CornellDialogsDataset.get_num_batches"><code class="docutils literal notranslate"><span class="pre">CornellDialogsDataset.get_num_batches()</span></code></a></li>
+<li><a class="reference internal" href="#chatbot.data.datasets.CornellDialogsDataset.get_vectorizer"><code class="docutils literal notranslate"><span class="pre">CornellDialogsDataset.get_vectorizer()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-chatbot.data.download">chatbot.data.download module</a><ul>
+<li><a class="reference internal" href="#chatbot.data.download.download_data"><code class="docutils literal notranslate"><span class="pre">download_data()</span></code></a></li>
+<li><a class="reference internal" href="#chatbot.data.download.get_cornell_dialogs"><code class="docutils literal notranslate"><span class="pre">get_cornell_dialogs()</span></code></a></li>
+<li><a class="reference internal" href="#chatbot.data.download.get_data"><code class="docutils literal notranslate"><span class="pre">get_data()</span></code></a></li>
+<li><a class="reference internal" href="#chatbot.data.download.unzip_data"><code class="docutils literal notranslate"><span class="pre">unzip_data()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-chatbot.data.parsers">chatbot.data.parsers module</a><ul>
+<li><a class="reference internal" href="#chatbot.data.parsers.CornellDialogsParser"><code class="docutils literal notranslate"><span class="pre">CornellDialogsParser</span></code></a><ul>
+<li><a class="reference internal" href="#chatbot.data.parsers.CornellDialogsParser.extract_sequence_pairs"><code class="docutils literal notranslate"><span class="pre">CornellDialogsParser.extract_sequence_pairs()</span></code></a></li>
+<li><a class="reference internal" href="#chatbot.data.parsers.CornellDialogsParser.parse_conversations"><code class="docutils literal notranslate"><span class="pre">CornellDialogsParser.parse_conversations()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-chatbot.data.processing">chatbot.data.processing module</a><ul>
+<li><a class="reference internal" href="#chatbot.data.processing.Seq2SeqProcessor"><code class="docutils literal notranslate"><span class="pre">Seq2SeqProcessor</span></code></a><ul>
+<li><a class="reference internal" href="#chatbot.data.processing.Seq2SeqProcessor.pairs"><code class="docutils literal notranslate"><span class="pre">Seq2SeqProcessor.pairs</span></code></a></li>
+<li><a class="reference internal" href="#chatbot.data.processing.Seq2SeqProcessor._tokenizer"><code class="docutils literal notranslate"><span class="pre">Seq2SeqProcessor._tokenizer</span></code></a></li>
+<li><a class="reference internal" href="#chatbot.data.processing.Seq2SeqProcessor.filter_pairs_by_length"><code class="docutils literal notranslate"><span class="pre">Seq2SeqProcessor.filter_pairs_by_length()</span></code></a></li>
+<li><a class="reference internal" href="#chatbot.data.processing.Seq2SeqProcessor.filter_pairs_by_token_count"><code class="docutils literal notranslate"><span class="pre">Seq2SeqProcessor.filter_pairs_by_token_count()</span></code></a></li>
+<li><a class="reference internal" href="#chatbot.data.processing.Seq2SeqProcessor.from_txt_file"><code class="docutils literal notranslate"><span class="pre">Seq2SeqProcessor.from_txt_file()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-chatbot.data.tokenizers">chatbot.data.tokenizers module</a><ul>
+<li><a class="reference internal" href="#chatbot.data.tokenizers.TokenizersFactory"><code class="docutils literal notranslate"><span class="pre">TokenizersFactory</span></code></a><ul>
+<li><a class="reference internal" href="#chatbot.data.tokenizers.TokenizersFactory._tokenizers"><code class="docutils literal notranslate"><span class="pre">TokenizersFactory._tokenizers</span></code></a></li>
+<li><a class="reference internal" href="#chatbot.data.tokenizers.TokenizersFactory.add_tokenizer"><code class="docutils literal notranslate"><span class="pre">TokenizersFactory.add_tokenizer()</span></code></a></li>
+<li><a class="reference internal" href="#chatbot.data.tokenizers.TokenizersFactory.get_tokenizer"><code class="docutils literal notranslate"><span class="pre">TokenizersFactory.get_tokenizer()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#chatbot.data.tokenizers.get_tokenizer"><code class="docutils literal notranslate"><span class="pre">get_tokenizer()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-chatbot.data.utils">chatbot.data.utils module</a><ul>
+<li><a class="reference internal" href="#chatbot.data.utils.expand_contractions"><code class="docutils literal notranslate"><span class="pre">expand_contractions()</span></code></a></li>
+<li><a class="reference internal" href="#chatbot.data.utils.load_pairs"><code class="docutils literal notranslate"><span class="pre">load_pairs()</span></code></a></li>
+<li><a class="reference internal" href="#chatbot.data.utils.load_txt_file"><code class="docutils literal notranslate"><span class="pre">load_txt_file()</span></code></a></li>
+<li><a class="reference internal" href="#chatbot.data.utils.load_yaml_file"><code class="docutils literal notranslate"><span class="pre">load_yaml_file()</span></code></a></li>
+<li><a class="reference internal" href="#chatbot.data.utils.normalize_text"><code class="docutils literal notranslate"><span class="pre">normalize_text()</span></code></a></li>
+<li><a class="reference internal" href="#chatbot.data.utils.save_pairs"><code class="docutils literal notranslate"><span class="pre">save_pairs()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-chatbot.data.vectorizer">chatbot.data.vectorizer module</a><ul>
+<li><a class="reference internal" href="#chatbot.data.vectorizer.SequenceVectorizer"><code class="docutils literal notranslate"><span class="pre">SequenceVectorizer</span></code></a><ul>
+<li><a class="reference internal" href="#chatbot.data.vectorizer.SequenceVectorizer.from_serializable"><code class="docutils literal notranslate"><span class="pre">SequenceVectorizer.from_serializable()</span></code></a></li>
+<li><a class="reference internal" href="#chatbot.data.vectorizer.SequenceVectorizer.vectorize"><code class="docutils literal notranslate"><span class="pre">SequenceVectorizer.vectorize()</span></code></a></li>
+<li><a class="reference internal" href="#chatbot.data.vectorizer.SequenceVectorizer.vectorize_single"><code class="docutils literal notranslate"><span class="pre">SequenceVectorizer.vectorize_single()</span></code></a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-chatbot.data.vocabulary">chatbot.data.vocabulary module</a><ul>
+<li><a class="reference internal" href="#chatbot.data.vocabulary.SequenceVocabulary"><code class="docutils literal notranslate"><span class="pre">SequenceVocabulary</span></code></a><ul>
+<li><a class="reference internal" href="#chatbot.data.vocabulary.SequenceVocabulary.token_to_idx"><code class="docutils literal notranslate"><span class="pre">SequenceVocabulary.token_to_idx</span></code></a></li>
+<li><a class="reference internal" href="#chatbot.data.vocabulary.SequenceVocabulary._unk_token"><code class="docutils literal notranslate"><span class="pre">SequenceVocabulary._unk_token</span></code></a></li>
+<li><a class="reference internal" href="#chatbot.data.vocabulary.SequenceVocabulary._mask_token"><code class="docutils literal notranslate"><span class="pre">SequenceVocabulary._mask_token</span></code></a></li>
+<li><a class="reference internal" href="#chatbot.data.vocabulary.SequenceVocabulary._begin_seq_token"><code class="docutils literal notranslate"><span class="pre">SequenceVocabulary._begin_seq_token</span></code></a></li>
+<li><a class="reference internal" href="#chatbot.data.vocabulary.SequenceVocabulary._end_seq_token"><code class="docutils literal notranslate"><span class="pre">SequenceVocabulary._end_seq_token</span></code></a></li>
+<li><a class="reference internal" href="#chatbot.data.vocabulary.SequenceVocabulary.unk_index"><code class="docutils literal notranslate"><span class="pre">SequenceVocabulary.unk_index</span></code></a></li>
+<li><a class="reference internal" href="#chatbot.data.vocabulary.SequenceVocabulary.mask_index"><code class="docutils literal notranslate"><span class="pre">SequenceVocabulary.mask_index</span></code></a></li>
+<li><a class="reference internal" href="#chatbot.data.vocabulary.SequenceVocabulary.start_seq_index"><code class="docutils literal notranslate"><span class="pre">SequenceVocabulary.start_seq_index</span></code></a></li>
+<li><a class="reference internal" href="#chatbot.data.vocabulary.SequenceVocabulary.end_seq_index"><code class="docutils literal notranslate"><span class="pre">SequenceVocabulary.end_seq_index</span></code></a></li>
+<li><a class="reference internal" href="#chatbot.data.vocabulary.SequenceVocabulary.indices_to_tokens"><code class="docutils literal notranslate"><span class="pre">SequenceVocabulary.indices_to_tokens()</span></code></a></li>
+<li><a class="reference internal" href="#chatbot.data.vocabulary.SequenceVocabulary.lookup_token"><code class="docutils literal notranslate"><span class="pre">SequenceVocabulary.lookup_token()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#chatbot.data.vocabulary.Vocabulary"><code class="docutils literal notranslate"><span class="pre">Vocabulary</span></code></a><ul>
+<li><a class="reference internal" href="#chatbot.data.vocabulary.Vocabulary.token_to_idx"><code class="docutils literal notranslate"><span class="pre">Vocabulary.token_to_idx</span></code></a></li>
+<li><a class="reference internal" href="#chatbot.data.vocabulary.Vocabulary.add_many"><code class="docutils literal notranslate"><span class="pre">Vocabulary.add_many()</span></code></a></li>
+<li><a class="reference internal" href="#chatbot.data.vocabulary.Vocabulary.add_token"><code class="docutils literal notranslate"><span class="pre">Vocabulary.add_token()</span></code></a></li>
+<li><a class="reference internal" href="#chatbot.data.vocabulary.Vocabulary.lookup_index"><code class="docutils literal notranslate"><span class="pre">Vocabulary.lookup_index()</span></code></a></li>
+<li><a class="reference internal" href="#chatbot.data.vocabulary.Vocabulary.lookup_token"><code class="docutils literal notranslate"><span class="pre">Vocabulary.lookup_token()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#chatbot.data.vocabulary.build_vocabulary"><code class="docutils literal notranslate"><span class="pre">build_vocabulary()</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#module-chatbot.data">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</div>
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">chatbot</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">chatbot.data package</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/chatbot.data.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="chatbot-data-package">
+<h1>chatbot.data package<a class="headerlink" href="#chatbot-data-package" title="Link to this heading"></a></h1>
+<section id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Link to this heading"></a></h2>
+</section>
+<section id="module-chatbot.data.datasets">
+<span id="chatbot-data-datasets-module"></span><h2>chatbot.data.datasets module<a class="headerlink" href="#module-chatbot.data.datasets" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="chatbot.data.datasets.CornellDialogsDataset">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">chatbot.data.datasets.</span></span><span class="sig-name descname"><span class="pre">CornellDialogsDataset</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pairs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">vectorizer</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#chatbot.data.vectorizer.SequenceVectorizer" title="chatbot.data.vectorizer.SequenceVectorizer"><span class="pre">SequenceVectorizer</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#chatbot.data.datasets.CornellDialogsDataset" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">Dataset</span></code></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="chatbot.data.datasets.CornellDialogsDataset.get_num_batches">
+<span class="sig-name descname"><span class="pre">get_num_batches</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">batch_size</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#chatbot.data.datasets.CornellDialogsDataset.get_num_batches" title="Link to this definition"></a></dt>
+<dd><p>Given a batch size, returns the number of batches
+in the dataset.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>batch_size</strong> (<em>int</em>) – The batch size.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The number of batches in the dataset.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="chatbot.data.datasets.CornellDialogsDataset.get_vectorizer">
+<span class="sig-name descname"><span class="pre">get_vectorizer</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#chatbot.data.vectorizer.SequenceVectorizer" title="chatbot.data.vectorizer.SequenceVectorizer"><span class="pre">SequenceVectorizer</span></a></span></span><a class="headerlink" href="#chatbot.data.datasets.CornellDialogsDataset.get_vectorizer" title="Link to this definition"></a></dt>
+<dd><p>Returns the vectorizer.</p>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-chatbot.data.download">
+<span id="chatbot-data-download-module"></span><h2>chatbot.data.download module<a class="headerlink" href="#module-chatbot.data.download" title="Link to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="chatbot.data.download.download_data">
+<span class="sig-prename descclassname"><span class="pre">chatbot.data.download.</span></span><span class="sig-name descname"><span class="pre">download_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">url</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#chatbot.data.download.download_data" title="Link to this definition"></a></dt>
+<dd><p>Retrieves data from a source url and saves
+them to a local destination path.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>url</strong> (<em>str</em>) – The url to download the data from.</p></li>
+<li><p><strong>path</strong> (<em>str</em>) – The local destination path to save
+the data.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="chatbot.data.download.get_cornell_dialogs">
+<span class="sig-prename descclassname"><span class="pre">chatbot.data.download.</span></span><span class="sig-name descname"><span class="pre">get_cornell_dialogs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">directory</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#chatbot.data.download.get_cornell_dialogs" title="Link to this definition"></a></dt>
+<dd><p>Downloads, and unzips the cornell-dialogs
+data.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>directory</strong> (<em>str</em>) – Local directory to store
+the raw data.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="chatbot.data.download.get_data">
+<span class="sig-prename descclassname"><span class="pre">chatbot.data.download.</span></span><span class="sig-name descname"><span class="pre">get_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">directory</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#chatbot.data.download.get_data" title="Link to this definition"></a></dt>
+<dd><p>Downloads one of the available datasets.</p>
+<dl class="simple">
+<dt>Available datasets:</dt><dd><ul class="simple">
+<li><p><cite>cornel_dialogs</cite></p></li>
+</ul>
+</dd>
+</dl>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>str</em>) – Choose one of the available
+datasets.</p></li>
+<li><p><strong>directory</strong> (<em>str</em>) – A local directory path
+to save the data.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="chatbot.data.download.unzip_data">
+<span class="sig-prename descclassname"><span class="pre">chatbot.data.download.</span></span><span class="sig-name descname"><span class="pre">unzip_data</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">compressed_file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">destination_dir</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#chatbot.data.download.unzip_data" title="Link to this definition"></a></dt>
+<dd><p>Extracts the content of a compressed (<cite>.zip</cite>) file
+to a local directory and removes the compressed file afterward.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>If the destination directory and/or its subdirectories
+do not exist, they will be created.</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>compressed_file</strong> (<em>str</em>) – The path to the compressed file.</p></li>
+<li><p><strong>destination_dir</strong> (<em>str</em>) – Local directory path to extract the
+content of the compressed file.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>FileNotFoundError</strong> – If the compressed file does not exist.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-chatbot.data.parsers">
+<span id="chatbot-data-parsers-module"></span><h2>chatbot.data.parsers module<a class="headerlink" href="#module-chatbot.data.parsers" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="chatbot.data.parsers.CornellDialogsParser">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">chatbot.data.parsers.</span></span><span class="sig-name descname"><span class="pre">CornellDialogsParser</span></span><a class="headerlink" href="#chatbot.data.parsers.CornellDialogsParser" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Extracts the query-response sequence pairs from the
+cornell-dialogs movie corpus.</p>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">chatbot.data.parsers</span> <span class="kn">import</span> <span class="n">CornellDialogsParser</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">conversations</span> <span class="o">=</span> <span class="n">CornellDialogsParser</span><span class="o">.</span><span class="n">parse_conversations</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">filepath</span><span class="o">=</span><span class="s2">&quot;path-to-utterances.jsonl&quot;</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pairs</span> <span class="o">=</span> <span class="n">CornellDialogsParser</span><span class="o">.</span><span class="n">extract_sequence_pairs</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">conversations</span><span class="o">=</span><span class="n">conversations</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pairs</span>
+<span class="go">[[&#39;They do to!&#39;, &#39;They do not!&#39;],</span>
+<span class="go"> [&#39;She okay?&#39;, &#39;I hope so.&#39;],</span>
+<span class="go"> [&#39;Wow&#39;, &quot;Let&#39;s go.&quot;],</span>
+<span class="go"> [&#39;No&#39;, &quot;Okay -- you&#39;re gonna need to learn how to lie.&quot;],</span>
+<span class="go"> [&#39;What good stuff?&#39;, &#39;The &quot;real you&quot;.&#39;],</span>
+<span class="go"> [&#39;The &quot;real you&quot;.&#39;, &#39;Like my fear of wearing pastels?&#39;],</span>
+<span class="go"> [&#39;do you listen to this crap?&#39;, &#39;What crap?&#39;],</span>
+<span class="go"> ...</span>
+<span class="go">]</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="chatbot.data.parsers.CornellDialogsParser.extract_sequence_pairs">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">extract_sequence_pairs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">conversations</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#chatbot.data.parsers.CornellDialogsParser.extract_sequence_pairs" title="Link to this definition"></a></dt>
+<dd><p>Extracts pairs of query-response sequences from the
+conversations dictionary.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>conversations</strong> (<em>Dict</em><em>[</em><em>str</em><em>, </em><em>Any</em><em>]</em>) – The conversations’
+dictionary.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>All the query-answer sequence pairs.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List[List[str]]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="chatbot.data.parsers.CornellDialogsParser.parse_conversations">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">parse_conversations</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filepath</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#chatbot.data.parsers.CornellDialogsParser.parse_conversations" title="Link to this definition"></a></dt>
+<dd><p>Extracts the cornell movie dialog conversations from
+a json file.</p>
+<p>Each conversation consists of multiple lines (sequences).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>filepath</strong> (<em>str</em>) – The path to the target file.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The cornell movie dialog conversations.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Dict[str, Any]</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-chatbot.data.processing">
+<span id="chatbot-data-processing-module"></span><h2>chatbot.data.processing module<a class="headerlink" href="#module-chatbot.data.processing" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="chatbot.data.processing.Seq2SeqProcessor">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">chatbot.data.processing.</span></span><span class="sig-name descname"><span class="pre">Seq2SeqProcessor</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pairs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tokenizer</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#chatbot.data.processing.Seq2SeqProcessor" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Basic processing for a corpus consisting of pairs of
+text sequences.</p>
+<p>Implements three processing steps:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>- Normalizes the text sequences
+- Filters the corpus based on the minimum and maximum
+number of allowed tokens in a text sequence
+- Filters the corpus based on the minimum token count
+threshold
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>pairs</strong> (<em>List</em><em>[</em><em>List</em><em>[</em><em>str</em><em>]</em><em>]</em>) – The query and response sequence
+pairs.</p></li>
+<li><p><strong>tokenizer</strong> (<em>Callable</em><em>[</em><em>[</em><em>str</em><em>]</em><em>, </em><em>List</em><em>[</em><em>str</em><em>]</em><em>]</em>) – A callable function
+responsible for tokenizing the text sequences.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="chatbot.data.processing.Seq2SeqProcessor.pairs">
+<span class="sig-name descname"><span class="pre">pairs</span></span><a class="headerlink" href="#chatbot.data.processing.Seq2SeqProcessor.pairs" title="Link to this definition"></a></dt>
+<dd><p>The query and response sequence
+pairs.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List[List[str]]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="chatbot.data.processing.Seq2SeqProcessor._tokenizer">
+<span class="sig-name descname"><span class="pre">_tokenizer</span></span><a class="headerlink" href="#chatbot.data.processing.Seq2SeqProcessor._tokenizer" title="Link to this definition"></a></dt>
+<dd><p>A callable function
+responsible for tokenizing the text sequences.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Callable[[str], List[str]]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">chatbot.data.processing</span> <span class="kn">import</span> <span class="n">Seq2SeqProcessor</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">chatbot.data.tokenizers</span> <span class="kn">import</span> <span class="n">get_tokenizer</span>
+<span class="gp">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tokenizer</span> <span class="o">=</span> <span class="n">get_tokenizer</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">processor</span> <span class="o">=</span> <span class="n">Seq2SeqProcessor</span><span class="o">.</span><span class="n">from_txt_file</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">file</span><span class="o">=</span><span class="s2">&quot;path-to-parsed-conversations-txt-file&quot;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">tokenizer</span><span class="o">=</span><span class="n">tokenizer</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">filtered_pairs</span> <span class="o">=</span> <span class="n">processor</span><span class="o">.</span><span class="n">filter_pairs_by_length</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">pairs</span><span class="o">=</span><span class="n">processor</span><span class="o">.</span><span class="n">pairs</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">min_length</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">max_length</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>
+<span class="gp">... </span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">filtered_pairs</span> <span class="o">=</span> <span class="n">processor</span><span class="o">.</span><span class="n">filter_pairs_by_token_count</span><span class="p">(</span>
+<span class="gp">... </span>    <span class="n">pairs</span><span class="o">=</span><span class="n">filtered_pairs</span><span class="p">,</span> <span class="n">min_count</span><span class="o">=</span><span class="mi">3</span>
+<span class="gp">... </span><span class="p">)</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="chatbot.data.processing.Seq2SeqProcessor.filter_pairs_by_length">
+<span class="sig-name descname"><span class="pre">filter_pairs_by_length</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pairs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_length</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_length</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#chatbot.data.processing.Seq2SeqProcessor.filter_pairs_by_length" title="Link to this definition"></a></dt>
+<dd><p>Removing pairs whose sequences (either of them) have length greater
+than or equal to the specified maximum threshold..</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The sequence length is essentially the length of the
+list of tokens obtained by tokenizing the input sequence.</p>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>pairs</strong> (<em>List</em><em>[</em><em>List</em><em>[</em><em>str</em><em>]</em><em>]</em>) – The query and response
+sequence pairs.</p></li>
+<li><p><strong>min_length</strong> (<em>int</em>) – Minimum number of tokens allowed in each
+of the pair of sequences.</p></li>
+<li><p><strong>max_length</strong> (<em>int</em>) – Maximum number of tokens allowed in each
+of the pair of sequences.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The filtered pairs.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List[List[str]]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="chatbot.data.processing.Seq2SeqProcessor.filter_pairs_by_token_count">
+<span class="sig-name descname"><span class="pre">filter_pairs_by_token_count</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pairs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">min_count</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#chatbot.data.processing.Seq2SeqProcessor.filter_pairs_by_token_count" title="Link to this definition"></a></dt>
+<dd><p>Removes pairs whose sequences (either of them) include tokens with
+count value less than or equal to the specified minimum threshold.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>pairs</strong> (<em>List</em><em>[</em><em>List</em><em>[</em><em>str</em><em>]</em><em>]</em>) – The query and response
+sequence pairs.</p></li>
+<li><p><strong>min_count</strong> (<em>int</em>) – Minimum token count threshold.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The filtered pairs.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List[List[str]]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="chatbot.data.processing.Seq2SeqProcessor.from_txt_file">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_txt_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">file</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tokenizer</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delimiter</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'\t'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#chatbot.data.processing.Seq2SeqProcessor" title="chatbot.data.processing.Seq2SeqProcessor"><span class="pre">Seq2SeqProcessor</span></a></span></span><a class="headerlink" href="#chatbot.data.processing.Seq2SeqProcessor.from_txt_file" title="Link to this definition"></a></dt>
+<dd><p>Initializes the <cite>Seq2SeqProcessor</cite> from a <cite>txt</cite> file.</p>
+<p>Normalizes each pair of sequences before initialization.
+Refer to the <code class="xref py py-func docutils literal notranslate"><span class="pre">chatbot.utils.normalize_text()</span></code> function
+for what the normalization includes.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>file</strong> (<em>str</em>) – The path to the <cite>txt</cite> file.</p></li>
+<li><p><strong>tokenizer</strong> (<em>Callable</em><em>[</em><em>[</em><em>str</em><em>]</em><em>, </em><em>List</em><em>[</em><em>str</em><em>]</em><em>]</em>) – A callable function
+responsible for tokenizing the text sequences.</p></li>
+<li><p><strong>delimiter</strong> (<em>str</em><em>, </em><em>optional</em>) – The string to separate the query
+sequence from the response sequence. Defaults to <code class="docutils literal notranslate"><span class="pre">'</span>&#160;&#160;&#160; <span class="pre">'</span></code>.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-chatbot.data.tokenizers">
+<span id="chatbot-data-tokenizers-module"></span><h2>chatbot.data.tokenizers module<a class="headerlink" href="#module-chatbot.data.tokenizers" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="chatbot.data.tokenizers.TokenizersFactory">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">chatbot.data.tokenizers.</span></span><span class="sig-name descname"><span class="pre">TokenizersFactory</span></span><a class="headerlink" href="#chatbot.data.tokenizers.TokenizersFactory" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Responsible for registering and creating different
+text tokenizers.</p>
+<p>Each tokenizer should be a callable function that takes
+as input a string and returns a list of strings.</p>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="chatbot.data.tokenizers.TokenizersFactory._tokenizers">
+<span class="sig-name descname"><span class="pre">_tokenizers</span></span><a class="headerlink" href="#chatbot.data.tokenizers.TokenizersFactory._tokenizers" title="Link to this definition"></a></dt>
+<dd><p>A dictionary to store registered tokenizers.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Dict[str, Callable[[str], List[str]]]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="chatbot.data.tokenizers.TokenizersFactory.add_tokenizer">
+<span class="sig-name descname"><span class="pre">add_tokenizer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tokenizer</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#chatbot.data.tokenizers.TokenizersFactory.add_tokenizer" title="Link to this definition"></a></dt>
+<dd><p>Registers a new tokenizer to the factory.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>name</strong> (<em>str</em>) – The name of the tokenizer.</p></li>
+<li><p><strong>tokenizer</strong> (<em>Callable</em><em>[</em><em>[</em><em>str</em><em>]</em><em>, </em><em>List</em><em>[</em><em>str</em><em>]</em><em>]</em>) – The tokenizer
+method.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="chatbot.data.tokenizers.TokenizersFactory.get_tokenizer">
+<span class="sig-name descname"><span class="pre">get_tokenizer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#chatbot.data.tokenizers.TokenizersFactory.get_tokenizer" title="Link to this definition"></a></dt>
+<dd><p>Returns the selected tokenizer by name.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>name</strong> (<em>str</em>) – The name of the tokenizer to get.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The tokenizer.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Callable[[str], List[str]]</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="chatbot.data.tokenizers.get_tokenizer">
+<span class="sig-prename descclassname"><span class="pre">chatbot.data.tokenizers.</span></span><span class="sig-name descname"><span class="pre">get_tokenizer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tokenizer</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#chatbot.data.tokenizers.get_tokenizer" title="Link to this definition"></a></dt>
+<dd><p>Returns a tokenizer function for tokenizing
+a string sequence.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>tokenizer</strong> (<em>str</em><em>, </em><em>optional</em>) – Name of tokenizer
+function. If <code class="docutils literal notranslate"><span class="pre">None</span></code> returns a <code class="docutils literal notranslate"><span class="pre">split()</span></code>
+function, which splits the string sequence
+by whitespace.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The tokenizer function.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Callable[[str], List[str]]</p>
+</dd>
+</dl>
+<p class="rubric">Example</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">split_tokenizer</span> <span class="o">=</span> <span class="n">get_tokenizer</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tokens</span> <span class="o">=</span> <span class="n">split_tokenizer</span><span class="p">(</span><span class="s2">&quot;A chatbot implementation with PyTorch.&quot;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">tokens</span>
+<span class="go">[&#39;A&#39;, &#39;chatbot&#39;, &#39;implementation&#39;, &#39;with&#39;, &#39;PyTorch.&#39;]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</section>
+<section id="module-chatbot.data.utils">
+<span id="chatbot-data-utils-module"></span><h2>chatbot.data.utils module<a class="headerlink" href="#module-chatbot.data.utils" title="Link to this heading"></a></h2>
+<dl class="py function">
+<dt class="sig sig-object py" id="chatbot.data.utils.expand_contractions">
+<span class="sig-prename descclassname"><span class="pre">chatbot.data.utils.</span></span><span class="sig-name descname"><span class="pre">expand_contractions</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#chatbot.data.utils.expand_contractions" title="Link to this definition"></a></dt>
+<dd><p>Remove contractions from the input text.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>text</strong> (<em>str</em>) – Input text.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Text without contractions.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="chatbot.data.utils.load_pairs">
+<span class="sig-prename descclassname"><span class="pre">chatbot.data.utils.</span></span><span class="sig-name descname"><span class="pre">load_pairs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filepath</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delimiter</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'\t'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#chatbot.data.utils.load_pairs" title="Link to this definition"></a></dt>
+<dd><p>Creates a list of lists where each sublist contains
+a query and response sequence pair.</p>
+<p>The pairs are loaded from a <cite>txt</cite> file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>filepath</strong> (<em>str</em>) – The path to the <cite>txt</cite> file.</p></li>
+<li><p><strong>delimiter</strong> (<em>str</em><em>, </em><em>optional</em>) – The string that  separates
+the query sequence from the  response sequence.
+Defaults to <code class="docutils literal notranslate"><span class="pre">'</span>&#160;&#160;&#160;&#160; <span class="pre">'</span></code>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The query and response sequence pairs.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List[List[str]]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="chatbot.data.utils.load_txt_file">
+<span class="sig-prename descclassname"><span class="pre">chatbot.data.utils.</span></span><span class="sig-name descname"><span class="pre">load_txt_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filepath</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#chatbot.data.utils.load_txt_file" title="Link to this definition"></a></dt>
+<dd><p>Creates a list containing the lines
+of a <cite>txt</cite> file.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>filepath</strong> (<em>str</em>) – The path to the <cite>txt</cite> file.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The content of the <cite>txt</cite> file.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List[str]</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>FileNotFoundError</strong> – If the file is not found.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="chatbot.data.utils.load_yaml_file">
+<span class="sig-prename descclassname"><span class="pre">chatbot.data.utils.</span></span><span class="sig-name descname"><span class="pre">load_yaml_file</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">filepath</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Any</span></span></span><a class="headerlink" href="#chatbot.data.utils.load_yaml_file" title="Link to this definition"></a></dt>
+<dd><p>Loads a <cite>yaml</cite> configuration file into a dictionary.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>filepath</strong> (<em>str</em>) – The path to the <cite>yaml</cite> file.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The configuration parameters.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Any</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>FileNotFoundError</strong> – If the file is not found.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="chatbot.data.utils.normalize_text">
+<span class="sig-prename descclassname"><span class="pre">chatbot.data.utils.</span></span><span class="sig-name descname"><span class="pre">normalize_text</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">text</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#chatbot.data.utils.normalize_text" title="Link to this definition"></a></dt>
+<dd><p>Basic normalization for the provided text.</p>
+<p>Normalization includes:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>- Lowercasing
+- Conversion of a unicode string to plain `ASCII`
+- Expanding contractions, .e.g, `&#39;I&#39;m&#39;` -&gt; `&#39;I am&#39;`
+- Trimming all non-letter characters except for basic
+punctuation
+- Replacing consecutive punctuation with a single
+punctuation, e.g., `&#39;???&#39;` -&gt; `&#39;?&#39;`
+- Adding whitespace around punctuation symbols
+- Replace multiple spaces with single space
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>text</strong> (<em>str</em>) – Input text for normalizing.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The normalized text.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="chatbot.data.utils.save_pairs">
+<span class="sig-prename descclassname"><span class="pre">chatbot.data.utils.</span></span><span class="sig-name descname"><span class="pre">save_pairs</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pairs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">path</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delimiter</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'\t'</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#chatbot.data.utils.save_pairs" title="Link to this definition"></a></dt>
+<dd><p>Writes the query and response sequence pairs in a <cite>txt</cite> file.</p>
+<p>Each line of the file contains a tab-separated query and response
+sequence pair.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>pairs</strong> (<em>List</em><em>[</em><em>List</em><em>[</em><em>str</em><em>]</em><em>]</em>) – The query and response sequence
+pairs.</p></li>
+<li><p><strong>path</strong> (<em>str</em>) – Path to write the <cite>txt</cite> file.</p></li>
+<li><p><strong>delimiter</strong> (<em>str</em><em>, </em><em>optional</em>) – The string to separate the query
+sequence from the response sequence. Defaults to <code class="docutils literal notranslate"><span class="pre">'</span>&#160;&#160;&#160;&#160;&#160;&#160;&#160; <span class="pre">'</span></code>.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-chatbot.data.vectorizer">
+<span id="chatbot-data-vectorizer-module"></span><h2>chatbot.data.vectorizer module<a class="headerlink" href="#module-chatbot.data.vectorizer" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="chatbot.data.vectorizer.SequenceVectorizer">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">chatbot.data.vectorizer.</span></span><span class="sig-name descname"><span class="pre">SequenceVectorizer</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">vocab</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#chatbot.data.vocabulary.SequenceVocabulary" title="chatbot.data.vocabulary.SequenceVocabulary"><span class="pre">SequenceVocabulary</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">tokenizer</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_query_length</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_response_length</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#chatbot.data.vectorizer.SequenceVectorizer" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Responsible for implementing token-level based vectorization
+of the provided query and response sequences.</p>
+<p>The tokens can be either words or punctuations.</p>
+<p>Each token in the input sequence is substituted with its
+corresponding index from the dataset’s vocabulary.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>vocab</strong> (<a class="reference internal" href="#chatbot.data.vocabulary.SequenceVocabulary" title="chatbot.data.vocabulary.SequenceVocabulary"><em>SequenceVocabulary</em></a>) – Vocabulary object constructed
+from dataset’s collection of tokens.</p></li>
+<li><p><strong>tokenizer</strong> (<em>Callable</em><em>[</em><em>[</em><em>str</em><em>]</em><em>, </em><em>List</em><em>[</em><em>str</em><em>]</em><em>]</em>) – Tokenizer for
+splitting the input sequence into tokens.</p></li>
+<li><p><strong>max_query_length</strong> (<em>int</em>) – The length of the longest query
+sequence in the training dataset.</p></li>
+<li><p><strong>max_response_length</strong> (<em>int</em>) – The length of the longest
+response sequence in the training dataset.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="chatbot.data.vectorizer.SequenceVectorizer.from_serializable">
+<em class="property"><span class="pre">classmethod</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">from_serializable</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">contents</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Any</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><a class="reference internal" href="#chatbot.data.vectorizer.SequenceVectorizer" title="chatbot.data.vectorizer.SequenceVectorizer"><span class="pre">SequenceVectorizer</span></a></span></span><a class="headerlink" href="#chatbot.data.vectorizer.SequenceVectorizer.from_serializable" title="Link to this definition"></a></dt>
+<dd><p>Initializes the vectorizer from a serializable
+dictionary containing the vocabulary, tokenizer and
+the maximum query and response lengths.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="chatbot.data.vectorizer.SequenceVectorizer.vectorize">
+<span class="sig-name descname"><span class="pre">vectorize</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">query_seq</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">response_seq</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_dataset_max_length</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">Tensor</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#chatbot.data.vectorizer.SequenceVectorizer.vectorize" title="Link to this definition"></a></dt>
+<dd><p>Converts the provided query and response sequences to
+zero-padded 1-D tensors.</p>
+<p>The query and response sequences are padded with zeros to
+match the maximum length and they are appended with the
+<cite>&lt;EOS&gt;</cite> token index.</p>
+<p># TODO -&gt; not sure if the <cite>&lt;SOS&gt;</cite> token should be prepended
+# to the response sequence before training.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>query_seq</strong> (<em>str</em>) – The query sequence.</p></li>
+<li><p><strong>response_seq</strong> (<em>str</em>) – The response sequence.</p></li>
+<li><p><strong>use_dataset_max_length</strong> (<em>bool</em><em>, </em><em>optional</em>) – If <code class="docutils literal notranslate"><span class="pre">True</span></code> the
+<code class="xref py py-attr docutils literal notranslate"><span class="pre">query_max_length</span></code> and <code class="xref py py-attr docutils literal notranslate"><span class="pre">response_max_length</span></code>
+are used as the maximum sequence lengths. Otherwise, the
+maximum lengths are equal to the number of tokens in the
+provided query and response sequences. Defaults to
+<code class="docutils literal notranslate"><span class="pre">True</span></code>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>The vectorized query and</dt><dd><p>response sequences and their lengths.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Dict[str, torch.Tensor | int]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="chatbot.data.vectorizer.SequenceVectorizer.vectorize_single">
+<span class="sig-name descname"><span class="pre">vectorize_single</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">query_seq</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_dataset_max_length</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">Tensor</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#chatbot.data.vectorizer.SequenceVectorizer.vectorize_single" title="Link to this definition"></a></dt>
+<dd><p>Converts the input query sequence to a zero-padded 1-D tensor.</p>
+<p>The 1-D tensor is appended with the <cite>&lt;EOS&gt;</cite> token index.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>query_seq</strong> (<em>str</em>) – The input sequence.</p></li>
+<li><p><strong>use_dataset_max_length</strong> (<em>bool</em><em>, </em><em>optional</em>) – If <code class="docutils literal notranslate"><span class="pre">True</span></code> the
+<code class="xref py py-attr docutils literal notranslate"><span class="pre">query_max_length</span></code> is used as the maximum sequence
+length. Otherwise, the maximum length is equal to the
+number of tokens in the provided sequence. Defaults to
+<code class="docutils literal notranslate"><span class="pre">True</span></code>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>The vectorized input sequence and</dt><dd><p>the length of it.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Tuple[torch.Tensor, int]</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="module-chatbot.data.vocabulary">
+<span id="chatbot-data-vocabulary-module"></span><h2>chatbot.data.vocabulary module<a class="headerlink" href="#module-chatbot.data.vocabulary" title="Link to this heading"></a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="chatbot.data.vocabulary.SequenceVocabulary">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">chatbot.data.vocabulary.</span></span><span class="sig-name descname"><span class="pre">SequenceVocabulary</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">token_to_idx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">unk_token</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'&lt;UNK&gt;'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mask_token</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'&lt;MASK&gt;'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">begin_seq_token</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'&lt;SOS&gt;'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">end_seq_token</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'&lt;EOS&gt;'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#chatbot.data.vocabulary.SequenceVocabulary" title="Link to this definition"></a></dt>
+<dd><p>Bases: <a class="reference internal" href="#chatbot.data.vocabulary.Vocabulary" title="chatbot.data.vocabulary.Vocabulary"><code class="xref py py-class docutils literal notranslate"><span class="pre">Vocabulary</span></code></a></p>
+<p>Bundles four special tokens used for sequence data.</p>
+<p>The special tokens are: the <cite>UNK</cite> token, the <cite>MASK</cite> token,
+the <cite>START-OF-SEQUENCE</cite> token, and the <cite>END-OF-SEQUENCE</cite>
+token where:</p>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>* `UNK`: The unknown token used for unseen out-of-vocabulary
+input tokens
+* `MASK`: Enables handling variable-length inputs
+* `START-OF-SEQUENCE`: Start of sequence boundary
+* `END-OF-SEQUENCE`: End of sequence boundary
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>token_to_idx</strong> (<em>Dict</em><em>[</em><em>str</em><em>, </em><em>int</em><em>]</em><em>, </em><em>optional</em>) – A pre-existing map of tokens to indices. Defaults
+to <cite>None</cite>.</p></li>
+<li><p><strong>mask_token</strong> (<em>str</em><em>, </em><em>optional</em>) – The representation of the
+<cite>MASK</cite> token. Defaults to <cite>&lt;MASK&gt;</cite>.</p></li>
+<li><p><strong>unk_token</strong> (<em>str</em><em>, </em><em>optional</em>) – The representation of the
+<cite>UNK</cite> token. Defaults to <cite>&lt;UNK&gt;</cite>.</p></li>
+<li><p><strong>begin_seq_token</strong> (<em>str</em><em>, </em><em>optional</em>) – The representation of
+the <cite>START-OF-SEQUENCE</cite> token. Defaults to <cite>&lt;SOS&gt;</cite>.</p></li>
+<li><p><strong>end_seq_token</strong> (<em>str</em><em>, </em><em>optional</em>) – The representation of
+the <cite>END-OF-SEQUENCE</cite> token. Defaults to <cite>&lt;EOS&gt;</cite>.</p></li>
+</ul>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="chatbot.data.vocabulary.SequenceVocabulary.token_to_idx">
+<span class="sig-name descname"><span class="pre">token_to_idx</span></span><a class="headerlink" href="#chatbot.data.vocabulary.SequenceVocabulary.token_to_idx" title="Link to this definition"></a></dt>
+<dd><p>A dictionary mapping tokens to indices.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Dict[str, int]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">idx_to_token</span> <span class="pre">(Dict[int,</span> <span class="pre">str]</span></span></dt>
+<dd><p>A dictionary mapping indices to tokens.</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="chatbot.data.vocabulary.SequenceVocabulary._unk_token">
+<span class="sig-name descname"><span class="pre">_unk_token</span></span><a class="headerlink" href="#chatbot.data.vocabulary.SequenceVocabulary._unk_token" title="Link to this definition"></a></dt>
+<dd><p>The representation of the <cite>UNK</cite> token.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="chatbot.data.vocabulary.SequenceVocabulary._mask_token">
+<span class="sig-name descname"><span class="pre">_mask_token</span></span><a class="headerlink" href="#chatbot.data.vocabulary.SequenceVocabulary._mask_token" title="Link to this definition"></a></dt>
+<dd><p>The representation of the <cite>MASK</cite> token.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="chatbot.data.vocabulary.SequenceVocabulary._begin_seq_token">
+<span class="sig-name descname"><span class="pre">_begin_seq_token</span></span><a class="headerlink" href="#chatbot.data.vocabulary.SequenceVocabulary._begin_seq_token" title="Link to this definition"></a></dt>
+<dd><p>The representation of the
+<cite>START-OF-SEQUENCE</cite> token.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="chatbot.data.vocabulary.SequenceVocabulary._end_seq_token">
+<span class="sig-name descname"><span class="pre">_end_seq_token</span></span><a class="headerlink" href="#chatbot.data.vocabulary.SequenceVocabulary._end_seq_token" title="Link to this definition"></a></dt>
+<dd><p>The representation of the
+<cite>END-OF-SEQUENCE</cite> token.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str, optional</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="chatbot.data.vocabulary.SequenceVocabulary.unk_index">
+<span class="sig-name descname"><span class="pre">unk_index</span></span><a class="headerlink" href="#chatbot.data.vocabulary.SequenceVocabulary.unk_index" title="Link to this definition"></a></dt>
+<dd><p>Index associated with the <cite>UNK</cite> token.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="chatbot.data.vocabulary.SequenceVocabulary.mask_index">
+<span class="sig-name descname"><span class="pre">mask_index</span></span><a class="headerlink" href="#chatbot.data.vocabulary.SequenceVocabulary.mask_index" title="Link to this definition"></a></dt>
+<dd><p>Index associated with the <cite>MASK</cite> token.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="chatbot.data.vocabulary.SequenceVocabulary.start_seq_index">
+<span class="sig-name descname"><span class="pre">start_seq_index</span></span><a class="headerlink" href="#chatbot.data.vocabulary.SequenceVocabulary.start_seq_index" title="Link to this definition"></a></dt>
+<dd><p>Index associated with the
+<cite>START-OF-SEQUENCE</cite> token.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="chatbot.data.vocabulary.SequenceVocabulary.end_seq_index">
+<span class="sig-name descname"><span class="pre">end_seq_index</span></span><a class="headerlink" href="#chatbot.data.vocabulary.SequenceVocabulary.end_seq_index" title="Link to this definition"></a></dt>
+<dd><p>Index associated with the
+<cite>END-OF-SEQUENCE</cite> token.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="chatbot.data.vocabulary.SequenceVocabulary.indices_to_tokens">
+<span class="sig-name descname"><span class="pre">indices_to_tokens</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">input_tensor</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tensor</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#chatbot.data.vocabulary.SequenceVocabulary.indices_to_tokens" title="Link to this definition"></a></dt>
+<dd><p>Converts a batch of sequences with token indices to
+a human-readable format.</p>
+<p>Utilizes the vocabulary to match indices to tokens.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>input_tensor</strong> (<em>torch.Tensor</em>) – tensor of shape
+<span class="math notranslate nohighlight">\((N, L)\)</span> where <span class="math notranslate nohighlight">\(N\)</span> the batch
+size and <span class="math notranslate nohighlight">\(L\)</span> the max sequence length.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>List of lists where each inner</dt><dd><p>each contains a string with the joined tokens.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List[List[str]]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="chatbot.data.vocabulary.SequenceVocabulary.lookup_token">
+<span class="sig-name descname"><span class="pre">lookup_token</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">token</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#chatbot.data.vocabulary.SequenceVocabulary.lookup_token" title="Link to this definition"></a></dt>
+<dd><p>Retrieves the index associated with the token or the <cite>UNK</cite> index if
+token isn’t found.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>token</strong> (<em>str</em>) – The token to look up.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The index corresponding to the token.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+<p class="rubric">Notes</p>
+<p><cite>unk_index</cite> needs to be &gt;=0 (having been added into
+the <cite>Vocabulary</cite>) for the <cite>UNK</cite> functionality.</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="chatbot.data.vocabulary.Vocabulary">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">chatbot.data.vocabulary.</span></span><span class="sig-name descname"><span class="pre">Vocabulary</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">token_to_idx</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">token_to_count</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Dict</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#chatbot.data.vocabulary.Vocabulary" title="Link to this definition"></a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Creates a vocabulary object which maps tokens to indices.</p>
+<p>Provides methods for adding new tokens and for searching existing
+tokens based on their indices or indices based on their tokens.
+Also keeps track of the count value of each token in the vocabulary.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>token_to_idx</strong> (<em>Dict</em><em>[</em><em>str</em><em>, </em><em>int</em><em>]</em><em>, </em><em>optional</em>) – A pre-existing mapping
+of tokens to indices. Defaults to <cite>None</cite>.</p>
+</dd>
+</dl>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="chatbot.data.vocabulary.Vocabulary.token_to_idx">
+<span class="sig-name descname"><span class="pre">token_to_idx</span></span><a class="headerlink" href="#chatbot.data.vocabulary.Vocabulary.token_to_idx" title="Link to this definition"></a></dt>
+<dd><p>A dictionary mapping tokens to indices.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Dict[str, int]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py">
+<span class="sig-name descname"><span class="pre">idx_to_token</span> <span class="pre">(Dict[int,</span> <span class="pre">str]</span></span></dt>
+<dd><p>A dictionary mapping indices to tokens.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="chatbot.data.vocabulary.Vocabulary.add_many">
+<span class="sig-name descname"><span class="pre">add_many</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">tokens</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#chatbot.data.vocabulary.Vocabulary.add_many" title="Link to this definition"></a></dt>
+<dd><p>Updates the mapping dictionaries based on a list of input tokens.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>tokens</strong> (<em>List</em><em>[</em><em>str</em><em>]</em>) – A list of string tokens.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>A list of indices corresponding</dt><dd><p>to the tokens.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>List[int]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="chatbot.data.vocabulary.Vocabulary.add_token">
+<span class="sig-name descname"><span class="pre">add_token</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">token</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#chatbot.data.vocabulary.Vocabulary.add_token" title="Link to this definition"></a></dt>
+<dd><p>Updates the mapping dictionaries based on the provided token.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>token</strong> (<em>str</em>) – The token to be added to the
+vocabulary.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The index corresponding to the token.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="chatbot.data.vocabulary.Vocabulary.lookup_index">
+<span class="sig-name descname"><span class="pre">lookup_index</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">index</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">str</span></span></span><a class="headerlink" href="#chatbot.data.vocabulary.Vocabulary.lookup_index" title="Link to this definition"></a></dt>
+<dd><p>Retrieves the token associated with the index.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>index</strong> (<em>int</em>) – The index to look up.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The token corresponding to the index.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>str</p>
+</dd>
+<dt class="field-even">Raises<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>KeyError</strong> – If the index is not in the vocabulary.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="chatbot.data.vocabulary.Vocabulary.lookup_token">
+<span class="sig-name descname"><span class="pre">lookup_token</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">token</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">int</span></span></span><a class="headerlink" href="#chatbot.data.vocabulary.Vocabulary.lookup_token" title="Link to this definition"></a></dt>
+<dd><p>Retrieves the index associated with the token.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>token</strong> (<em>str</em>) – The token to look up.</p>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>The index corresponding to the token.</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>int</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py function">
+<dt class="sig sig-object py" id="chatbot.data.vocabulary.build_vocabulary">
+<span class="sig-prename descclassname"><span class="pre">chatbot.data.vocabulary.</span></span><span class="sig-name descname"><span class="pre">build_vocabulary</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">pairs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tokenizer</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Callable</span><span class="p"><span class="pre">[</span></span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">List</span><span class="p"><span class="pre">[</span></span><span class="pre">str</span><span class="p"><span class="pre">]</span></span><span class="p"><span class="pre">]</span></span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="#chatbot.data.vocabulary.SequenceVocabulary" title="chatbot.data.vocabulary.SequenceVocabulary"><span class="pre">SequenceVocabulary</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">int</span><span class="p"><span class="pre">]</span></span></span></span><a class="headerlink" href="#chatbot.data.vocabulary.build_vocabulary" title="Link to this definition"></a></dt>
+<dd><p>Populates the vocabulary with tokens from the provided
+pairs.</p>
+<p>Also, finds the maximum query and response lengths.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>pairs</strong> (<em>List</em><em>[</em><em>List</em><em>[</em><em>str</em><em>]</em><em>]</em>) – The query and response
+sequence pairs.</p></li>
+<li><p><strong>tokenizer</strong> (<em>Callable</em><em>[</em><em>[</em><em>str</em><em>]</em><em>, </em><em>List</em><em>[</em><em>str</em><em>]</em><em>]</em>) – Tokenizer for
+splitting each sequence into tokens.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><dl class="simple">
+<dt>The populated vocabulary</dt><dd><p>and the maximum query and response lengths that were found
+in the provided pairs.</p>
+</dd>
+</dl>
+</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Tuple[<a class="reference internal" href="#chatbot.data.vocabulary.SequenceVocabulary" title="chatbot.data.vocabulary.SequenceVocabulary">SequenceVocabulary</a>, int, int]</p>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="module-chatbot.data">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-chatbot.data" title="Link to this heading"></a></h2>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2024, Kanaris Konstantinos.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -12,12 +12,16 @@
 ## Overview 🔍
 A chatbot framework with PyTorch for training and evaluating seq-to-seq models.
 
-Implements 2 high-level processes:
-- Training of a seq-to-seq PyTorch model consisting of encoder and decoder layers
-- Chat with the trained bot (evaluation)
+Implements 5 high-level processes:
+- Downloads data, i.e., cornell-dialogs from a source url
+- Parses query-response sequence pairs from the raw data
+- Processes the query-response sequence pairs (normalizing, filtering, etc.)
+- Creates training/evaluation assets, i.e., train_set, val_set, test_set
+- Trains and evaluates a sequence-to-sequence PyTorch model consisting of encoder and decoder layers
+- Chats with the trained bot
 
-Both processes are fully configurable through dedicated configuration files. For
-instance, for the training process, users can define training hyperparameters, such
+The training and evaluation processes are fully configurable through dedicated configuration
+files. For instance, for the training process, users can define training hyperparameters, such
 as number of epochs, batch size, model/optimizer settings, in a YAML file. This allows for
 easy customization and experimentation with different configurations without modifying
 the source code.
@@ -125,6 +129,31 @@ Python 3.10 is required.
     ```
 
 ## Execute 🚀
+All the commands should be executed from the project's root directory.
+
+### Get data
+> Download the cornell-dialogs data by executing:
+>```bash
+> $ python -m chatbot download --name cornell_dialogs --directory <path_to_a_local_directory>
+>```
+
+### Parse data
+> Parse the cornell-dialogs data by executing:
+>```bash
+> $ python -m chatbot parse --filepath <path_to_cornell_dialogs_utterances> --save_path <filepath_to_save_parsed_txt_file>
+>```
+
+### Process data
+> Process the cornell-dialogs data by executing:
+>```bash
+> $ python -m chatbot process --filepath <path_to_the_parsed_txt_file> --min_length 1 --max_length 10 --min_count 3 --save_path <filepath_to_save_processed_txt_file>
+>```
+
+### Create assets
+> Create training, validation, and test sets by executing:
+>```bash
+> $ python -m chatbot create_assets --filepath <path_to_the_processed_txt_file> --val_size 0.2 --test_size 0.2 --random_seed 42 --assets_directory <local_directory_to_save_the_assets>
+>```
 
 ### Training
 > Define training parameters in the configuration file and from the project's root directory execute:
