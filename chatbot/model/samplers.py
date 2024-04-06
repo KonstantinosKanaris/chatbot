@@ -16,7 +16,7 @@ class SamplersFactory:
     def __init__(self) -> None:
         self._samplers: Dict[str, type[torch.nn.Module]] = {}
 
-    def register_model(
+    def register_sampler(
         self, name: str, sampler: type[torch.nn.Module]
     ) -> None:
         """Registers a sample with the given name.
@@ -102,10 +102,25 @@ class GreedySearchSampler(nn.Module):
         self.decoder.eval()
 
         with torch.inference_mode():
-            encoder_state, encoder_hidden = self.encoder(
-                input_seq, query_length
-            )
+
+            encoder_cell = None
+            if self.encoder.__class__.__name__ == "EncoderGRU":
+                encoder_state, encoder_hidden = self.encoder(
+                    input_seq, query_length
+                )
+            else:
+                encoder_state, encoder_hidden, encoder_cell = self.encoder(
+                    input_seq, query_length
+                )
+
             decoder_hidden = encoder_hidden[: self.decoder.num_layers]
+            decoder_cell = None
+            if (
+                self.decoder.__class__.__name__ == "LuongAttnDecoderLSTM"
+                and isinstance(encoder_cell, torch.Tensor)
+            ):
+                decoder_cell = encoder_cell[: self.decoder.num_layers]
+
             decoder_input = torch.ones(
                 size=(1, 1), device=self.device, dtype=torch.int64
             )
@@ -116,9 +131,22 @@ class GreedySearchSampler(nn.Module):
             )
 
             for _ in range(max_seq_length):
-                decoder_output, decoder_hidden = self.decoder(
-                    decoder_input, decoder_hidden, encoder_state
-                )
+                if self.decoder.__class__.__name__ == "LuongAttnDecoderGRU":
+                    decoder_output, decoder_hidden = self.decoder(
+                        input_seq=decoder_input,
+                        h_0=decoder_hidden,
+                        encoder_state=encoder_state,
+                    )
+                else:
+                    decoder_output, decoder_hidden, decoder_cell = (
+                        self.decoder(
+                            input_seq=decoder_input,
+                            h_0=decoder_hidden,
+                            c_0=decoder_cell,
+                            encoder_state=encoder_state,
+                        )
+                    )
+
                 decoder_input = torch.argmax(decoder_output, dim=1)
 
                 all_token_indices = torch.cat(
@@ -193,10 +221,25 @@ class RandomSearchSampler(nn.Module):
         self.decoder.eval()
 
         with torch.inference_mode():
-            encoder_state, encoder_hidden = self.encoder(
-                input_seq, query_length
-            )
+            # Encoder Forward pass
+            encoder_cell = None
+            if self.encoder.__class__.__name__ == "EncoderGRU":
+                encoder_state, encoder_hidden = self.encoder(
+                    input_seq, query_length
+                )
+            else:
+                encoder_state, encoder_hidden, encoder_cell = self.encoder(
+                    input_seq, query_length
+                )
+
             decoder_hidden = encoder_hidden[: self.decoder.num_layers]
+            decoder_cell = None
+            if (
+                self.decoder.__class__.__name__ == "LuongAttnDecoderLSTM"
+                and isinstance(encoder_cell, torch.Tensor)
+            ):
+                decoder_cell = encoder_cell[: self.decoder.num_layers]
+
             decoder_input = torch.ones(
                 size=(1, 1), device=self.device, dtype=torch.int64
             )
@@ -207,9 +250,22 @@ class RandomSearchSampler(nn.Module):
             )
 
             for _ in range(max_seq_length):
-                decoder_output, decoder_hidden = self.decoder(
-                    decoder_input, decoder_hidden, encoder_state
-                )
+                if self.decoder.__class__.__name__ == "LuongAttnDecoderGRU":
+                    decoder_output, decoder_hidden = self.decoder(
+                        input_seq=decoder_input,
+                        h_0=decoder_hidden,
+                        encoder_state=encoder_state,
+                    )
+                else:
+                    decoder_output, decoder_hidden, decoder_cell = (
+                        self.decoder(
+                            input_seq=decoder_input,
+                            h_0=decoder_hidden,
+                            c_0=decoder_cell,
+                            encoder_state=encoder_state,
+                        )
+                    )
+
                 decoder_input = torch.multinomial(
                     input=decoder_output, num_samples=1
                 ).squeeze(dim=0)

@@ -21,6 +21,9 @@
 #                             methods: ``greedy``, ``random``.
 # - alignment_method        : Name of the alignment score method used in the attention layer.
 #                             The available methods are: `concat`, `dot` and `general`.
+# - decoder                 : Available decoders: ``luong_attention_with_gru`` and
+#                             ``luong_attention_with_lstm``.
+# - encoder                 : Available encoders: ``gru`` and ``lstm``.
 # - temperature             : Float number > 0. Used to control the randomness of the decoder's
 #                             predictions by scaling the logits before applying softmax.
 # - embedding_dim           : Dimensions of token embeddings.
@@ -36,6 +39,8 @@ checkpoints_dir: ./checkpoints
 checkpoint_filename: base_model.pth
 hyperparameters:
     embeddings_path:
+    decoder: luong_attention_with_lstm
+    encoder: lstm
     general:
       batch_size: 64
       num_epochs: 50
@@ -44,7 +49,7 @@ hyperparameters:
       clip_factor: 50
       enable_early_stop: True
       enable_lr_scheduler: True
-      sampling_decay: 16
+      sampling_decay: 15
       sampling_method: random
     embedding_init_params:
       embedding_dim: 50
@@ -61,10 +66,10 @@ hyperparameters:
       temperature: 1.0
     encoder_optimizer_init_params:
       lr: 0.0001
-      weight_decay: 0.001
+      weight_decay: 0.0001
     decoder_optimizer_init_params:
       lr: 0.0001
-      weight_decay: 0.001
+      weight_decay: 0.0001
     encoder_lr_scheduler_init_params:
       factor: 0.3
       patience: 1

@@ -1,15 +1,15 @@
 from .attention import AttnLayer
-from .decoders import LuongAttnDecoderRNN
+from .decoders import LuongAttnDecoderGRU
 from .embeddings import EmbeddingLayerConstructor, PreTrainedEmbeddings
-from .encoders import EncoderRNN
+from .encoders import EncoderGRU
 from .samplers import GreedySearchSampler, RandomSearchSampler
 
 __all__ = [
     "AttnLayer",
     "EmbeddingLayerConstructor",
-    "EncoderRNN",
+    "EncoderGRU",
     "GreedySearchSampler",
-    "LuongAttnDecoderRNN",
+    "LuongAttnDecoderGRU",
     "PreTrainedEmbeddings",
     "RandomSearchSampler",
 ]

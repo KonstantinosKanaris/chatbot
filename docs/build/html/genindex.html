@@ -7,11 +7,11 @@
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
 
-  
+
   <!--[if lt IE 9]>
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
-  
+
         <script src="_static/jquery.js?v=5d32c60e"></script>
         <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
         <script src="_static/documentation_options.js?v=5929fcd5"></script>
@@ -19,17 +19,17 @@
         <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="#" />
-    <link rel="search" title="Search" href="search.html" /> 
+    <link rel="search" title="Search" href="search.html" />
 </head>
 
-<body class="wy-body-for-nav"> 
+<body class="wy-body-for-nav">
   <div class="wy-grid-for-nav">
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
 
-          
-          
+
+
           <a href="index.html" class="icon icon-home">
             chatbot
           </a>
@@ -65,7 +65,7 @@
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-             
+
 
 <h1 id="index">Index</h1>
 
@@ -90,19 +90,23 @@
  | <a href="#U"><strong>U</strong></a>
  | <a href="#V"><strong>V</strong></a>
  | <a href="#W"><strong>W</strong></a>
- 
+
 </div>
 <h2 id="_">_</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="chatbot.data.html#chatbot.data.vocabulary.SequenceVocabulary._begin_seq_token">_begin_seq_token (chatbot.data.vocabulary.SequenceVocabulary attribute)</a>
 </li>
-      <li><a href="chatbot.data.html#chatbot.data.vocabulary.SequenceVocabulary._end_seq_token">_end_seq_token (chatbot.data.vocabulary.SequenceVocabulary attribute)</a>
+      <li><a href="chatbot.model.html#chatbot.model.decoders.DecodersFactory._decoders">_decoders (chatbot.model.decoders.DecodersFactory attribute)</a>
 </li>
-      <li><a href="chatbot.data.html#chatbot.data.vocabulary.SequenceVocabulary._mask_token">_mask_token (chatbot.data.vocabulary.SequenceVocabulary attribute)</a>
+      <li><a href="chatbot.model.html#chatbot.model.encoders.EncodersFactory._encoders">_encoders (chatbot.model.encoders.EncodersFactory attribute)</a>
+</li>
+      <li><a href="chatbot.data.html#chatbot.data.vocabulary.SequenceVocabulary._end_seq_token">_end_seq_token (chatbot.data.vocabulary.SequenceVocabulary attribute)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="chatbot.data.html#chatbot.data.vocabulary.SequenceVocabulary._mask_token">_mask_token (chatbot.data.vocabulary.SequenceVocabulary attribute)</a>
+</li>
       <li><a href="chatbot.model.html#chatbot.model.samplers.SamplersFactory._samplers">_samplers (chatbot.model.samplers.SamplersFactory attribute)</a>
 </li>
       <li><a href="chatbot.data.html#chatbot.data.processing.Seq2SeqProcessor._tokenizer">_tokenizer (chatbot.data.processing.Seq2SeqProcessor attribute)</a>
@@ -145,14 +149,16 @@
         <li><a href="chatbot.engine.html#chatbot.engine.trainer.Trainer.batched_bleu_score">(chatbot.engine.trainer.Trainer method)</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="chatbot.model.html#chatbot.model.EncoderRNN.bi_gru">bi_gru (chatbot.model.EncoderRNN attribute)</a>
+      <li><a href="chatbot.model.html#chatbot.model.EncoderGRU.bi_gru">bi_gru (chatbot.model.EncoderGRU attribute)</a>
 
       <ul>
-        <li><a href="chatbot.model.html#chatbot.model.encoders.EncoderRNN.bi_gru">(chatbot.model.encoders.EncoderRNN attribute)</a>
+        <li><a href="chatbot.model.html#chatbot.model.encoders.EncoderGRU.bi_gru">(chatbot.model.encoders.EncoderGRU attribute)</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="chatbot.model.html#chatbot.model.encoders.EncoderLSTM.bi_lstm">bi_lstm (chatbot.model.encoders.EncoderLSTM attribute)</a>
+</li>
       <li><a href="chatbot.data.html#chatbot.data.vocabulary.build_vocabulary">build_vocabulary() (in module chatbot.data.vocabulary)</a>
 </li>
   </ul></td>
@@ -347,6 +353,12 @@
 <h2 id="D">D</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="chatbot.model.html#chatbot.model.clients.decoders_client">decoders_client() (in module chatbot.model.clients)</a>
+</li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="chatbot.model.html#chatbot.model.decoders.DecodersFactory">DecodersFactory (class in chatbot.model.decoders)</a>
+</li>
       <li><a href="chatbot.data.html#chatbot.data.download.download_data">download_data() (in module chatbot.data.download)</a>
 </li>
   </ul></td>
@@ -359,10 +371,12 @@
 </li>
       <li><a href="chatbot.engine.html#chatbot.engine.utils.EarlyStopping">EarlyStopping (class in chatbot.engine.utils)</a>
 </li>
-      <li><a href="chatbot.model.html#chatbot.model.EncoderRNN.emb">emb (chatbot.model.EncoderRNN attribute)</a>
+      <li><a href="chatbot.model.html#chatbot.model.EncoderGRU.emb">emb (chatbot.model.EncoderGRU attribute)</a>
 
       <ul>
-        <li><a href="chatbot.model.html#chatbot.model.encoders.EncoderRNN.emb">(chatbot.model.encoders.EncoderRNN attribute)</a>
+        <li><a href="chatbot.model.html#chatbot.model.encoders.EncoderGRU.emb">(chatbot.model.encoders.EncoderGRU attribute)</a>
+</li>
+        <li><a href="chatbot.model.html#chatbot.model.encoders.EncoderLSTM.emb">(chatbot.model.encoders.EncoderLSTM attribute)</a>
 </li>
       </ul></li>
       <li><a href="chatbot.model.html#chatbot.model.EmbeddingLayerConstructor">EmbeddingLayerConstructor (class in chatbot.model)</a>
@@ -371,14 +385,20 @@
         <li><a href="chatbot.model.html#chatbot.model.embeddings.EmbeddingLayerConstructor">(class in chatbot.model.embeddings)</a>
 </li>
       </ul></li>
-      <li><a href="chatbot.model.html#chatbot.model.EncoderRNN">EncoderRNN (class in chatbot.model)</a>
+      <li><a href="chatbot.model.html#chatbot.model.EncoderGRU">EncoderGRU (class in chatbot.model)</a>
 
       <ul>
-        <li><a href="chatbot.model.html#chatbot.model.encoders.EncoderRNN">(class in chatbot.model.encoders)</a>
+        <li><a href="chatbot.model.html#chatbot.model.encoders.EncoderGRU">(class in chatbot.model.encoders)</a>
 </li>
       </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="chatbot.model.html#chatbot.model.encoders.EncoderLSTM">EncoderLSTM (class in chatbot.model.encoders)</a>
+</li>
+      <li><a href="chatbot.model.html#chatbot.model.clients.encoders_client">encoders_client() (in module chatbot.model.clients)</a>
+</li>
+      <li><a href="chatbot.model.html#chatbot.model.encoders.EncodersFactory">EncodersFactory (class in chatbot.model.encoders)</a>
+</li>
       <li><a href="chatbot.data.html#chatbot.data.vocabulary.SequenceVocabulary.end_seq_index">end_seq_index (chatbot.data.vocabulary.SequenceVocabulary attribute)</a>
 </li>
       <li><a href="chatbot.engine.html#chatbot.engine.Evaluator.evaluate">evaluate() (chatbot.engine.Evaluator method)</a>
@@ -412,15 +432,19 @@
       <ul>
         <li><a href="chatbot.model.html#chatbot.model.AttnLayer.forward">(chatbot.model.AttnLayer method)</a>
 </li>
-        <li><a href="chatbot.model.html#chatbot.model.decoders.LuongAttnDecoderRNN.forward">(chatbot.model.decoders.LuongAttnDecoderRNN method)</a>
+        <li><a href="chatbot.model.html#chatbot.model.decoders.LuongAttnDecoderGRU.forward">(chatbot.model.decoders.LuongAttnDecoderGRU method)</a>
 </li>
-        <li><a href="chatbot.model.html#chatbot.model.EncoderRNN.forward">(chatbot.model.EncoderRNN method)</a>
+        <li><a href="chatbot.model.html#chatbot.model.decoders.LuongAttnDecoderLSTM.forward">(chatbot.model.decoders.LuongAttnDecoderLSTM method)</a>
 </li>
-        <li><a href="chatbot.model.html#chatbot.model.encoders.EncoderRNN.forward">(chatbot.model.encoders.EncoderRNN method)</a>
+        <li><a href="chatbot.model.html#chatbot.model.EncoderGRU.forward">(chatbot.model.EncoderGRU method)</a>
+</li>
+        <li><a href="chatbot.model.html#chatbot.model.encoders.EncoderGRU.forward">(chatbot.model.encoders.EncoderGRU method)</a>
+</li>
+        <li><a href="chatbot.model.html#chatbot.model.encoders.EncoderLSTM.forward">(chatbot.model.encoders.EncoderLSTM method)</a>
 </li>
         <li><a href="chatbot.model.html#chatbot.model.GreedySearchSampler.forward">(chatbot.model.GreedySearchSampler method)</a>
 </li>
-        <li><a href="chatbot.model.html#chatbot.model.LuongAttnDecoderRNN.forward">(chatbot.model.LuongAttnDecoderRNN method)</a>
+        <li><a href="chatbot.model.html#chatbot.model.LuongAttnDecoderGRU.forward">(chatbot.model.LuongAttnDecoderGRU method)</a>
 </li>
         <li><a href="chatbot.model.html#chatbot.model.RandomSearchSampler.forward">(chatbot.model.RandomSearchSampler method)</a>
 </li>
@@ -459,16 +483,20 @@
 </li>
       <li><a href="chatbot.data.html#chatbot.data.download.get_data">get_data() (in module chatbot.data.download)</a>
 </li>
+      <li><a href="chatbot.model.html#chatbot.model.decoders.DecodersFactory.get_decoder">get_decoder() (chatbot.model.decoders.DecodersFactory method)</a>
+</li>
       <li><a href="chatbot.model.html#chatbot.model.embeddings.PreTrainedEmbeddings.get_embedding">get_embedding() (chatbot.model.embeddings.PreTrainedEmbeddings method)</a>
 
       <ul>
         <li><a href="chatbot.model.html#chatbot.model.PreTrainedEmbeddings.get_embedding">(chatbot.model.PreTrainedEmbeddings method)</a>
 </li>
       </ul></li>
-      <li><a href="chatbot.data.html#chatbot.data.datasets.CornellDialogsDataset.get_num_batches">get_num_batches() (chatbot.data.datasets.CornellDialogsDataset method)</a>
+      <li><a href="chatbot.model.html#chatbot.model.encoders.EncodersFactory.get_encoder">get_encoder() (chatbot.model.encoders.EncodersFactory method)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="chatbot.data.html#chatbot.data.datasets.CornellDialogsDataset.get_num_batches">get_num_batches() (chatbot.data.datasets.CornellDialogsDataset method)</a>
+</li>
       <li><a href="chatbot.model.html#chatbot.model.samplers.SamplersFactory.get_sampler">get_sampler() (chatbot.model.samplers.SamplersFactory method)</a>
 </li>
       <li><a href="chatbot.data.html#chatbot.data.tokenizers.TokenizersFactory.get_tokenizer">get_tokenizer() (chatbot.data.tokenizers.TokenizersFactory method)</a>
@@ -491,10 +519,12 @@
 <h2 id="H">H</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="chatbot.model.html#chatbot.model.EncoderRNN.hidden_size">hidden_size (chatbot.model.EncoderRNN attribute)</a>
+      <li><a href="chatbot.model.html#chatbot.model.EncoderGRU.hidden_size">hidden_size (chatbot.model.EncoderGRU attribute)</a>
 
       <ul>
-        <li><a href="chatbot.model.html#chatbot.model.encoders.EncoderRNN.hidden_size">(chatbot.model.encoders.EncoderRNN attribute)</a>
+        <li><a href="chatbot.model.html#chatbot.model.encoders.EncoderGRU.hidden_size">(chatbot.model.encoders.EncoderGRU attribute)</a>
+</li>
+        <li><a href="chatbot.model.html#chatbot.model.encoders.EncoderLSTM.hidden_size">(chatbot.model.encoders.EncoderLSTM attribute)</a>
 </li>
       </ul></li>
   </ul></td>
@@ -545,12 +575,14 @@
         <li><a href="chatbot.data.html#chatbot.data.vocabulary.Vocabulary.lookup_token">(chatbot.data.vocabulary.Vocabulary method)</a>
 </li>
       </ul></li>
-      <li><a href="chatbot.model.html#chatbot.model.LuongAttnDecoderRNN">LuongAttnDecoderRNN (class in chatbot.model)</a>
+      <li><a href="chatbot.model.html#chatbot.model.LuongAttnDecoderGRU">LuongAttnDecoderGRU (class in chatbot.model)</a>
 
       <ul>
-        <li><a href="chatbot.model.html#chatbot.model.decoders.LuongAttnDecoderRNN">(class in chatbot.model.decoders)</a>
+        <li><a href="chatbot.model.html#chatbot.model.decoders.LuongAttnDecoderGRU">(class in chatbot.model.decoders)</a>
 </li>
       </ul></li>
+      <li><a href="chatbot.model.html#chatbot.model.decoders.LuongAttnDecoderLSTM">LuongAttnDecoderLSTM (class in chatbot.model.decoders)</a>
+</li>
   </ul></td>
 </tr></table>
 
@@ -654,9 +686,13 @@
         <li><a href="chatbot.model.html#chatbot.model.samplers.RandomSearchSampler">(class in chatbot.model.samplers)</a>
 </li>
       </ul></li>
+      <li><a href="chatbot.model.html#chatbot.model.decoders.DecodersFactory.register_decoder">register_decoder() (chatbot.model.decoders.DecodersFactory method)</a>
+</li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="chatbot.model.html#chatbot.model.samplers.SamplersFactory.register_model">register_model() (chatbot.model.samplers.SamplersFactory method)</a>
+      <li><a href="chatbot.model.html#chatbot.model.encoders.EncodersFactory.register_encoder">register_encoder() (chatbot.model.encoders.EncodersFactory method)</a>
+</li>
+      <li><a href="chatbot.model.html#chatbot.model.samplers.SamplersFactory.register_sampler">register_sampler() (chatbot.model.samplers.SamplersFactory method)</a>
 </li>
       <li><a href="chatbot.html#chatbot.agent.Agent.resume">resume (chatbot.agent.Agent attribute)</a>
 </li>
@@ -810,7 +846,7 @@
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
     <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
     provided by <a href="https://readthedocs.org">Read the Docs</a>.
-   
+
 
 </footer>
         </div>
@@ -821,7 +857,7 @@
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
 
 </body>
 </html>

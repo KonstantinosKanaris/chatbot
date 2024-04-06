@@ -179,6 +179,35 @@ class Trainer:
         blue_score_per_batch /= batch_size
         return blue_score_per_batch
 
+    def _sample_predictions(
+        self, decoder_output: torch.Tensor
+    ) -> torch.Tensor:
+        """Samples a token index according to decoder's output
+        probability distribution over the vocabulary.
+
+
+        Args:
+            decoder_output (torch.Tensor): The decoder's prediction
+                probabilities.
+
+        Returns:
+            torch.Tensor: The sampled token indices (for the batch).
+        """
+        if self.sampling_method == "greedy":
+            predicted_indices = torch.argmax(decoder_output, dim=1)
+        elif self.sampling_method == "random":
+            predicted_indices = torch.multinomial(
+                input=decoder_output, num_samples=1
+            ).squeeze(dim=1)
+        else:
+            raise ValueError(
+                f"Unsupported sampling method: {self.sampling_method}"
+                f"Choose one of the following: "
+                f"{self.__class__._sampling_methods}"
+            )
+
+        return predicted_indices
+
     def compute_metrics(
         self,
         decoder_input: torch.Tensor,
@@ -186,6 +215,7 @@ class Trainer:
         encoder_state: torch.Tensor,
         y_responses: torch.Tensor,
         response_max_length: int,
+        decoder_cell: Optional[torch.Tensor] = None,
     ) -> Tuple[torch.Tensor, Dict[str, float]]:
         """Performs a forward pass through the decoder.
 
@@ -205,6 +235,9 @@ class Trainer:
         Args:
             decoder_input: tensor of shape: math:`(1, N)`.
             decoder_hidden: tensor of shape: math:`(1, N, H)`.
+            decoder_cell: tensor of shape: math:`(1, N, H)`.
+                Used only in the case of a decoder with LSTM layer.
+                Defaults to ``None``.
             encoder_state: tensor of shape: math:`(L_{in}, N, H)`.
             y_responses: tensor of shape: math:`(L_{out}, N)`.
             response_max_length: The max sequence length in a batch
@@ -226,18 +259,21 @@ class Trainer:
             dtype=torch.int64,
         )
         for t in range(response_max_length):
-            decoder_output, decoder_hidden = self.decoder(
-                input_seq=decoder_input,
-                h_0=decoder_hidden,
-                encoder_state=encoder_state,
-            )
-
-            if self.sampling_method == "greedy":
-                predicted_indices = torch.argmax(decoder_output, dim=1)
+            if self.decoder.__class__.__name__ == "LuongAttnDecoderGRU":
+                decoder_output, decoder_hidden = self.decoder(
+                    input_seq=decoder_input,
+                    h_0=decoder_hidden,
+                    encoder_state=encoder_state,
+                )
             else:
-                predicted_indices = torch.multinomial(
-                    input=decoder_output, num_samples=1
-                ).squeeze(dim=1)
+                decoder_output, decoder_hidden, decoder_cell = self.decoder(
+                    input_seq=decoder_input,
+                    h_0=decoder_hidden,
+                    c_0=decoder_cell,
+                    encoder_state=encoder_state,
+                )
+
+            predicted_indices = self._sample_predictions(decoder_output)
 
             if self.loss_fn.__class__.__name__ == "NLLLoss":
                 decoder_output = torch.log(decoder_output)
@@ -432,22 +468,36 @@ class Trainer:
             response_max_length = int(response_lengths.max().item())
 
             # Encoder Forward pass
-            encoder_state, encoder_hidden = self.encoder(
-                x_queries, query_lengths
-            )
+            encoder_cell = None
+            if self.encoder.__class__.__name__ == "EncoderGRU":
+                encoder_state, encoder_hidden = self.encoder(
+                    x_queries, query_lengths
+                )
+            else:
+                encoder_state, encoder_hidden, encoder_cell = self.encoder(
+                    x_queries, query_lengths
+                )
 
             # Create initial decoder input starting with an SOS token
             decoder_input = torch.LongTensor(
                 [[self.vocab.start_seq_index for _ in range(batch_size)]]
             ).to(self.device)
 
-            # Set initial decoder hidden state to the encoder's final
+            # Set initial decoder hidden/cell state to the encoder's final
             decoder_hidden = encoder_hidden[: self.decoder.num_layers]
+
+            decoder_cell = None
+            if (
+                self.decoder.__class__.__name__ == "LuongAttnDecoderLSTM"
+                and isinstance(encoder_cell, torch.Tensor)
+            ):
+                decoder_cell = encoder_cell[: self.decoder.num_layers]
 
             # Decoder forward pass and loss calculation
             loss, metrics = self.compute_metrics(
                 decoder_input=decoder_input,
                 decoder_hidden=decoder_hidden,
+                decoder_cell=decoder_cell,
                 encoder_state=encoder_state,
                 y_responses=y_responses,
                 response_max_length=response_max_length,
@@ -549,9 +599,15 @@ class Trainer:
                 batch_size = x_queries.size(1)
                 response_max_length = int(response_lengths.max().item())
 
-                encoder_state, encoder_hidden = self.encoder(
-                    x_queries, query_lengths
-                )
+                encoder_cell = None
+                if self.encoder.__class__.__name__ == "EncoderGRU":
+                    encoder_state, encoder_hidden = self.encoder(
+                        x_queries, query_lengths
+                    )
+                else:
+                    encoder_state, encoder_hidden, encoder_cell = self.encoder(
+                        x_queries, query_lengths
+                    )
 
                 # Create initial decoder input starting with an SOS token
                 decoder_input = torch.LongTensor(
@@ -561,10 +617,18 @@ class Trainer:
                 # Set initial decoder hidden state to the encoder's final
                 decoder_hidden = encoder_hidden[: self.decoder.num_layers]
 
+                decoder_cell = None
+                if (
+                    self.decoder.__class__.__name__ == "LuongAttnDecoderLSTM"
+                    and isinstance(encoder_cell, torch.Tensor)
+                ):
+                    decoder_cell = encoder_cell[: self.decoder.num_layers]
+
                 # Decoder forward pass and loss calculation
                 loss, metrics = self.compute_metrics(
                     decoder_input=decoder_input,
                     decoder_hidden=decoder_hidden,
+                    decoder_cell=decoder_cell,
                     encoder_state=encoder_state,
                     y_responses=y_responses,
                     response_max_length=response_max_length,

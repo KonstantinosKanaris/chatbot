@@ -32,6 +32,7 @@ class Evaluator:
         Returns:
             List[str]: The generated tokens.
         """
+
         token_indices, indices_length = self.vectorizer.vectorize_single(
             query_seq=query_seq, use_dataset_max_length=True
         )

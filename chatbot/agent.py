@@ -11,9 +11,8 @@ from chatbot import logger
 from chatbot.data.vocabulary import SequenceVocabulary
 from chatbot.engine.trainer import Trainer
 from chatbot.engine.utils import EarlyStopping, Timer, set_seeds
-from chatbot.model.decoders import LuongAttnDecoderRNN
+from chatbot.model.clients import decoders_client, encoders_client
 from chatbot.model.embeddings import EmbeddingLayerConstructor
-from chatbot.model.encoders import EncoderRNN
 
 
 def initialize_seq2seq_components(
@@ -49,6 +48,7 @@ def initialize_seq2seq_components(
         >>> # or create it manually
         >>> seq2seq_params = {
         ...     "embeddings_path": "./pretrained_embeddings/glove.6B.50d.txt",
+        ...     "decoder": "luong_attention_with_lstm",
         ...     "embedding_init_params": {
         ...         "embedding_dim": 50,
         ...         "padding_idx": 0
@@ -76,7 +76,7 @@ def initialize_seq2seq_components(
         >>>
         >>> training_components = initialize_seq2seq_components(
         ...     vocab_tokens=["1st_token", "2nd_token", "..."],
-        ...     init_params=init_params,
+        ...     init_params=seq2seq_params,
         ...     use_optimizers=True
         ... )
         >>> embedding_layer = training_components["embedding"]
@@ -85,7 +85,7 @@ def initialize_seq2seq_components(
         >>> encoder_opt = training_components["encoder_optimizer"]
         >>> decoder_opt = training_components["decoder_optimizer"]
         >>> encoder_layer
-        EncoderRNN(
+        EncoderGRU(
           (emb): Embedding(2, 50, padding_idx=0)
           (bi_gru): GRU(50, 50, bidirectional=True)
         )
@@ -98,13 +98,25 @@ def initialize_seq2seq_components(
         **init_params["embedding_init_params"],
     )
 
-    encoder = EncoderRNN(
-        embedding=embedding, **init_params["encoder_init_params"]
+    # encoder = EncoderLSTM(
+    #     embedding=embedding, **init_params["encoder_init_params"]
+    # )
+    encoder = encoders_client(
+        name=init_params["encoder"],
+        params={"embedding": embedding, **init_params["encoder_init_params"]},
     )
-    decoder = LuongAttnDecoderRNN(
-        embedding=embedding,
-        output_size=len(vocab_tokens),
-        **init_params["decoder_init_params"],
+    # decoder = LuongAttnDecoderLSTM(
+    #     embedding=embedding,
+    #     output_size=len(vocab_tokens),
+    #     **init_params["decoder_init_params"],
+    # )
+    decoder = decoders_client(
+        name=init_params["decoder"],
+        params={
+            "embedding": embedding,
+            "output_size": len(vocab_tokens),
+            **init_params["decoder_init_params"],
+        },
     )
 
     encoder_optimizer, decoder_optimizer = None, None
@@ -162,6 +174,8 @@ def initialize_from_checkpoint(
         >>> # or create it manually
         >>> seq2seq_params = {
         ...     "embeddings_path": "./pretrained_embeddings/glove.6B.50d.txt",
+        ...     "encoder": "lstm",
+        ...     "decoder": "luong_attention_with_lstm",
         ...     "embedding_init_params": {
         ...         "embedding_dim": 50,
         ...         "padding_idx": 0
@@ -178,7 +192,7 @@ def initialize_from_checkpoint(
         ...         "dropout": 0.1,
         ...         "temperature": 1.0
         ...     },
-        ...     "encoder_optimizer_init_params": {
+        ...     "encoder_optimizer_init_params": {3
         ...         "lr": 0.0001,
         ...         "weight_decay": 0.001
         ...     },
@@ -200,7 +214,7 @@ def initialize_from_checkpoint(
         >>> encoder_opt = training_components["encoder_optimizer"]
         >>> decoder_opt = training_components["decoder_optimizer"]
         >>> encoder_layer
-        EncoderRNN(
+        EncoderGRU(
           (emb): Embedding(2, 50, padding_idx=0)
           (bi_gru): GRU(50, 50, bidirectional=True)
         )
@@ -226,13 +240,25 @@ def initialize_from_checkpoint(
     )
     embedding.load_state_dict(state_dict=embedding_state_dict)
 
-    encoder = EncoderRNN(
-        embedding=embedding, **init_params["encoder_init_params"]
+    # encoder = EncoderGRU(
+    #     embedding=embedding, **init_params["encoder_init_params"]
+    # )
+    encoder = encoders_client(
+        name=init_params["encoder"],
+        params={"embedding": embedding, **init_params["encoder_init_params"]},
     )
-    decoder = LuongAttnDecoderRNN(
-        embedding=embedding,
-        output_size=len(vocab_tokens),
-        **init_params["decoder_init_params"],
+    # decoder = LuongAttnDecoderGRU(
+    #     embedding=embedding,
+    #     output_size=len(vocab_tokens),
+    #     **init_params["decoder_init_params"],
+    # )
+    decoder = decoders_client(
+        name=init_params["decoder"],
+        params={
+            "embedding": embedding,
+            "output_size": len(vocab_tokens),
+            **init_params["decoder_init_params"],
+        },
     )
 
     encoder.load_state_dict(state_dict=encoder_state_dict)
@@ -420,8 +446,7 @@ class Agent:
         val_dataloader: DataLoader,
         last_epoch: int = 0,
     ) -> None:
-        """Splits the dataset into training and validation sets,
-        creates dataloaders and begins the training process."""
+        """Begins the training process."""
         with mlflow.start_run():
             mlflow.log_params(params=self.training_params)
 

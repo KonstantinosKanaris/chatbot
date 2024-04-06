@@ -8,11 +8,11 @@
       <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=80d5e7a1" />
       <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
 
-  
+
   <!--[if lt IE 9]>
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
-  
+
         <script src="_static/jquery.js?v=5d32c60e"></script>
         <script src="_static/_sphinx_javascript_frameworks_compat.js?v=2cd50e6c"></script>
         <script src="_static/documentation_options.js?v=5929fcd5"></script>
@@ -20,17 +20,17 @@
         <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" /> 
+    <link rel="search" title="Search" href="search.html" />
 </head>
 
-<body class="wy-body-for-nav"> 
+<body class="wy-body-for-nav">
   <div class="wy-grid-for-nav">
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
 
-          
-          
+
+
           <a href="index.html" class="icon icon-home">
             chatbot
           </a>
@@ -91,7 +91,7 @@
 </div>
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
-             
+
   <section id="chatbot-package">
 <h1>chatbot package<a class="headerlink" href="#chatbot-package" title="Link to this heading"></a></h1>
 <section id="subpackages">
@@ -249,12 +249,24 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="chatbot.model.html#module-chatbot.model.clients">chatbot.model.clients module</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="chatbot.model.html#chatbot.model.clients.decoders_client"><code class="docutils literal notranslate"><span class="pre">decoders_client()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="chatbot.model.html#chatbot.model.clients.encoders_client"><code class="docutils literal notranslate"><span class="pre">encoders_client()</span></code></a></li>
 <li class="toctree-l3"><a class="reference internal" href="chatbot.model.html#chatbot.model.clients.sampler_client"><code class="docutils literal notranslate"><span class="pre">sampler_client()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="chatbot.model.html#module-chatbot.model.decoders">chatbot.model.decoders module</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="chatbot.model.html#chatbot.model.decoders.LuongAttnDecoderRNN"><code class="docutils literal notranslate"><span class="pre">LuongAttnDecoderRNN</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="chatbot.model.html#chatbot.model.decoders.LuongAttnDecoderRNN.forward"><code class="docutils literal notranslate"><span class="pre">LuongAttnDecoderRNN.forward()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="chatbot.model.html#chatbot.model.decoders.DecodersFactory"><code class="docutils literal notranslate"><span class="pre">DecodersFactory</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="chatbot.model.html#chatbot.model.decoders.DecodersFactory._decoders"><code class="docutils literal notranslate"><span class="pre">DecodersFactory._decoders</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="chatbot.model.html#chatbot.model.decoders.DecodersFactory.get_decoder"><code class="docutils literal notranslate"><span class="pre">DecodersFactory.get_decoder()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="chatbot.model.html#chatbot.model.decoders.DecodersFactory.register_decoder"><code class="docutils literal notranslate"><span class="pre">DecodersFactory.register_decoder()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="chatbot.model.html#chatbot.model.decoders.LuongAttnDecoderGRU"><code class="docutils literal notranslate"><span class="pre">LuongAttnDecoderGRU</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="chatbot.model.html#chatbot.model.decoders.LuongAttnDecoderGRU.forward"><code class="docutils literal notranslate"><span class="pre">LuongAttnDecoderGRU.forward()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="chatbot.model.html#chatbot.model.decoders.LuongAttnDecoderLSTM"><code class="docutils literal notranslate"><span class="pre">LuongAttnDecoderLSTM</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="chatbot.model.html#chatbot.model.decoders.LuongAttnDecoderLSTM.forward"><code class="docutils literal notranslate"><span class="pre">LuongAttnDecoderLSTM.forward()</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -278,11 +290,24 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="chatbot.model.html#module-chatbot.model.encoders">chatbot.model.encoders module</a><ul>
-<li class="toctree-l3"><a class="reference internal" href="chatbot.model.html#chatbot.model.encoders.EncoderRNN"><code class="docutils literal notranslate"><span class="pre">EncoderRNN</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="chatbot.model.html#chatbot.model.encoders.EncoderRNN.hidden_size"><code class="docutils literal notranslate"><span class="pre">EncoderRNN.hidden_size</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="chatbot.model.html#chatbot.model.encoders.EncoderRNN.emb"><code class="docutils literal notranslate"><span class="pre">EncoderRNN.emb</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="chatbot.model.html#chatbot.model.encoders.EncoderRNN.bi_gru"><code class="docutils literal notranslate"><span class="pre">EncoderRNN.bi_gru</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="chatbot.model.html#chatbot.model.encoders.EncoderRNN.forward"><code class="docutils literal notranslate"><span class="pre">EncoderRNN.forward()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="chatbot.model.html#chatbot.model.encoders.EncoderGRU"><code class="docutils literal notranslate"><span class="pre">EncoderGRU</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="chatbot.model.html#chatbot.model.encoders.EncoderGRU.hidden_size"><code class="docutils literal notranslate"><span class="pre">EncoderGRU.hidden_size</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="chatbot.model.html#chatbot.model.encoders.EncoderGRU.emb"><code class="docutils literal notranslate"><span class="pre">EncoderGRU.emb</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="chatbot.model.html#chatbot.model.encoders.EncoderGRU.bi_gru"><code class="docutils literal notranslate"><span class="pre">EncoderGRU.bi_gru</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="chatbot.model.html#chatbot.model.encoders.EncoderGRU.forward"><code class="docutils literal notranslate"><span class="pre">EncoderGRU.forward()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="chatbot.model.html#chatbot.model.encoders.EncoderLSTM"><code class="docutils literal notranslate"><span class="pre">EncoderLSTM</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="chatbot.model.html#chatbot.model.encoders.EncoderLSTM.hidden_size"><code class="docutils literal notranslate"><span class="pre">EncoderLSTM.hidden_size</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="chatbot.model.html#chatbot.model.encoders.EncoderLSTM.emb"><code class="docutils literal notranslate"><span class="pre">EncoderLSTM.emb</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="chatbot.model.html#chatbot.model.encoders.EncoderLSTM.bi_lstm"><code class="docutils literal notranslate"><span class="pre">EncoderLSTM.bi_lstm</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="chatbot.model.html#chatbot.model.encoders.EncoderLSTM.forward"><code class="docutils literal notranslate"><span class="pre">EncoderLSTM.forward()</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="chatbot.model.html#chatbot.model.encoders.EncodersFactory"><code class="docutils literal notranslate"><span class="pre">EncodersFactory</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="chatbot.model.html#chatbot.model.encoders.EncodersFactory._encoders"><code class="docutils literal notranslate"><span class="pre">EncodersFactory._encoders</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="chatbot.model.html#chatbot.model.encoders.EncodersFactory.get_encoder"><code class="docutils literal notranslate"><span class="pre">EncodersFactory.get_encoder()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="chatbot.model.html#chatbot.model.encoders.EncodersFactory.register_encoder"><code class="docutils literal notranslate"><span class="pre">EncodersFactory.register_encoder()</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -299,7 +324,7 @@
 <li class="toctree-l3"><a class="reference internal" href="chatbot.model.html#chatbot.model.samplers.SamplersFactory"><code class="docutils literal notranslate"><span class="pre">SamplersFactory</span></code></a><ul>
 <li class="toctree-l4"><a class="reference internal" href="chatbot.model.html#chatbot.model.samplers.SamplersFactory._samplers"><code class="docutils literal notranslate"><span class="pre">SamplersFactory._samplers</span></code></a></li>
 <li class="toctree-l4"><a class="reference internal" href="chatbot.model.html#chatbot.model.samplers.SamplersFactory.get_sampler"><code class="docutils literal notranslate"><span class="pre">SamplersFactory.get_sampler()</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="chatbot.model.html#chatbot.model.samplers.SamplersFactory.register_model"><code class="docutils literal notranslate"><span class="pre">SamplersFactory.register_model()</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="chatbot.model.html#chatbot.model.samplers.SamplersFactory.register_sampler"><code class="docutils literal notranslate"><span class="pre">SamplersFactory.register_sampler()</span></code></a></li>
 </ul>
 </li>
 </ul>
@@ -316,19 +341,19 @@
 <li class="toctree-l4"><a class="reference internal" href="chatbot.model.html#chatbot.model.EmbeddingLayerConstructor.without_pretrained_embeddings"><code class="docutils literal notranslate"><span class="pre">EmbeddingLayerConstructor.without_pretrained_embeddings()</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="chatbot.model.html#chatbot.model.EncoderRNN"><code class="docutils literal notranslate"><span class="pre">EncoderRNN</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="chatbot.model.html#chatbot.model.EncoderRNN.hidden_size"><code class="docutils literal notranslate"><span class="pre">EncoderRNN.hidden_size</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="chatbot.model.html#chatbot.model.EncoderRNN.emb"><code class="docutils literal notranslate"><span class="pre">EncoderRNN.emb</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="chatbot.model.html#chatbot.model.EncoderRNN.bi_gru"><code class="docutils literal notranslate"><span class="pre">EncoderRNN.bi_gru</span></code></a></li>
-<li class="toctree-l4"><a class="reference internal" href="chatbot.model.html#chatbot.model.EncoderRNN.forward"><code class="docutils literal notranslate"><span class="pre">EncoderRNN.forward()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="chatbot.model.html#chatbot.model.EncoderGRU"><code class="docutils literal notranslate"><span class="pre">EncoderGRU</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="chatbot.model.html#chatbot.model.EncoderGRU.hidden_size"><code class="docutils literal notranslate"><span class="pre">EncoderGRU.hidden_size</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="chatbot.model.html#chatbot.model.EncoderGRU.emb"><code class="docutils literal notranslate"><span class="pre">EncoderGRU.emb</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="chatbot.model.html#chatbot.model.EncoderGRU.bi_gru"><code class="docutils literal notranslate"><span class="pre">EncoderGRU.bi_gru</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="chatbot.model.html#chatbot.model.EncoderGRU.forward"><code class="docutils literal notranslate"><span class="pre">EncoderGRU.forward()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="chatbot.model.html#chatbot.model.GreedySearchSampler"><code class="docutils literal notranslate"><span class="pre">GreedySearchSampler</span></code></a><ul>
 <li class="toctree-l4"><a class="reference internal" href="chatbot.model.html#chatbot.model.GreedySearchSampler.forward"><code class="docutils literal notranslate"><span class="pre">GreedySearchSampler.forward()</span></code></a></li>
 </ul>
 </li>
-<li class="toctree-l3"><a class="reference internal" href="chatbot.model.html#chatbot.model.LuongAttnDecoderRNN"><code class="docutils literal notranslate"><span class="pre">LuongAttnDecoderRNN</span></code></a><ul>
-<li class="toctree-l4"><a class="reference internal" href="chatbot.model.html#chatbot.model.LuongAttnDecoderRNN.forward"><code class="docutils literal notranslate"><span class="pre">LuongAttnDecoderRNN.forward()</span></code></a></li>
+<li class="toctree-l3"><a class="reference internal" href="chatbot.model.html#chatbot.model.LuongAttnDecoderGRU"><code class="docutils literal notranslate"><span class="pre">LuongAttnDecoderGRU</span></code></a><ul>
+<li class="toctree-l4"><a class="reference internal" href="chatbot.model.html#chatbot.model.LuongAttnDecoderGRU.forward"><code class="docutils literal notranslate"><span class="pre">LuongAttnDecoderGRU.forward()</span></code></a></li>
 </ul>
 </li>
 <li class="toctree-l3"><a class="reference internal" href="chatbot.model.html#chatbot.model.PreTrainedEmbeddings"><code class="docutils literal notranslate"><span class="pre">PreTrainedEmbeddings</span></code></a><ul>
@@ -463,8 +488,7 @@ initialized with their saved states from the last checkpoint.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="chatbot.agent.Agent.start_training">
 <span class="sig-name descname"><span class="pre">start_training</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">trainer</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="chatbot.engine.html#chatbot.engine.trainer.Trainer" title="chatbot.engine.trainer.Trainer"><span class="pre">Trainer</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">train_dataloader</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataLoader</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">val_dataloader</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">DataLoader</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">last_epoch</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span> <span class="sig-return"><span class="sig-return-icon">&#x2192;</span> <span class="sig-return-typehint"><span class="pre">None</span></span></span><a class="headerlink" href="#chatbot.agent.Agent.start_training" title="Link to this definition"></a></dt>
-<dd><p>Splits the dataset into training and validation sets,
-creates dataloaders and begins the training process.</p>
+<dd><p>Begins the training process.</p>
 </dd></dl>
 
 </dd></dl>
@@ -508,6 +532,8 @@ for training. Defaults to <code class="docutils literal notranslate"><span class
 <span class="gp">&gt;&gt;&gt; </span><span class="c1"># or create it manually</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">seq2seq_params</span> <span class="o">=</span> <span class="p">{</span>
 <span class="gp">... </span>    <span class="s2">&quot;embeddings_path&quot;</span><span class="p">:</span> <span class="s2">&quot;./pretrained_embeddings/glove.6B.50d.txt&quot;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="s2">&quot;encoder&quot;</span><span class="p">:</span> <span class="s2">&quot;lstm&quot;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="s2">&quot;decoder&quot;</span><span class="p">:</span> <span class="s2">&quot;luong_attention_with_lstm&quot;</span><span class="p">,</span>
 <span class="gp">... </span>    <span class="s2">&quot;embedding_init_params&quot;</span><span class="p">:</span> <span class="p">{</span>
 <span class="gp">... </span>        <span class="s2">&quot;embedding_dim&quot;</span><span class="p">:</span> <span class="mi">50</span><span class="p">,</span>
 <span class="gp">... </span>        <span class="s2">&quot;padding_idx&quot;</span><span class="p">:</span> <span class="mi">0</span>
@@ -524,7 +550,7 @@ for training. Defaults to <code class="docutils literal notranslate"><span class
 <span class="gp">... </span>        <span class="s2">&quot;dropout&quot;</span><span class="p">:</span> <span class="mf">0.1</span><span class="p">,</span>
 <span class="gp">... </span>        <span class="s2">&quot;temperature&quot;</span><span class="p">:</span> <span class="mf">1.0</span>
 <span class="gp">... </span>    <span class="p">},</span>
-<span class="gp">... </span>    <span class="s2">&quot;encoder_optimizer_init_params&quot;</span><span class="p">:</span> <span class="p">{</span>
+<span class="gp">... </span>    <span class="s2">&quot;encoder_optimizer_init_params&quot;</span><span class="p">:</span> <span class="p">{</span><span class="mi">3</span>
 <span class="gp">... </span>        <span class="s2">&quot;lr&quot;</span><span class="p">:</span> <span class="mf">0.0001</span><span class="p">,</span>
 <span class="gp">... </span>        <span class="s2">&quot;weight_decay&quot;</span><span class="p">:</span> <span class="mf">0.001</span>
 <span class="gp">... </span>    <span class="p">},</span>
@@ -546,7 +572,7 @@ for training. Defaults to <code class="docutils literal notranslate"><span class
 <span class="gp">&gt;&gt;&gt; </span><span class="n">encoder_opt</span> <span class="o">=</span> <span class="n">training_components</span><span class="p">[</span><span class="s2">&quot;encoder_optimizer&quot;</span><span class="p">]</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">decoder_opt</span> <span class="o">=</span> <span class="n">training_components</span><span class="p">[</span><span class="s2">&quot;decoder_optimizer&quot;</span><span class="p">]</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">encoder_layer</span>
-<span class="go">EncoderRNN(</span>
+<span class="go">EncoderGRU(</span>
 <span class="go">  (emb): Embedding(2, 50, padding_idx=0)</span>
 <span class="go">  (bi_gru): GRU(50, 50, bidirectional=True)</span>
 <span class="go">)</span>
@@ -599,6 +625,7 @@ for training. Defaults to <code class="docutils literal notranslate"><span class
 <span class="gp">&gt;&gt;&gt; </span><span class="c1"># or create it manually</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">seq2seq_params</span> <span class="o">=</span> <span class="p">{</span>
 <span class="gp">... </span>    <span class="s2">&quot;embeddings_path&quot;</span><span class="p">:</span> <span class="s2">&quot;./pretrained_embeddings/glove.6B.50d.txt&quot;</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="s2">&quot;decoder&quot;</span><span class="p">:</span> <span class="s2">&quot;luong_attention_with_lstm&quot;</span><span class="p">,</span>
 <span class="gp">... </span>    <span class="s2">&quot;embedding_init_params&quot;</span><span class="p">:</span> <span class="p">{</span>
 <span class="gp">... </span>        <span class="s2">&quot;embedding_dim&quot;</span><span class="p">:</span> <span class="mi">50</span><span class="p">,</span>
 <span class="gp">... </span>        <span class="s2">&quot;padding_idx&quot;</span><span class="p">:</span> <span class="mi">0</span>
@@ -626,7 +653,7 @@ for training. Defaults to <code class="docutils literal notranslate"><span class
 <span class="gp">&gt;&gt;&gt;</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">training_components</span> <span class="o">=</span> <span class="n">initialize_seq2seq_components</span><span class="p">(</span>
 <span class="gp">... </span>    <span class="n">vocab_tokens</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;1st_token&quot;</span><span class="p">,</span> <span class="s2">&quot;2nd_token&quot;</span><span class="p">,</span> <span class="s2">&quot;...&quot;</span><span class="p">],</span>
-<span class="gp">... </span>    <span class="n">init_params</span><span class="o">=</span><span class="n">init_params</span><span class="p">,</span>
+<span class="gp">... </span>    <span class="n">init_params</span><span class="o">=</span><span class="n">seq2seq_params</span><span class="p">,</span>
 <span class="gp">... </span>    <span class="n">use_optimizers</span><span class="o">=</span><span class="kc">True</span>
 <span class="gp">... </span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">embedding_layer</span> <span class="o">=</span> <span class="n">training_components</span><span class="p">[</span><span class="s2">&quot;embedding&quot;</span><span class="p">]</span>
@@ -635,7 +662,7 @@ for training. Defaults to <code class="docutils literal notranslate"><span class
 <span class="gp">&gt;&gt;&gt; </span><span class="n">encoder_opt</span> <span class="o">=</span> <span class="n">training_components</span><span class="p">[</span><span class="s2">&quot;encoder_optimizer&quot;</span><span class="p">]</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">decoder_opt</span> <span class="o">=</span> <span class="n">training_components</span><span class="p">[</span><span class="s2">&quot;decoder_optimizer&quot;</span><span class="p">]</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">encoder_layer</span>
-<span class="go">EncoderRNN(</span>
+<span class="go">EncoderGRU(</span>
 <span class="go">  (emb): Embedding(2, 50, padding_idx=0)</span>
 <span class="go">  (bi_gru): GRU(50, 50, bidirectional=True)</span>
 <span class="go">)</span>
@@ -677,7 +704,7 @@ the main package.</p>
   Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
     <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
     provided by <a href="https://readthedocs.org">Read the Docs</a>.
-   
+
 
 </footer>
         </div>
@@ -688,7 +715,7 @@ the main package.</p>
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(true);
       });
-  </script> 
+  </script>
 
 </body>
 </html>
