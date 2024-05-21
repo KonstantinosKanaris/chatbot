@@ -185,7 +185,6 @@ class Trainer:
         """Samples a token index according to decoder's output
         probability distribution over the vocabulary.
 
-
         Args:
             decoder_output (torch.Tensor): The decoder's prediction
                 probabilities.

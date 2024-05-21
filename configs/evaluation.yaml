@@ -25,7 +25,7 @@ train_data_path: ./data/cornell-dialogs/assets/train_set.txt
 checkpoint_path: ./checkpoints/base_model.pth
 evaluation_parameters:
   embeddings_path:
-  sampler: random
+  sampler: greedy
   decoder: luong_attention_with_lstm
   encoder: lstm
   embedding_init_params:

@@ -1,4 +1,4 @@
-# Character-based Text Generation with PyTorch
+# Chatbot
 
 ## Table of Contents
 * [Overview](#Overview)
